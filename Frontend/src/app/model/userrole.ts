@@ -1,2 +1,4 @@
-export class UserRole {
+export enum UserRole {
+    ADMIN,
+    USER
 }
