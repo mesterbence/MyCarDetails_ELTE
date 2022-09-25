@@ -16,11 +16,11 @@ public class Cost {
 
     @ManyToOne
     @JoinColumn(name = "type", referencedColumnName = "id")
-    private CostType type; //TODO: átalakítás typepá
+    private CostType type;
 
     @ManyToOne
     @JoinColumn(name = "car", referencedColumnName = "id")
-    private Car car; //TODO: átalakítás carrá
+    private Car car;
 
     @Column(name = "price")
     private Integer price;

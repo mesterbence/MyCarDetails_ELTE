@@ -13,14 +13,16 @@ public class Fueling {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cost")
-    private Long cost; // TODO: costtá alakítani
+    @ManyToOne
+    @JoinColumn(name = "cost", referencedColumnName = "id")
+    private Cost cost;
 
     @Column(name = "quantity")
     private double quantity;
 
-    @Column(name = "type")
-    private int type; // TODO: typepá alakítani
+    @ManyToOne
+    @JoinColumn(name = "type", referencedColumnName = "id")
+    private FuelType type;
 
     @Column(name = "ispremium")
     private Boolean isPremium;
