@@ -15,16 +15,16 @@ public class Cost {
     private Long id;
 
     @Column(name = "type")
-    private int type; //TODO: átalakítás typepá
+    private Integer type; //TODO: átalakítás typepá
 
     @Column(name = "car")
     private Long car; //TODO: átalakítás carrá
 
     @Column(name = "price")
-    private int price;
+    private Integer price;
 
     @Column(name = "mileage")
-    private int mileage;
+    private Integer mileage;
 
     @Column(name = "note")
     private String note;
