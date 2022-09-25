@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cost } from '../model/cost';
 import { CostService } from '../service/cost.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-costs',
@@ -10,6 +11,8 @@ import { CostService } from '../service/cost.service';
 export class CostsComponent implements OnInit {
 
   costs!: Cost[];
+  dataSource!: any;
+  displayedColumns: string[] = ['date','title','mileage','numberplate'];
 
   constructor(private costService: CostService) { }
 
@@ -17,9 +20,10 @@ export class CostsComponent implements OnInit {
     this.costService.getAllCosts().subscribe(
       data => {
         this.costs = data;
-        console.log(data)
+        this.dataSource = new MatTableDataSource(this.costs);
       }
     );
+    console.log(this.costs)
   }
 
 }
