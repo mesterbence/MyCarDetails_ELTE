@@ -14,11 +14,13 @@ public class Cost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type")
-    private Integer type; //TODO: átalakítás typepá
+    @ManyToOne
+    @JoinColumn(name = "type", referencedColumnName = "id")
+    private CostType type; //TODO: átalakítás typepá
 
-    @Column(name = "car")
-    private Long car; //TODO: átalakítás carrá
+    @ManyToOne
+    @JoinColumn(name = "car", referencedColumnName = "id")
+    private Car car; //TODO: átalakítás carrá
 
     @Column(name = "price")
     private Integer price;

@@ -17,4 +17,7 @@ public class CostServiceImpl implements CostService {
     public List<Cost> findAllCosts() {
         return costRepository.findAll();
     }
+
+    @Override
+    public List<Cost> findByCarId(Long carId) { return costRepository.findCostsByCarId(carId); }
 }
