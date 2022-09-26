@@ -3,6 +3,7 @@ package hu.bmester.mycardetails.service;
 import hu.bmester.mycardetails.model.Cost;
 import hu.bmester.mycardetails.repository.CostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class CostServiceImpl implements CostService {
 
     @Override
     public List<Cost> findAllCosts() {
-        return costRepository.findAll();
+        return costRepository.findAll(Sort.by(Sort.Direction.DESC, "date"));
     }
 
     @Override

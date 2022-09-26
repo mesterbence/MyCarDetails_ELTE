@@ -12,7 +12,7 @@ export class CostsComponent implements OnInit {
 
   costs!: Cost[];
   dataSource!: any;
-  displayedColumns: string[] = ['date','title','mileage','numberplate'];
+  displayedColumns: string[] = ['date','type','title','price','mileage'];
 
   constructor(private costService: CostService) { }
 
