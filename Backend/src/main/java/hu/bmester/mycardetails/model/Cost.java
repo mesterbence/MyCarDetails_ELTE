@@ -1,6 +1,8 @@
 package hu.bmester.mycardetails.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -36,4 +38,8 @@ public class Cost {
 
     @Column(name = "title")
     private String title;
+
+    @OneToOne(mappedBy = "cost")
+    @JsonManagedReference // ha ez nincs benne, és a fuelingben a párja, akkor rekurzív hívás lesz
+    private Fueling fueling;
 }
