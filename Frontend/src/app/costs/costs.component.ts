@@ -22,10 +22,12 @@ export class CostsComponent implements OnInit {
   dataSource!: any;
   displayedColumns: string[] = ['date', 'type','price','title','mileage'];
   expanded !: Cost | any;
+  breakpoint !: number;
 
   constructor(private costService: CostService) { }
 
   ngOnInit(): void {
+    this.breakpoint = (window.innerWidth <= 400) ? 1 : 5;
     this.costService.getAllCosts().subscribe(
       data => {
         this.costs = data;
@@ -40,5 +42,9 @@ export class CostsComponent implements OnInit {
     } else {
       this.expanded = row
     }
+  }
+
+  onResize(event: any) {
+    this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 5;
   }
 }
