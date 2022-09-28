@@ -3,6 +3,8 @@ package hu.bmester.mycardetails.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -14,6 +16,8 @@ public class Car {
     private Long id;
 
     @Column(name = "numberplate")
+    @NotNull
+    @NotBlank
     private String numberplate;
 
     @ManyToOne(fetch = FetchType.EAGER)
