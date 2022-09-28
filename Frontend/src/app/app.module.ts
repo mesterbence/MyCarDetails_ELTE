@@ -9,11 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CostsComponent
+    CostsComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
