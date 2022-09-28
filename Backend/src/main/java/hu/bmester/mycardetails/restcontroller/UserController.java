@@ -34,6 +34,6 @@ public class UserController {
             return new ResponseEntity<>("Foglalt e-mail cím!",HttpStatus.CONFLICT);
         }
         userService.createUser(user);
-        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.CREATED); // TODO: rendes return
+        return new ResponseEntity<>(userService.findUserByUsername(user.getUsername()), HttpStatus.CREATED); // TODO: rendes return
     }
 }
