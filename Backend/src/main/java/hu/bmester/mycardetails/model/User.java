@@ -1,6 +1,7 @@
 package hu.bmester.mycardetails.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class User {
     private String username;
 
     @Column(name = "password")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // így a lekérésben nem szerepel, de a settere működik
     private String password;
 
     @Column(name = "email")
