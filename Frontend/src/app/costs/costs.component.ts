@@ -20,7 +20,7 @@ export class CostsComponent implements OnInit {
 
   costs!: Cost[];
   dataSource!: any;
-  displayedColumns: string[] = ['date', 'type', 'title', 'price', 'mileage'];
+  displayedColumns: string[] = ['date', 'type','price','title','mileage'];
   expanded !: Cost | any;
 
   constructor(private costService: CostService) { }
