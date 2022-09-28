@@ -23,4 +23,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return user; // TODO: rendes return
     }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
 }
