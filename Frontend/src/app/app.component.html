@@ -8,10 +8,10 @@
     </div>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
-            <a class="nav-link" href="#">Regisztráció</a>
+            <a class="nav-link" routerLink="register">Regisztráció</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Bejelentkezés</a>
+            <a class="nav-link" routerLink="">Bejelentkezés</a>
         </li>
     </ul>
 </nav>
@@ -19,21 +19,21 @@
 
 
 
-<ng-template #content let-offcanvas>
+<ng-template #content let-menu>
     <div class="offcanvas-header">
         <h4 class="offcanvas-title" id="offcanvas-basic-title">Menü</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+        <button type="button" class="btn-close" aria-label="Close" (click)="menu.dismiss()"></button>
     </div>
     <div class="offcanvas-body">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="#">Autó költségek</a>
+                <a class="nav-link" routerLink="costs" (click)="menu.dismiss()">Autó költségek</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Bejelentkezés</a>
+                <a class="nav-link" routerLink="register" (click)="menu.dismiss()">Regisztráció</a>
             </li>
         </ul>
     </div>
 </ng-template>
 
-<app-costs></app-costs>
+<router-outlet></router-outlet>
