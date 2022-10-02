@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/api/user/login")
-    public Map<String, Object> loginHandler(@RequestBody LoginCredentials body){
+    public ResponseEntity<?> loginHandler(@RequestBody LoginCredentials body){
         try {
             UsernamePasswordAuthenticationToken authInputToken =
                     new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword());
@@ -74,9 +74,15 @@ public class UserController {
 
             String token = jwtUtil.generateToken(body.getUsername());
 
-            return Collections.singletonMap("jwt-token", token);
-        }catch (AuthenticationException authExc){
-            throw new RuntimeException("Invalid Login Credentials");
+            return new ResponseEntity<Map<String, Object>>(Collections.singletonMap("jwt-token", token),HttpStatus.OK);
+        } catch (AuthenticationException authExc){
+            return new ResponseEntity<Map<String, Object>>(Collections.singletonMap("error", "Hibás felhasználónév vagy jelszó!"),HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @PostMapping("/api/user/changePass")
+    public boolean changePass(@RequestBody String password){
+        userService.changeUserPassword(passwordEncoder.encode(password));
+        return true;
     }
 }

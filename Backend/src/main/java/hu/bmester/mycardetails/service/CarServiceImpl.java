@@ -1,6 +1,7 @@
 package hu.bmester.mycardetails.service;
 
 import hu.bmester.mycardetails.model.Car;
+import hu.bmester.mycardetails.model.User;
 import hu.bmester.mycardetails.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,10 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car findCarByNumberplate(String numberplate) {
         return carRepository.findCarByNumberplate(numberplate);
+    }
+
+    @Override
+    public List<Car> findCarsByOwner(User owner) {
+        return carRepository.findCarsByOwner(owner);
     }
 }
