@@ -27,7 +27,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // így a lekérésben nem szerepel, de a settere működik
     @NotNull
     @NotBlank
-    @Min(6)
+    //@Min(6)
     private String password;
 
     @Column(name = "email")
