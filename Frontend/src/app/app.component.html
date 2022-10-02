@@ -1,1 +1,39 @@
-<app-register></app-register>
+<nav class="navbar navbar-expand bg-light">
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <span class="navbar-brand">
+            <button (click)="open(content)" class=" menu-container menu-button" type="button">
+                <i class="bi bi-list p-2"></i>
+            </button>
+        </span>
+    </div>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Regisztráció</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Bejelentkezés</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+
+<ng-template #content let-offcanvas>
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title" id="offcanvas-basic-title">Menü</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Autó költségek</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Bejelentkezés</a>
+            </li>
+        </ul>
+    </div>
+</ng-template>
+
+<app-costs></app-costs>
