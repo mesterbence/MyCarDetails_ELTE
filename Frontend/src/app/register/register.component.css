@@ -16,3 +16,9 @@
 ::ng-deep .mat-ink-bar {
     background-color: #B6E388 !important;
 }
+mat-label {
+    color: gray !important;
+}
+::ng-deep.mat-tab-label {
+    width: 50%;
+  }
