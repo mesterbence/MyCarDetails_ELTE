@@ -10,4 +10,5 @@ public interface CarService {
     Car createCar(Car car);
     Car findCarByNumberplate(String numberplate);
     List<Car> findCarsByOwner(User owner);
+    Car findCarById(Long id);
 }

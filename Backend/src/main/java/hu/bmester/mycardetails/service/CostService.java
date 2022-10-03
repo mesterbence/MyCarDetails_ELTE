@@ -7,4 +7,5 @@ import java.util.List;
 public interface CostService {
     List<Cost> findAllCosts();
     List<Cost> findByCarId(Long carId);
+    Cost saveCost(Cost cost);
 }

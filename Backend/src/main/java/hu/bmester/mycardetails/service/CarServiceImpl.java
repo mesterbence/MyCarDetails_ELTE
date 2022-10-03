@@ -33,4 +33,9 @@ public class CarServiceImpl implements CarService {
     public List<Car> findCarsByOwner(User owner) {
         return carRepository.findCarsByOwner(owner);
     }
+
+    @Override
+    public Car findCarById(Long id) {
+        return carRepository.findCarById(id);
+    }
 }

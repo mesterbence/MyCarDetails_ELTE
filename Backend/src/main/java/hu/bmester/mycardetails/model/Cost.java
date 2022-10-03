@@ -16,11 +16,11 @@ public class Cost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "type", referencedColumnName = "id")
     private CostType type;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "car", referencedColumnName = "id")
     private Car car;
 
@@ -39,7 +39,7 @@ public class Cost {
     @Column(name = "title")
     private String title;
 
-    @OneToOne(mappedBy = "cost")
+    @OneToOne(mappedBy = "cost", cascade = {CascadeType.ALL})
     @JsonManagedReference // ha ez nincs benne, és a fuelingben a párja, akkor rekurzív hívás lesz
     private Fueling fueling;
 }
