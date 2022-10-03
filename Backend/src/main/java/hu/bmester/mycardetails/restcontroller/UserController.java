@@ -65,13 +65,9 @@ public class UserController {
     @PostMapping("/api/user/login")
     public ResponseEntity<?> loginHandler(@RequestBody LoginCredentials body){
         try {
-            UsernamePasswordAuthenticationToken authInputToken =
-                    new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword());
-
+            UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword());
             authManager.authenticate(authInputToken);
-
             String token = jwtUtil.generateToken(body.getUsername());
-
             return new ResponseEntity<Map<String, Object>>(Collections.singletonMap("token", token),HttpStatus.OK);
         } catch (AuthenticationException authExc){
             return new ResponseEntity<Map<String, Object>>(Collections.singletonMap("error", "Hibás felhasználónév vagy jelszó!"),HttpStatus.UNAUTHORIZED);
