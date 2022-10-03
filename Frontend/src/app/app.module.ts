@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
