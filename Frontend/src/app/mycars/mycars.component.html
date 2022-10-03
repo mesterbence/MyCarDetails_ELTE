@@ -1,1 +1,16 @@
-<p>mycars works!</p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Rendszám</th>
+      <th scope="col">Márka</th>
+      <th scope="col">Típus</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let car of cars">
+      <td>{{ car.numberplate }}</td>
+      <td>{{ car.brand }}</td>
+      <td>{{ car.model }}</td>
+    </tr>
+    </tbody>
+  </table>
