@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { SideMenuComponent } from './side-menu/side-menu.component';
+import { MycarsComponent } from './mycars/mycars.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
     AppComponent,
     CostsComponent,
     RegisterComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    MycarsComponent
   ],
   imports: [
     BrowserModule,

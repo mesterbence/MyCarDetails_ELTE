@@ -22,13 +22,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm.get('username')?.value)
-    console.log(this.loginForm.get('password')?.value)
     this.authService.authenticate(this.loginForm.get('username')?.value,this.loginForm.get('password')?.value);
-
-    //this.httpClient.post<any>(this.SERVER_URL, formData).subscribe(
-      //(res) => console.log(res),
-      //(err) => console.log(err)
-    //);
   }
 }

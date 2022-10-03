@@ -20,6 +20,7 @@ export class AuthService {
       return this.httpClient.post<any>(environment.baseUrl + "/user/login", { username, password })
       .subscribe((data) => {
         this.cookieService.set('token', data.token);
+        this.router.navigate(['/mycars']);
       });
     }
 
@@ -29,5 +30,9 @@ export class AuthService {
 
     getToken(): String {
       return this.cookieService.get('token');
+    }
+
+    logout(): void {
+      this.cookieService.delete('token');
     }
 }

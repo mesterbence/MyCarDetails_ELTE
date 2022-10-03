@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -8,11 +9,12 @@ import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstra
 })
 export class SideMenuComponent implements OnInit {
 
-  constructor(private offcanvasService: NgbOffcanvas) { }
+  constructor(private offcanvasService: NgbOffcanvas,
+    protected authService: AuthService) { }
 
   ngOnInit(): void {
   }
-  
+
   open(content: any) {
     this.offcanvasService.open(content);
   }

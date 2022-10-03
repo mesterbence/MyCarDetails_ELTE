@@ -7,11 +7,11 @@
         </span>
     </div>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-            <a class="nav-link" routerLink="register">Regisztráció</a>
+        <li class="nav-item" *ngIf="!this.authService.hasToken()">
+            <a class="nav-link" routerLink="login">Bejelentkezés</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="">Bejelentkezés</a>
+        <li class="nav-item" *ngIf="this.authService.hasToken()">
+            <a class="nav-link" (click)="this.authService.logout()">Kijelentkezés</a>
         </li>
     </ul>
 </nav>
@@ -29,8 +29,17 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="costs" (click)="menu.dismiss()">Autó költségek</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="register" (click)="menu.dismiss()">Regisztráció</a>
+            <li class="nav-item" *ngIf="!this.authService.hasToken()">
+                <a class="nav-link" routerLink="login" (click)="menu.dismiss()">Bejelentkezés</a>
+            </li>
+            <li class="nav-item" *ngIf="this.authService.hasToken()">
+                <a class="nav-link" routerLink="" (click)="menu.dismiss()">Profilom</a>
+            </li>
+            <li class="nav-item" *ngIf="this.authService.hasToken()">
+                <a class="nav-link" routerLink="mycars" (click)="menu.dismiss()">Autóim</a>
+            </li>
+            <li class="nav-item" *ngIf="this.authService.hasToken()">
+                <a class="nav-link" (click)="this.authService.logout()" (click)="menu.dismiss()">Kijelentkezés</a>
             </li>
         </ul>
     </div>
