@@ -17,13 +17,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { CookieService } from 'ngx-cookie-service';
+import { SideMenuComponent } from './side-menu/side-menu.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CostsComponent,
-    RegisterComponent
+    RegisterComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,

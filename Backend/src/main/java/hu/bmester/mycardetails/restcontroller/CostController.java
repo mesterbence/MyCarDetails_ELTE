@@ -38,7 +38,7 @@ public class CostController {
     @PostMapping("/api/cost/create/{costTypeId}/{carId}")
     public ResponseEntity<?> createNewCost(@PathVariable Long carId, @PathVariable int costTypeId, @RequestBody Cost cost) {
         Car car = carService.findCarById(carId);
-        if(null == car) return new ResponseEntity<>("Nincs ilyen autó!",HttpStatus.NOT_FOUND);
+        if(null == car) return new ResponseEntity<>("Nincs ilyen autó!",HttpStatus.NOT_FOUND); // TODO: json hibássá tenni
         CostType type = costTypeService.findCostById(costTypeId);
         if(null == type) return new ResponseEntity<>("Nincs ilyen típus!",HttpStatus.NOT_FOUND);
         cost.setCar(car);
