@@ -2,12 +2,12 @@
   <div class="container col-lg-4 p-3 shadow-lg bg-white rounded">
     <mat-tab-group>
       <mat-tab label="Bejelentkezés">
-        <form class="reg-form">
+        <form [formGroup] = "loginForm" (ngSubmit)="onSubmit()" class="reg-form">
           <div class="align-items-center justify-content-center pt-4">
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>Felhasználói név</mat-label>
-                <input matInput placeholder="">
+                <input formControlName="username" matInput placeholder="">
                 <mat-icon matSuffix>person</mat-icon>
                 <!--<mat-hint>Hint</mat-hint>-->
               </mat-form-field>
@@ -15,13 +15,13 @@
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>Jelszó</mat-label>
-                <input type="password" matInput placeholder="">
+                <input formControlName="password" type="password" matInput placeholder="">
                 <mat-icon matSuffix>password</mat-icon>
                 <!--<mat-hint>Hint</mat-hint>-->
               </mat-form-field>
             </p>
             <div class="text-center">
-              <button type="button" class="btn btn-light">Bejelentkezés</button>
+              <button type="submit" class="btn btn-light w-100">Bejelentkezés</button>
             </div>
           </div>
         </form>

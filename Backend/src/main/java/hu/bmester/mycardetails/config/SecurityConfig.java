@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/car/cars").hasRole("ADMIN")
                 .antMatchers("/api/car/own").hasRole("USER")
+                .antMatchers("/api/cost/costs").hasRole("USER")
                 .and()
                 .userDetailsService(uds)
                 .exceptionHandling()
