@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbOffcanvas, OffcanvasDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-root',
@@ -11,9 +11,7 @@ export class AppComponent {
 
   closeResult = '';
 
-  constructor(private offcanvasService: NgbOffcanvas) {}
+  constructor() {}
 
-  open(content: any) {
-    this.offcanvasService.open(content);
-  }
+  
 }
