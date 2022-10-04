@@ -54,15 +54,15 @@ public class UserController {
         return new ResponseEntity<>(userService.findUserByUsername(user.getUsername()), HttpStatus.CREATED); // TODO: rendes return
     }
 
-    @PostMapping("/api/user/register")
-    public Map<String, Object> registerHandler(@RequestBody User user){
-        String encodedPass = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPass);
-        user.setRole(UserRole.USER);
-        user = userService.saveUser(user);
-        String token = jwtUtil.generateToken(user.getUsername());
-        return Collections.singletonMap("jwt-token", token);
-    }
+//    @PostMapping("/api/user/register")
+//    public Map<String, Object> registerHandler(@RequestBody User user){
+//        String encodedPass = passwordEncoder.encode(user.getPassword());
+//        user.setPassword(encodedPass);
+//        user.setRole(UserRole.USER);
+//        user = userService.saveUser(user);
+//        String token = jwtUtil.generateToken(user.getUsername());
+//        return Collections.singletonMap("jwt-token", token);
+//    }
 
     @PostMapping("/api/user/login")
     public ResponseEntity<?> loginHandler(@RequestBody LoginCredentials body){
