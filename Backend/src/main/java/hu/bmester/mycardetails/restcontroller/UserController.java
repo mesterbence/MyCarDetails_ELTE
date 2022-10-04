@@ -48,6 +48,8 @@ public class UserController {
         if(null != userService.findUserByEmail(user.getEmail())) {
             return new ResponseEntity<>("Foglalt e-mail cím!",HttpStatus.CONFLICT);
         }
+        String encodedPass = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPass);
         userService.saveUser(user);
         return new ResponseEntity<>(userService.findUserByUsername(user.getUsername()), HttpStatus.CREATED); // TODO: rendes return
     }

@@ -23,6 +23,14 @@ export class AuthService {
         this.router.navigate(['/mycars']);
       });
     }
+    async register(username:string, email:string, password:string){
+      console.log(username,email,password)
+      return this.httpClient.post<any>(environment.baseUrl + "/user/create", { username, email, password })
+      .subscribe((data) => {
+        console.log(data)
+        this.authenticate(username,password);
+      });
+    }
 
     hasToken(): boolean {
       return this.cookieService.check('token');

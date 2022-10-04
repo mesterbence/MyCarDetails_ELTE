@@ -2,7 +2,7 @@
   <div class="container col-lg-4 p-3 shadow-lg bg-white rounded">
     <mat-tab-group>
       <mat-tab label="Bejelentkezés">
-        <form [formGroup] = "loginForm" (ngSubmit)="onSubmit()" class="reg-form">
+        <form [formGroup] = "loginForm" (ngSubmit)="onLoginSubmit()" class="reg-form">
           <div class="align-items-center justify-content-center pt-4">
             <p>
               <mat-form-field appearance="outline">
@@ -27,12 +27,12 @@
         </form>
       </mat-tab>
       <mat-tab label="Regisztráció">
-        <form class="reg-form">
+        <form [formGroup] = "registerForm" (ngSubmit)="onRegisterSubmit()"class="reg-form">
           <div class="align-items-center justify-content-center pt-4">
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>Felhasználói név</mat-label>
-                <input matInput placeholder="">
+                <input formControlName="username" matInput placeholder="">
                 <mat-icon matSuffix>person</mat-icon>
                 <!--<mat-hint>Hint</mat-hint>-->
               </mat-form-field>
@@ -40,7 +40,7 @@
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>E-mail cím</mat-label>
-                <input type="email" matInput placeholder="">
+                <input formControlName="email" type="email" matInput placeholder="">
                 <mat-icon matSuffix>mail</mat-icon>
                 <!--<mat-hint>Hint</mat-hint>-->
               </mat-form-field>
@@ -48,7 +48,7 @@
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>Jelszó</mat-label>
-                <input type="password" matInput placeholder="">
+                <input formControlName="password" type="password" matInput placeholder="">
                 <mat-icon matSuffix>password</mat-icon>
                 <!--<mat-hint>Hint</mat-hint>-->
               </mat-form-field>
@@ -56,13 +56,13 @@
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>Jelszó ismét</mat-label>
-                <input type="password" matInput placeholder="">
+                <input formControlName="password2" type="password" matInput placeholder="">
                 <mat-icon matSuffix>password</mat-icon>
                 <!--<mat-hint>Hint</mat-hint>-->
               </mat-form-field>
             </p>
             <div class="text-center">
-              <button type="button" class="btn btn-light">Regisztráció</button>
+              <button type="submit" class="btn btn-light">Regisztráció</button>
             </div>
           </div>
         </form>
