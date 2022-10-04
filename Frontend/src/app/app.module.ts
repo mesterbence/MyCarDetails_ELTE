@@ -19,6 +19,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { MycarsComponent } from './mycars/mycars.component';
+import { CardetailsComponent } from './cardetails/cardetails.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MycarsComponent } from './mycars/mycars.component';
     CostsComponent,
     RegisterComponent,
     SideMenuComponent,
-    MycarsComponent
+    MycarsComponent,
+    CardetailsComponent
   ],
   imports: [
     BrowserModule,
