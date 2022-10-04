@@ -20,6 +20,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { MycarsComponent } from './mycars/mycars.component';
 import { CardetailsComponent } from './cardetails/cardetails.component';
+import { NewcarComponent } from './newcar/newcar.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { CardetailsComponent } from './cardetails/cardetails.component';
     RegisterComponent,
     SideMenuComponent,
     MycarsComponent,
-    CardetailsComponent
+    CardetailsComponent,
+    NewcarComponent
   ],
   imports: [
     BrowserModule,
