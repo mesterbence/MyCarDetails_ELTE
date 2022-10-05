@@ -24,7 +24,6 @@ export class AuthService {
       });
     }
     async register(username:string, email:string, password:string){
-      console.log(username,email,password)
       return this.httpClient.post<any>(environment.baseUrl + "/user/create", { username, email, password })
       .subscribe((data) => {
         console.log(data)
@@ -42,5 +41,6 @@ export class AuthService {
 
     logout(): void {
       this.cookieService.delete('token');
+      this.router.navigate(['/']);
     }
 }

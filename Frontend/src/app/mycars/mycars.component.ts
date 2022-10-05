@@ -21,6 +21,8 @@ export class MycarsComponent implements OnInit {
         this.cars = data;
         if(this.cars.length === 0) {
           this.router.navigate(['/newcar']);
+        } else if(this.cars.length === 1) {
+          this.router.navigate(['/cardetails', this.cars[0].id]);
         }
       }
     );

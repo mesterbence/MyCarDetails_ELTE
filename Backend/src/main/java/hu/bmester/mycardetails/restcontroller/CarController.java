@@ -3,7 +3,9 @@ package hu.bmester.mycardetails.restcontroller;
 import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.model.Car;
 import hu.bmester.mycardetails.service.CarService;
+import hu.bmester.mycardetails.service.UserService;
 import hu.bmester.mycardetails.service.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@Slf4j
 public class CarController {
 
     @Autowired
@@ -24,7 +27,7 @@ public class CarController {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @GetMapping("/api/car/cars")
     public ResponseEntity<?> getAllCars() {
@@ -44,6 +47,9 @@ public class CarController {
         if(null != carService.findCarByNumberplate(car.getNumberplate())) {
             return new ResponseEntity<>("Foglalt rendszám!",HttpStatus.CONFLICT);
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object currentPrincipalName = authentication.getPrincipal();
+        car.setOwner(userService.findUserByUsername(currentPrincipalName.toString()));
         carService.createCar(car);
         return new ResponseEntity<>(carService.findCarByNumberplate(car.getNumberplate()), HttpStatus.CREATED); // TODO: rendes return
     }

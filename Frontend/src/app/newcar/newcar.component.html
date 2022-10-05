@@ -1,39 +1,43 @@
 <div class="pt-5">
     <div class="container col-lg-4 p-3 shadow-lg bg-white rounded">
-        <form [formGroup]="newCarForm" (ngSubmit)="onSubmit()" class="reg-form">
-            <div class="align-items-center justify-content-center pt-4">
-                <p>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Rendszám</mat-label>
-                        <input formControlName="numberplate" matInput placeholder="">
-                    </mat-form-field>
-                </p>
-                <p>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Márka</mat-label>
-                        <input formControlName="brand" matInput placeholder="">
-                    </mat-form-field>
-                </p>
-                <p>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Típus</mat-label>
-                        <input formControlName="brand" matInput placeholder="">
-                    </mat-form-field>
-                </p>
-                <p>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Üzemanyag</mat-label>
-                        <mat-select formControlName="fuel">
-                            <mat-option *ngFor="let type of fuelTypes" [value]="type.id">
-                                {{ type.name }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </p>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-light w-100">Felvétel</button>
-                </div>
-            </div>
-        </form>
+        <mat-tab-group>
+            <mat-tab label="Új autó felvétele">
+                <form [formGroup]="newCarForm" (ngSubmit)="onSubmit()" class="reg-form">
+                    <div class="align-items-center justify-content-center pt-4">
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Rendszám</mat-label>
+                                <input formControlName="numberplate" matInput placeholder="">
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Márka</mat-label>
+                                <input formControlName="brand" matInput placeholder="">
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Típus</mat-label>
+                                <input formControlName="model" matInput placeholder="">
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Üzemanyag</mat-label>
+                                <mat-select formControlName="fuel">
+                                    <mat-option *ngFor="let type of fuelTypes" [value]="type">
+                                        {{ type.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </p>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-light w-100">Felvétel</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </div>
