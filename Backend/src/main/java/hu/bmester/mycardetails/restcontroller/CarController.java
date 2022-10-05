@@ -41,6 +41,18 @@ public class CarController {
         return new ResponseEntity<>(carService.findCarsByOwner(userService.findUserByUsername(currentPrincipalName.toString())), HttpStatus.OK);
     }
 
+    @GetMapping("/api/car/get/{carId}")
+    public ResponseEntity<?> getCarById(@PathVariable Long carId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object currentPrincipalName = authentication.getPrincipal();
+        Car car = carService.findCarById(carId);
+        log.error(currentPrincipalName.toString());
+        if(car.getOwner().getUsername().equals(currentPrincipalName.toString())) {
+            return new ResponseEntity<>(carService.findCarById(carId), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Nincs jog", HttpStatus.FORBIDDEN);
+    }
+
 
     @PostMapping("/api/car/create")
     public ResponseEntity<?> createNewCar(@Valid @RequestBody Car car) {

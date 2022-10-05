@@ -1,3 +1,46 @@
-<div class="w-75">
-    <app-costs></app-costs>
+<div class="container">
+    <div class="row pt-2">
+        <div class="col-lg-4 pb-2">
+            <div class="bg-white rounded pt-2 p-3">
+                <p>Autó adatai</p>
+                <div class="col-lg-12 shadow-lg bg-white rounded">
+                    <ul class="list-group">
+                        <li class="list-group-item">Rendszám: {{ carData.numberplate }}</li>
+                        <li class="list-group-item">Márka: {{ carData.brand }}</li>
+                        <li class="list-group-item">Modell: {{ carData.model }}</li>
+                        <li class="list-group-item">Üzemanyag: {{ carData.fuelType.name }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 pb-2">
+            <div class="bg-white rounded pt-2 p-3">
+                <p>Műveletek</p>
+                <div class="col-lg-12 shadow-lg bg-white rounded">
+                    <ul class="list-group">
+                        <li class="list-group-item">Autó adatainak módosítása</li>
+                        <li class="list-group-item">Költség rögzítése</li>
+                        <li class="list-group-item">Grafikonok megtekintése</li>
+                        <li class="list-group-item">Autó törlése</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 pb-2">
+            <div class="bg-white rounded pt-2 p-3">
+                <p>Költségek</p>
+                <div class="col-lg-12 shadow-lg bg-white rounded">
+                    <ul class="list-group">
+                        <li class="list-group-item">Összes költött összeg: 1876756 Ft</li>
+                        <li class="list-group-item">Összes tankolt mennyiség: 4563 liter</li>
+                        <li class="list-group-item">Ft/km: 51,08 Ft/km</li>
+                        <li class="list-group-item">Legtöbbet használt kategória: üzemanyag</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <app-costs></app-costs>
+    </div>
 </div>

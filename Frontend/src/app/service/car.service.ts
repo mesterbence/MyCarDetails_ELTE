@@ -17,6 +17,9 @@ export class CarService {
   getAllOwnCars(): Observable<Car[]> {
     return this.httpClient.get<Car[]>(`${environment.baseUrl}/car/own`);
   }
+  getCarById(carId: number): Observable<Car> {
+    return this.httpClient.get<Car>(`${environment.baseUrl}/car/get/${carId}`);
+  }
 
   async create(numberplate:string, brand:string, model:string, fuelType:FuelType){
     return this.httpClient.post<any>(environment.baseUrl + "/car/create", { numberplate, brand, model, fuelType })

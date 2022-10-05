@@ -20,7 +20,7 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public List<Cost> findByCarId(Long carId) { return costRepository.findCostsByCarId(carId); }
+    public List<Cost> findByCarId(Long carId) { return costRepository.findCostsByCarIdOrderByDateDesc(carId); }
 
     @Override
     public Cost saveCost(Cost cost) {

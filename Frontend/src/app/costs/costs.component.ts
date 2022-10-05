@@ -3,6 +3,7 @@ import { Cost } from '../model/cost';
 import { CostService } from '../service/cost.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-costs',
@@ -20,20 +21,30 @@ export class CostsComponent implements OnInit {
 
   costs!: Cost[];
   dataSource!: any;
-  displayedColumns: string[] = ['date', 'type','price','title','mileage'];
+  displayedColumns: string[] = ['date', 'type', 'price', 'title', 'mileage'];
   expanded !: Cost | any;
   breakpoint !: number;
+  carId!: number;
 
-  constructor(private costService: CostService) { }
+  constructor(private costService: CostService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 5;
-    this.costService.getAllCosts().subscribe(
-      data => {
-        this.costs = data;
-        this.dataSource = new MatTableDataSource(this.costs);
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params.get('id') !== null) {
+        this.carId = Number(params.get('id'));
+        this.costService.getAllCostsById(this.carId).subscribe(
+          data => {
+            this.costs = data;
+            this.dataSource = new MatTableDataSource(this.costs);
+          }
+        );
+      } else {
+        this.router.navigate(['/mycars']);
       }
-    );
+    });
   }
 
   toggleRow(row: any) {

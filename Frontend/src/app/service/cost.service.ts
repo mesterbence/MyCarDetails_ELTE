@@ -14,4 +14,7 @@ export class CostService {
   getAllCosts(): Observable<Cost[]> {
     return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/costs`);
   }
+  getAllCostsById(carId: number): Observable<Cost[]> {
+    return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/bycar/${carId}`);
+  }
 }
