@@ -46,7 +46,6 @@ public class CarController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object currentPrincipalName = authentication.getPrincipal();
         Car car = carService.findCarById(carId);
-        log.error(currentPrincipalName.toString());
         if(car.getOwner().getUsername().equals(currentPrincipalName.toString())) {
             return new ResponseEntity<>(carService.findCarById(carId), HttpStatus.OK);
         }
