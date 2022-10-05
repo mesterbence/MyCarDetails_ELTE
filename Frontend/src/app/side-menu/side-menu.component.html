@@ -8,7 +8,7 @@
     </div>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item" *ngIf="!this.authService.hasToken()">
-            <a class="nav-link" routerLink="login">Bejelentkezés</a>
+            <a class="nav-link" routerLink="login">Csatlakozás</a>
         </li>
         <li class="nav-item" *ngIf="this.authService.hasToken()">
             <a class="nav-link" (click)="this.authService.logout()">Kijelentkezés</a>
@@ -30,7 +30,7 @@
                 <a class="nav-link" routerLink="costs" (click)="menu.dismiss()">Autó költségek</a>
             </li>
             <li class="nav-item" *ngIf="!this.authService.hasToken()">
-                <a class="nav-link" routerLink="login" (click)="menu.dismiss()">Bejelentkezés</a>
+                <a class="nav-link" routerLink="login" (click)="menu.dismiss()">Csatlakozás</a>
             </li>
             <li class="nav-item" *ngIf="this.authService.hasToken()">
                 <a class="nav-link" routerLink="" (click)="menu.dismiss()">Profilom</a>

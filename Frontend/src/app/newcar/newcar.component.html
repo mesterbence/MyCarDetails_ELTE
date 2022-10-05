@@ -7,30 +7,31 @@
                         <p>
                             <mat-form-field appearance="outline">
                                 <mat-label>Rendszám</mat-label>
-                                <input formControlName="numberplate" matInput placeholder="">
+                                <input formControlName="numberplate" matInput placeholder="" required>
                             </mat-form-field>
                         </p>
                         <p>
                             <mat-form-field appearance="outline">
                                 <mat-label>Márka</mat-label>
-                                <input formControlName="brand" matInput placeholder="">
+                                <input formControlName="brand" matInput placeholder="" required>
                             </mat-form-field>
                         </p>
                         <p>
                             <mat-form-field appearance="outline">
                                 <mat-label>Típus</mat-label>
-                                <input formControlName="model" matInput placeholder="">
+                                <input formControlName="model" matInput placeholder="" required>
                             </mat-form-field>
                         </p>
                         <p>
                             <mat-form-field appearance="outline">
                                 <mat-label>Üzemanyag</mat-label>
-                                <mat-select formControlName="fuel">
+                                <mat-select formControlName="fuel" required>
                                     <mat-option *ngFor="let type of fuelTypes" [value]="type">
                                         {{ type.name }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
+                            <mat-hint>A *-gal jelölt mezők kitöltése kötelező!</mat-hint>
                         </p>
                         <div class="text-center">
                             <button type="submit" class="btn btn-light w-100">Felvétel</button>
