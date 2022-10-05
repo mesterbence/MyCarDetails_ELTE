@@ -1,3 +1,40 @@
 .mat-form-field {
     min-width: 100%;
 }
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #B6E388;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+    color: #B6E388;
+}
+
+::ng-deep .mat-ink-bar {
+    background-color: #B6E388 !important;
+}
+
+mat-label {
+    color: gray !important;
+}
+
+.input-container input {
+    border: none;
+    box-sizing: border-box;
+    outline: 0;
+    padding: .75rem;
+    position: relative;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}

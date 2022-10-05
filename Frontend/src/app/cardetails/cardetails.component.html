@@ -49,27 +49,48 @@
         <h4 class="modal-title" id="modal-basic-title">Új költés rögzítése</h4>
         <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
     </div>
-    <form class="reg-form">
+    <form [formGroup]="newCostGroup" (ngSubmit)="onSubmit()" class="reg-form">
         <div class="modal-body">
             <div class="align-items-center justify-content-center pt-4">
                 <p>
                     <mat-form-field appearance="outline">
                         <mat-label>Összeg</mat-label>
-                        <input formControlName="price" matInput>
-                        <mat-icon matSuffix>person</mat-icon>
+                        <input (keypress)="numberOnly($event)" type="text" formControlName="price" matInput>
+                        <mat-icon matSuffix>payments</mat-icon>
                     </mat-form-field>
                 </p>
                 <p>
                     <mat-form-field appearance="outline">
-                        <mat-label>Jelszó</mat-label>
-                        <input formControlName="password" type="password" matInput>
-                        <mat-icon matSuffix>password</mat-icon>
+                        <mat-label>Kilométeróra állása</mat-label>
+                        <input formControlName="mileage" (keypress)="numberOnly($event)" type="text" matInput>
+                        <mat-icon matSuffix>speed</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Megnevezés</mat-label>
+                        <input formControlName="title" type="text" matInput>
+                        <mat-icon matSuffix>edit</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dátum</mat-label>
+                        <input formControlName="date" type="date" matInput>
+                        <mat-icon matSuffix>calendar_month</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Megjegyzés</mat-label>
+                        <input formControlName="note" type="text" matInput>
+                        <mat-icon matSuffix>description</mat-icon>
                     </mat-form-field>
                 </p>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-light w-100" (click)="modal.close()">Rögzítés</button>
+            <button type="submit" class="btn btn-light w-100">Rögzítés</button>
         </div>
     </form>
 </ng-template>
