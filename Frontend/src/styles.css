@@ -9,3 +9,6 @@ body { background-color: #d5d2d2 !important; }
 .btn-light {
     background-color: #B6E388 !important;
 }
+a {
+    text-decoration: none;
+}

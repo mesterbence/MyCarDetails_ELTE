@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from '../model/car';
 import { CarService } from '../service/car.service';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cardetails',
@@ -15,7 +16,8 @@ export class CardetailsComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
-    private carService: CarService) { }
+    private carService: CarService,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -31,5 +33,10 @@ export class CardetailsComponent implements OnInit {
       }
     });
   }
-
+  newCost() {
+    console.log(this.carData)
+  }
+  open(content: any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  }
 }

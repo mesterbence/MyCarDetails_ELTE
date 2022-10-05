@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="carData">
     <div class="row pt-2">
         <div class="col-lg-4 pb-2">
             <div class="bg-white rounded pt-2 p-3">
@@ -19,7 +19,7 @@
                 <div class="col-lg-12 shadow-lg bg-white rounded">
                     <ul class="list-group">
                         <li class="list-group-item">Autó adatainak módosítása</li>
-                        <li class="list-group-item">Költség rögzítése</li>
+                        <li class="list-group-item" (click)="open(newCost)">Költség rögzítése</li>
                         <li class="list-group-item">Grafikonok megtekintése</li>
                         <li class="list-group-item">Autó törlése</li>
                     </ul>
@@ -44,3 +44,32 @@
         <app-costs></app-costs>
     </div>
 </div>
+<ng-template #newCost let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Új költés rögzítése</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <form class="reg-form">
+        <div class="modal-body">
+            <div class="align-items-center justify-content-center pt-4">
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Összeg</mat-label>
+                        <input formControlName="price" matInput>
+                        <mat-icon matSuffix>person</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Jelszó</mat-label>
+                        <input formControlName="password" type="password" matInput>
+                        <mat-icon matSuffix>password</mat-icon>
+                    </mat-form-field>
+                </p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-light w-100" (click)="modal.close()">Rögzítés</button>
+        </div>
+    </form>
+</ng-template>
