@@ -54,6 +54,16 @@
             <div class="align-items-center justify-content-center pt-4">
                 <p>
                     <mat-form-field appearance="outline">
+                        <mat-label>Költés típusa</mat-label>
+                        <mat-select formControlName="costtype" required>
+                            <mat-option *ngFor="let type of costTypes" [value]="type">
+                                {{ type.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
                         <mat-label>Összeg</mat-label>
                         <input (keypress)="numberOnly($event)" type="text" formControlName="price" matInput>
                         <mat-icon matSuffix>payments</mat-icon>
@@ -87,6 +97,31 @@
                         <mat-icon matSuffix>description</mat-icon>
                     </mat-form-field>
                 </p>
+                <div *ngIf="this.newCostGroup.get('costtype')?.value.name === 'üzemanyag'">
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Tankolt üzemagyagfajta</mat-label>
+                            <input formControlName="fueling_type" type="text" matInput>
+                            <mat-icon matSuffix>local_gas_station</mat-icon>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Tankolt mennyiség</mat-label>
+                            <input formControlName="fueling_quantity" type="text" matInput>
+                            <mat-icon matSuffix>60fps</mat-icon>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Prémium üzemanyag</mat-label>
+                            <mat-select formControlName="fueling_isPremium" required>
+                                <mat-option [value]="true">Igen</mat-option>
+                                <mat-option [value]="false">Nem</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

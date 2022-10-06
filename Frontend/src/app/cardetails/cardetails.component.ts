@@ -4,6 +4,8 @@ import { Car } from '../model/car';
 import { CarService } from '../service/car.service';
 import { NgbModal, NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CostType } from '../model/costtype';
+import { CosttypeService } from '../service/costtype.service';
 
 @Component({
   selector: 'app-cardetails',
@@ -15,16 +17,23 @@ export class CardetailsComponent implements OnInit {
   carId!: number;
   carData!: Car;
   newCostGroup!: FormGroup;
+  costTypes!: CostType[];
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private carService: CarService,
     private modalService: NgbModal,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private costTypeService: CosttypeService) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') !== null) {
+        this.costTypeService.getAllCostTypes().subscribe(
+          data => {
+            this.costTypes = data;
+          }
+        );
         this.carId = Number(params.get('id'));
         this.carService.getCarById(this.carId).subscribe(
           data => {
@@ -36,15 +45,20 @@ export class CardetailsComponent implements OnInit {
       }
     });
     this.newCostGroup = this.formBuilder.group({
-      price: [],
-      mileage: [],
+      costtype: [''],
+      price: [''],
+      mileage: [''],
       title: [''],
       date: [''],
-      note: ['']
+      note: [''],
+      fueling_type: [''],
+      fueling_quantity: [''],
+      fueling_isPremium: ['']
     })
   }
   onSubmit() {
-    console.log(this.newCostGroup.get('price')?.value,this.newCostGroup.get('mileage')?.value,this.newCostGroup.get('title')?.value,this.newCostGroup.get('date')?.value,this.newCostGroup.get('note')?.value);
+    console.log(this.newCostGroup.get('costtype')?.value,this.newCostGroup.get('fueling_type')?.value,this.newCostGroup.get('fueling_quantity')?.value,this.newCostGroup.get('fueling_isPremium')?.value)
+    console.log(this.newCostGroup.get('price')?.value, this.newCostGroup.get('mileage')?.value, this.newCostGroup.get('title')?.value, this.newCostGroup.get('date')?.value, this.newCostGroup.get('note')?.value);
     //this.carService.create(this.newCarForm.get('numberplate')?.value,this.newCarForm.get('brand')?.value,this.newCarForm.get('model')?.value,this.newCarForm.get('fuel')?.value); // típust bevezetni
   }
   open(content: any) {
@@ -56,6 +70,5 @@ export class CardetailsComponent implements OnInit {
       return false;
     }
     return true;
-
   }
 }

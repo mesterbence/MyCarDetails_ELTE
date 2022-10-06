@@ -22,6 +22,8 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
 import { MycarsComponent } from './mycars/mycars.component';
 import { CardetailsComponent } from './cardetails/cardetails.component';
 import { NewcarComponent } from './newcar/newcar.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { NewcarComponent } from './newcar/newcar.component';
     MatInputModule,
     MatIconModule,
     MatTabsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatCheckboxModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

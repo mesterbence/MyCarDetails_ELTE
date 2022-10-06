@@ -5,6 +5,8 @@ import hu.bmester.mycardetails.repository.CostTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CostTypeServiceImpl implements CostTypeService {
@@ -15,5 +17,10 @@ public class CostTypeServiceImpl implements CostTypeService {
     @Override
     public CostType findCostById(int typeId) {
         return costTypeRepository.findCostTypeById(typeId);
+    }
+
+    @Override
+    public List<CostType> findAllCostTypes() {
+        return costTypeRepository.findAll();
     }
 }

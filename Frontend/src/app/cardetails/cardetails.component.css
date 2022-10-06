@@ -38,3 +38,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 0;
     width: auto;
 }
+::ng-deep .cdk-overlay-container {
+    z-index: 9999;
+}

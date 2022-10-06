@@ -28,6 +28,12 @@ public class CostController {
         return new ResponseEntity<>(costService.findAllCosts(), HttpStatus.OK);
     }
 
+    @GetMapping("/api/cost/types")
+    public ResponseEntity<?> getAllCostTypes() {
+        return new ResponseEntity<>(costTypeService.findAllCostTypes(), HttpStatus.OK);
+    }
+
+
     @GetMapping("/api/cost/bycar/{carId}")
     public ResponseEntity<?> getAllCostsByCarId(@PathVariable Long carId) {
         return new ResponseEntity<>(costService.findByCarId(carId), HttpStatus.OK);
