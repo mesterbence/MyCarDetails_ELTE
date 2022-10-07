@@ -50,4 +50,13 @@ public class CostController {
         costService.saveCost(cost);
         return new ResponseEntity<>(true, HttpStatus.CREATED); // TODO: rendes return
     }
+
+    @PostMapping("/api/cost/create/{carId}")
+    public ResponseEntity<?> createNewCost2(@PathVariable Long carId, @RequestBody Cost cost) {
+        Car car = carService.findCarById(carId);
+        if(null == car) return new ResponseEntity<>("Nincs ilyen autó!",HttpStatus.NOT_FOUND); // TODO: json hibássá tenni
+        cost.setCar(car);
+        costService.saveCost(cost);
+        return new ResponseEntity<>(true, HttpStatus.CREATED); // TODO: rendes return
+    }
 }

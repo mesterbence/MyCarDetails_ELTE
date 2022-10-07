@@ -6,6 +6,7 @@ import { NgbModal, NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CostType } from '../model/costtype';
 import { CosttypeService } from '../service/costtype.service';
+import { CostService } from '../service/cost.service';
 
 @Component({
   selector: 'app-cardetails',
@@ -22,6 +23,7 @@ export class CardetailsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private carService: CarService,
+    private costService: CostService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private costTypeService: CosttypeService) { }
@@ -57,7 +59,34 @@ export class CardetailsComponent implements OnInit {
     })
   }
   onSubmit() {
-    console.log(this.newCostGroup.get('costtype')?.value,this.newCostGroup.get('fueling_type')?.value,this.newCostGroup.get('fueling_quantity')?.value,this.newCostGroup.get('fueling_isPremium')?.value)
+    if (this.newCostGroup.get('costtype')?.value.name === "üzemanyag") {
+      this.costService.saveCostWithFueling(
+        this.carId,
+        this.newCostGroup.get('costtype')?.value,
+        this.newCostGroup.get('price')?.value,
+        this.newCostGroup.get('mileage')?.value,
+        this.newCostGroup.get('title')?.value,
+        this.newCostGroup.get('date')?.value,
+        this.newCostGroup.get('note')?.value,
+        this.newCostGroup.get('fueling_type')?.value,
+        this.newCostGroup.get('fueling_quantity')?.value,
+        this.newCostGroup.get('fueling_isPremium')?.value
+      )
+      console.log("Ez biza tankolás")
+    } else {
+      console.log("ez kvára nem tankolás");
+      this.costService.saveCost(
+        this.carId,
+        this.newCostGroup.get('costtype')?.value,
+        this.newCostGroup.get('price')?.value,
+        this.newCostGroup.get('mileage')?.value,
+        this.newCostGroup.get('title')?.value,
+        this.newCostGroup.get('date')?.value,
+        this.newCostGroup.get('note')?.value
+      )
+
+    }
+    console.log(this.newCostGroup.get('costtype')?.value, this.newCostGroup.get('fueling_type')?.value, this.newCostGroup.get('fueling_quantity')?.value, this.newCostGroup.get('fueling_isPremium')?.value)
     console.log(this.newCostGroup.get('price')?.value, this.newCostGroup.get('mileage')?.value, this.newCostGroup.get('title')?.value, this.newCostGroup.get('date')?.value, this.newCostGroup.get('note')?.value);
     //this.carService.create(this.newCarForm.get('numberplate')?.value,this.newCarForm.get('brand')?.value,this.newCarForm.get('model')?.value,this.newCarForm.get('fuel')?.value); // típust bevezetni
   }
