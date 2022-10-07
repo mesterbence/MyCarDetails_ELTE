@@ -72,9 +72,7 @@ export class CardetailsComponent implements OnInit {
         this.newCostGroup.get('fueling_quantity')?.value,
         this.newCostGroup.get('fueling_isPremium')?.value
       )
-      console.log("Ez biza tankolás")
     } else {
-      console.log("ez kvára nem tankolás");
       this.costService.saveCost(
         this.carId,
         this.newCostGroup.get('costtype')?.value,
