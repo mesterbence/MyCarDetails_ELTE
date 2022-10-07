@@ -17,11 +17,13 @@
             <div class="bg-white rounded pt-2 p-3">
                 <p>Műveletek</p>
                 <div class="col-lg-12 shadow-lg bg-white rounded">
-                    <ul class="list-group">
-                        <li class="list-group-item">Autó adatainak módosítása</li>
-                        <li class="list-group-item" (click)="open(newCost)">Költség rögzítése</li>
-                        <li class="list-group-item">Grafikonok megtekintése</li>
-                        <li class="list-group-item">Autó törlése</li>
+                    <ul class="list-group list-group-green">
+                        <button class="list-group-item list-group-item-action" (click)="openModify(modifyCar)">Autó
+                            adatainak módosítása</button>
+                        <button class="list-group-item list-group-item-action" (click)="open(newCost)">Költség
+                            rögzítése</button>
+                        <button class="list-group-item list-group-item-action">Grafikonok megtekintése</button>
+                        <button class="list-group-item list-group-item-action">Autó törlése</button>
                     </ul>
                 </div>
             </div>
@@ -126,6 +128,40 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-light w-100">Rögzítés</button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #modifyCar let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Autó adatainak módosítása</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <form [formGroup]="modifyCarGroup" class="reg-form">
+        <div class="modal-body">
+            <div class="align-items-center justify-content-center pt-4">
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Rendszám</mat-label>
+                        <input formControlName="numberplate" matInput required>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Márka</mat-label>
+                        <input formControlName="brand" matInput required>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Típus</mat-label>
+                        <input formControlName="model" matInput required>
+                    </mat-form-field>
+                </p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-light w-100">Mentés</button>
         </div>
     </form>
 </ng-template>

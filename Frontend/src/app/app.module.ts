@@ -24,6 +24,7 @@ import { CardetailsComponent } from './cardetails/cardetails.component';
 import { NewcarComponent } from './newcar/newcar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MyprofileComponent } from './myprofile/myprofile.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     SideMenuComponent,
     MycarsComponent,
     CardetailsComponent,
-    NewcarComponent
+    NewcarComponent,
+    MyprofileComponent
   ],
   imports: [
     BrowserModule,

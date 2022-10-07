@@ -1,6 +1,7 @@
 .mat-form-field {
     min-width: 100%;
 }
+
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     color: #B6E388;
 }
@@ -38,6 +39,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 0;
     width: auto;
 }
+
 ::ng-deep .cdk-overlay-container {
     z-index: 9999;
+}
+
+
+.list-group-green .list-group-item:hover {
+    background-color: #B6E388;
 }

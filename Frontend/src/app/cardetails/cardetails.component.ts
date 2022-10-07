@@ -18,6 +18,7 @@ export class CardetailsComponent implements OnInit {
   carId!: number;
   carData!: Car;
   newCostGroup!: FormGroup;
+  modifyCarGroup!: FormGroup;
   costTypes!: CostType[];
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -56,7 +57,7 @@ export class CardetailsComponent implements OnInit {
       fueling_type: [''],
       fueling_quantity: [''],
       fueling_isPremium: ['']
-    })
+    });
   }
   onSubmit() {
     if (this.newCostGroup.get('costtype')?.value.name === "üzemanyag") {
@@ -91,6 +92,17 @@ export class CardetailsComponent implements OnInit {
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
+
+  openModify(content:any) {
+    this.modifyCarGroup = this.formBuilder.group({
+      numberplate: [this.carData.numberplate],
+      brand: [this.carData.brand],
+      model: [this.carData.model],
+      fuelType: [this.carData.fuelType],
+    })
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
   numberOnly(event: any): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
