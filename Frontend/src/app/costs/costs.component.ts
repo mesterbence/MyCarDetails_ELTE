@@ -35,12 +35,7 @@ export class CostsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') !== null) {
         this.carId = Number(params.get('id'));
-        this.costService.getAllCostsById(this.carId).subscribe(
-          data => {
-            this.costs = data;
-            this.dataSource = new MatTableDataSource(this.costs);
-          }
-        );
+        this.loadCosts();
       } else {
         this.router.navigate(['/mycars']);
       }
@@ -57,5 +52,17 @@ export class CostsComponent implements OnInit {
 
   onResize(event: any) {
     this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 5;
+  }
+  loadCosts() {
+    this.costService.getAllCostsById(this.carId).subscribe(
+      data => {
+        this.costs = data;
+        this.dataSource = new MatTableDataSource(this.costs);
+      }
+    );
+  }
+  addCost(cost:Cost) {
+    this.costs = [cost].concat(this.costs);
+    this.dataSource = new MatTableDataSource(this.costs);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from '../model/car';
 import { CarService } from '../service/car.service';
@@ -10,6 +10,8 @@ import { CostService } from '../service/cost.service';
 import { FuelType } from '../model/fueltype';
 import { FueltypeService } from '../service/fueltype.service';
 import { Carstatistic } from '../model/carstatistic';
+import { CostsComponent } from '../costs/costs.component';
+import { Cost } from '../model/cost';
 
 @Component({
   selector: 'app-cardetails',
@@ -17,6 +19,8 @@ import { Carstatistic } from '../model/carstatistic';
   styleUrls: ['./cardetails.component.css']
 })
 export class CardetailsComponent implements OnInit {
+
+  @ViewChild(CostsComponent) costs: CostsComponent | undefined;
 
   carId!: number;
   carData!: Car;
@@ -99,18 +103,18 @@ export class CardetailsComponent implements OnInit {
         this.newCostGroup.get('title')?.value,
         this.newCostGroup.get('date')?.value,
         this.newCostGroup.get('note')?.value
-      )
-
+      ).subscribe((data) => {
+        this.costs?.addCost(data);
+      })
+      //this.costs?.loadCosts();
     }
-    console.log(this.newCostGroup.get('costtype')?.value, this.newCostGroup.get('fueling_type')?.value, this.newCostGroup.get('fueling_quantity')?.value, this.newCostGroup.get('fueling_isPremium')?.value)
-    console.log(this.newCostGroup.get('price')?.value, this.newCostGroup.get('mileage')?.value, this.newCostGroup.get('title')?.value, this.newCostGroup.get('date')?.value, this.newCostGroup.get('note')?.value);
-    //this.carService.create(this.newCarForm.get('numberplate')?.value,this.newCarForm.get('brand')?.value,this.newCarForm.get('model')?.value,this.newCarForm.get('fuel')?.value); // típust bevezetni
   }
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  openModify(content:any) {
+  openModify(content: any) {
+    this.costs?.loadCosts()
     this.modifyCarGroup = this.formBuilder.group({
       numberplate: [this.carData.numberplate],
       brand: [this.carData.brand],
@@ -131,12 +135,10 @@ export class CardetailsComponent implements OnInit {
   }
 
   onModifySubmit() {
-    console.log("szubmit")
-    this.carService.modify(this.modifyCarGroup.get('numberplate')?.value,this.modifyCarGroup.get('brand')?.value,this.modifyCarGroup.get('model')?.value,this.modifyCarGroup.get('fuelType')?.value, this.carId);
-    console.log("szubmited")
+    this.carService.modify(this.modifyCarGroup.get('numberplate')?.value, this.modifyCarGroup.get('brand')?.value, this.modifyCarGroup.get('model')?.value, this.modifyCarGroup.get('fuelType')?.value, this.carId);
   }
-  getNum(num: number, unit:String) {
-    if(num === null) { return "Még nincs adat"; }
+  getNum(num: number, unit: String) {
+    if (num === null) { return "Még nincs adat"; }
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + unit;
   }
 }

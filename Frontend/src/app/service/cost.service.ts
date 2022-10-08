@@ -30,9 +30,6 @@ export class CostService {
         "date": date,
         "title": title,
         "fueling": null
-      })
-      .subscribe((data) => {
-        console.log(data)
       });
   }
 
@@ -50,9 +47,6 @@ export class CostService {
           "type": fueling_type,
           "isPremium": fueling_isPremium
         }
-      })
-      .subscribe((data) => {
-        console.log(data)
       });
   }
 }

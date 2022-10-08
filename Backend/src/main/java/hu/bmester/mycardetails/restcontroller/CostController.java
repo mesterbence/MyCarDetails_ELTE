@@ -58,7 +58,6 @@ public class CostController {
         Car car = carService.findCarById(carId);
         if(null == car) return new ResponseEntity<>("Nincs ilyen autó!",HttpStatus.NOT_FOUND); // TODO: json hibássá tenni
         cost.setCar(car);
-        costService.saveCost(cost);
-        return new ResponseEntity<>(true, HttpStatus.CREATED); // TODO: rendes return
+        return new ResponseEntity<>(costService.saveCost(cost), HttpStatus.CREATED); // TODO: rendes return
     }
 }
