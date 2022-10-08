@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
     Car findCarByNumberplate(String numberplate);
-    List<Car> findCarsByOwner(User owner);
+    List<Car> findCarsByOwnerOrderById(User owner);
     Car findCarById(Long id);
 }

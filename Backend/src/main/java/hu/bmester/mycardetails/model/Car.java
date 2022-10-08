@@ -30,7 +30,7 @@ public class Car {
     @Column(name = "model")
     private String model;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fuel_type", referencedColumnName = "id")
     private FuelType fuelType;
 }

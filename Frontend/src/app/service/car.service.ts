@@ -21,10 +21,18 @@ export class CarService {
     return this.httpClient.get<Car>(`${environment.baseUrl}/car/get/${carId}`);
   }
 
-  async create(numberplate:string, brand:string, model:string, fuelType:FuelType){
+  create(numberplate: string, brand: string, model: string, fuelType: FuelType) {
     return this.httpClient.post<any>(environment.baseUrl + "/car/create", { numberplate, brand, model, fuelType })
-    .subscribe((data) => {
-      this.router.navigate(['/mycars']);
-    });
+      .subscribe((data) => {
+        this.router.navigate(['/mycars']);
+      });
+  }
+
+  modify(numberplate: string, brand: string, model: string, fuelType: FuelType, carId: number) {
+    return this.httpClient.post<any>(environment.baseUrl + `/car/modify/${carId}`, { numberplate, brand, model, fuelType }).subscribe(
+      data => {
+        console.log(data)
+      }
+    );
   }
 }

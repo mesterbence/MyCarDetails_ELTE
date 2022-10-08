@@ -11,4 +11,5 @@ public interface CarService {
     Car findCarByNumberplate(String numberplate);
     List<Car> findCarsByOwner(User owner);
     Car findCarById(Long id);
+    Car updateCar(Car car);
 }

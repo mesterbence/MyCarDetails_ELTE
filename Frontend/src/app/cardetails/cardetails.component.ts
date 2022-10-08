@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CostType } from '../model/costtype';
 import { CosttypeService } from '../service/costtype.service';
 import { CostService } from '../service/cost.service';
+import { FuelType } from '../model/fueltype';
+import { FueltypeService } from '../service/fueltype.service';
 
 @Component({
   selector: 'app-cardetails',
@@ -20,6 +22,7 @@ export class CardetailsComponent implements OnInit {
   newCostGroup!: FormGroup;
   modifyCarGroup!: FormGroup;
   costTypes!: CostType[];
+  fuelTypes!: FuelType[];
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -27,7 +30,8 @@ export class CardetailsComponent implements OnInit {
     private costService: CostService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
-    private costTypeService: CosttypeService) { }
+    private costTypeService: CosttypeService,
+    private fuelTypeService: FueltypeService) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -41,6 +45,11 @@ export class CardetailsComponent implements OnInit {
         this.carService.getCarById(this.carId).subscribe(
           data => {
             this.carData = data;
+          }
+        );
+        this.fuelTypeService.getAllFuelTypes().subscribe(
+          data => {
+            this.fuelTypes = data;
           }
         );
       } else {
@@ -99,7 +108,9 @@ export class CardetailsComponent implements OnInit {
       brand: [this.carData.brand],
       model: [this.carData.model],
       fuelType: [this.carData.fuelType],
-    })
+    });
+    const fuel = this.fuelTypes.find(f => f.id == this.carData.fuelType.id);
+    this.modifyCarGroup.get('fuelType')?.setValue(fuel);
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
@@ -109,5 +120,11 @@ export class CardetailsComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  onModifySubmit() {
+    console.log("szubmit")
+    this.carService.modify(this.modifyCarGroup.get('numberplate')?.value,this.modifyCarGroup.get('brand')?.value,this.modifyCarGroup.get('model')?.value,this.modifyCarGroup.get('fuelType')?.value, this.carId);
+    console.log("szubmited")
   }
 }

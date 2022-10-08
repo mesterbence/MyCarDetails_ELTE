@@ -64,4 +64,23 @@ public class CarController {
         carService.createCar(car);
         return new ResponseEntity<>(carService.findCarByNumberplate(car.getNumberplate()), HttpStatus.CREATED); // TODO: rendes return
     }
+
+    @PostMapping("/api/car/modify/{carId}")
+    public ResponseEntity<?> editCar(@PathVariable Long carId, @Valid @RequestBody Car car) {
+        Car carToUpdate = carService.findCarById(carId);
+        if(null == carToUpdate) {
+            return new ResponseEntity<>("Nincs ilyen autó!",HttpStatus.NOT_FOUND);
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object currentPrincipalName = authentication.getPrincipal();
+        carToUpdate.setOwner(userService.findUserByUsername(currentPrincipalName.toString()));
+        carToUpdate.setNumberplate(car.getNumberplate());
+        carToUpdate.setBrand(car.getBrand());
+        carToUpdate.setModel(car.getModel());
+        carToUpdate.setFuelType(car.getFuelType());
+        log.error(car.toString());
+        log.error(carToUpdate.toString());
+        carService.updateCar(carToUpdate);
+        return new ResponseEntity<>(carToUpdate, HttpStatus.OK); // TODO: rendes return
+    }
 }

@@ -137,7 +137,7 @@
         <h4 class="modal-title" id="modal-basic-title">Autó adatainak módosítása</h4>
         <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
     </div>
-    <form [formGroup]="modifyCarGroup" class="reg-form">
+    <form [formGroup]="modifyCarGroup" (ngSubmit)="onModifySubmit()" class="reg-form">
         <div class="modal-body">
             <div class="align-items-center justify-content-center pt-4">
                 <p>
@@ -156,6 +156,16 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Típus</mat-label>
                         <input formControlName="model" matInput required>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Üzemanyag</mat-label>
+                        <mat-select formControlName="fuelType" required>
+                            <mat-option *ngFor="let type of fuelTypes" [value]="type">
+                                {{ type.name }}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </p>
             </div>

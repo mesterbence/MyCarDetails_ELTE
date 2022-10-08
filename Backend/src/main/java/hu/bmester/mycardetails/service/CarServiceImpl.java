@@ -31,11 +31,16 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> findCarsByOwner(User owner) {
-        return carRepository.findCarsByOwner(owner);
+        return carRepository.findCarsByOwnerOrderById(owner);
     }
 
     @Override
     public Car findCarById(Long id) {
         return carRepository.findCarById(id);
+    }
+
+    @Override
+    public Car updateCar(Car car) {
+        return carRepository.save(car);
     }
 }
