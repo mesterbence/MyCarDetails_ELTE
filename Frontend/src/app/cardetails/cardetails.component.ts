@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from '../model/car';
 import { CarService } from '../service/car.service';
-import { NgbModal, NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CostType } from '../model/costtype';
 import { CosttypeService } from '../service/costtype.service';
@@ -11,7 +11,6 @@ import { FuelType } from '../model/fueltype';
 import { FueltypeService } from '../service/fueltype.service';
 import { Carstatistic } from '../model/carstatistic';
 import { CostsComponent } from '../costs/costs.component';
-import { Cost } from '../model/cost';
 
 @Component({
   selector: 'app-cardetails',
@@ -93,7 +92,9 @@ export class CardetailsComponent implements OnInit {
         this.newCostGroup.get('fueling_type')?.value,
         this.newCostGroup.get('fueling_quantity')?.value,
         this.newCostGroup.get('fueling_isPremium')?.value
-      )
+      ).subscribe((data) => {
+        this.costs?.addCost(data);
+      })
     } else {
       this.costService.saveCost(
         this.carId,
@@ -106,8 +107,8 @@ export class CardetailsComponent implements OnInit {
       ).subscribe((data) => {
         this.costs?.addCost(data);
       })
-      //this.costs?.loadCosts();
     }
+    this.modalService.dismissAll();
   }
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
@@ -135,7 +136,9 @@ export class CardetailsComponent implements OnInit {
   }
 
   onModifySubmit() {
-    this.carService.modify(this.modifyCarGroup.get('numberplate')?.value, this.modifyCarGroup.get('brand')?.value, this.modifyCarGroup.get('model')?.value, this.modifyCarGroup.get('fuelType')?.value, this.carId);
+    this.carService.modify(this.modifyCarGroup.get('numberplate')?.value, this.modifyCarGroup.get('brand')?.value, this.modifyCarGroup.get('model')?.value, this.modifyCarGroup.get('fuelType')?.value, this.carId)
+    .subscribe((data: Car) => this.carData = data);
+    this.modalService.dismissAll();
   }
   getNum(num: number, unit: String) {
     if (num === null) { return "Még nincs adat"; }

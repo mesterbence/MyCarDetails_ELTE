@@ -30,11 +30,7 @@ export class CarService {
   }
 
   modify(numberplate: string, brand: string, model: string, fuelType: FuelType, carId: number) {
-    return this.httpClient.post<any>(environment.baseUrl + `/car/modify/${carId}`, { numberplate, brand, model, fuelType }).subscribe(
-      data => {
-        console.log(data)
-      }
-    );
+    return this.httpClient.post<any>(environment.baseUrl + `/car/modify/${carId}`, { numberplate, brand, model, fuelType });
   }
   getCarStat(carId: number): Observable<Carstatistic> {
     return this.httpClient.get<Carstatistic>(`${environment.baseUrl}/car/stat/${carId}`);
