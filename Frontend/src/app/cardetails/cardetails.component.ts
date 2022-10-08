@@ -61,7 +61,6 @@ export class CardetailsComponent implements OnInit {
         this.carService.getCarStat(this.carId).subscribe(
           data => {
             this.carStat = data;
-            console.log(this.carStat)
           }
         );
       } else {
