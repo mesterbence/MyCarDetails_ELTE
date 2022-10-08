@@ -4,6 +4,7 @@ import hu.bmester.mycardetails.model.*;
 import hu.bmester.mycardetails.service.CarService;
 import hu.bmester.mycardetails.service.CostService;
 import hu.bmester.mycardetails.service.CostTypeService;
+import hu.bmester.mycardetails.service.FuelingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class CostController {
 
     @Autowired
     private CostTypeService costTypeService;
+
 
     @GetMapping("/api/cost/costs")
     public ResponseEntity<?> getAllCosts() {

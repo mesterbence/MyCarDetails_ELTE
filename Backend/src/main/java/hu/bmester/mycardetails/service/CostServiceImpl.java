@@ -26,4 +26,9 @@ public class CostServiceImpl implements CostService {
     public Cost saveCost(Cost cost) {
         return costRepository.save(cost);
     }
+
+    @Override
+    public Integer getSum(Long carId) {
+        return costRepository.getSum(carId);
+    }
 }

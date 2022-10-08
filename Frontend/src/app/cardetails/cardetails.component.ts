@@ -9,6 +9,7 @@ import { CosttypeService } from '../service/costtype.service';
 import { CostService } from '../service/cost.service';
 import { FuelType } from '../model/fueltype';
 import { FueltypeService } from '../service/fueltype.service';
+import { Carstatistic } from '../model/carstatistic';
 
 @Component({
   selector: 'app-cardetails',
@@ -23,6 +24,7 @@ export class CardetailsComponent implements OnInit {
   modifyCarGroup!: FormGroup;
   costTypes!: CostType[];
   fuelTypes!: FuelType[];
+  carStat!: Carstatistic;
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -34,6 +36,7 @@ export class CardetailsComponent implements OnInit {
     private fuelTypeService: FueltypeService) { }
 
   ngOnInit(): void {
+
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') !== null) {
         this.costTypeService.getAllCostTypes().subscribe(
@@ -50,6 +53,11 @@ export class CardetailsComponent implements OnInit {
         this.fuelTypeService.getAllFuelTypes().subscribe(
           data => {
             this.fuelTypes = data;
+          }
+        );
+        this.carService.getCarStat(this.carId).subscribe(
+          data => {
+            this.carStat = data;
           }
         );
       } else {
@@ -126,5 +134,9 @@ export class CardetailsComponent implements OnInit {
     console.log("szubmit")
     this.carService.modify(this.modifyCarGroup.get('numberplate')?.value,this.modifyCarGroup.get('brand')?.value,this.modifyCarGroup.get('model')?.value,this.modifyCarGroup.get('fuelType')?.value, this.carId);
     console.log("szubmited")
+  }
+  getNum(num: number, unit:String) {
+    if(num === null) { return "Még nincs adat"; }
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + unit;
   }
 }

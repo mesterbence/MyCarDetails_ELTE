@@ -1,2 +1,11 @@
-package hu.bmester.mycardetails.model;public class CostStatistic {
+package hu.bmester.mycardetails.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CostStatistic {
+    Integer priceSum;
+    Double fuelingSum;
 }

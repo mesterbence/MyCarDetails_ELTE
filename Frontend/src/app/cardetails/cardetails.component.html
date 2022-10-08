@@ -31,12 +31,12 @@
         <div class="col-lg-4 pb-2">
             <div class="bg-white rounded pt-2 p-3">
                 <p>Költségek</p>
-                <div class="col-lg-12 shadow-lg bg-white rounded">
+                <div class="col-lg-12 shadow-lg bg-white rounded" *ngIf="this.carStat">
                     <ul class="list-group">
-                        <li class="list-group-item">Összes költött összeg: 1876756 Ft</li>
-                        <li class="list-group-item">Összes tankolt mennyiség: 4563 liter</li>
-                        <li class="list-group-item">Ft/km: 51,08 Ft/km</li>
-                        <li class="list-group-item">Legtöbbet használt kategória: üzemanyag</li>
+                        <li class="list-group-item">Összes költött összeg: {{ getNum(this.carStat.priceSum, "Ft") }}</li>
+                        <li class="list-group-item">Összes tankolt mennyiség: {{ getNum(this.carStat.fuelingSum, "liter") }}</li>
+                        <li class="list-group-item"></li>
+                        <li class="list-group-item"></li>
                     </ul>
                 </div>
             </div>

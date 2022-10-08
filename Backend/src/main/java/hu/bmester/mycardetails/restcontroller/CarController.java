@@ -2,9 +2,8 @@ package hu.bmester.mycardetails.restcontroller;
 
 import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.model.Car;
-import hu.bmester.mycardetails.service.CarService;
-import hu.bmester.mycardetails.service.UserService;
-import hu.bmester.mycardetails.service.UserServiceImpl;
+import hu.bmester.mycardetails.model.CostStatistic;
+import hu.bmester.mycardetails.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +27,12 @@ public class CarController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CostService costService;
+
+    @Autowired
+    private FuelingService fuelingService;
 
     @GetMapping("/api/car/cars")
     public ResponseEntity<?> getAllCars() {
@@ -82,5 +87,13 @@ public class CarController {
         log.error(carToUpdate.toString());
         carService.updateCar(carToUpdate);
         return new ResponseEntity<>(carToUpdate, HttpStatus.OK); // TODO: rendes return
+    }
+
+    @GetMapping("/api/car/stat/{carId}")
+    public ResponseEntity<?> getSum(@PathVariable Long carId) {
+        CostStatistic costStatistic = new CostStatistic();
+        costStatistic.setPriceSum(costService.getSum(carId));
+        costStatistic.setFuelingSum(fuelingService.getSum(carId));
+        return new ResponseEntity<>(costStatistic, HttpStatus.OK);
     }
 }
