@@ -95,7 +95,9 @@ public class CarController {
         costStatistic.setPriceSum(costService.getPriceSum(carId));
         costStatistic.setFuelingSum(fuelingService.getFuelSum(carId));
         costStatistic.setMileageSum(costService.getTraveledDistance(carId));
-        costStatistic.setConsumption(costStatistic.getFuelingSum() / costStatistic.getMileageSum() * 100);
+        if(costStatistic.getMileageSum() != null && costStatistic.getFuelingSum() != null) {
+            costStatistic.setConsumption(costStatistic.getFuelingSum() / costStatistic.getMileageSum() * 100);
+        }
         return new ResponseEntity<>(costStatistic, HttpStatus.OK);
     }
 }
