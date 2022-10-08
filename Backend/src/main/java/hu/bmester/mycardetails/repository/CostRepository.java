@@ -11,4 +11,7 @@ public interface CostRepository extends JpaRepository<Cost, Long> {
 
     @Query("select sum(c.price) from Cost c where c.car.id = :carId")
     Integer getSum(Long carId);
+
+    @Query("select max(c.mileage) - min(c.mileage) from Cost c where c.car.id = :carId")
+    Integer getTraveledDistance(Long carId);
 }

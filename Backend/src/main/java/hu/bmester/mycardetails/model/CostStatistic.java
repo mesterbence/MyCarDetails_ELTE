@@ -8,4 +8,6 @@ import lombok.Setter;
 public class CostStatistic {
     Integer priceSum;
     Double fuelingSum;
+    Integer mileageSum;
+    Double consumption;
 }

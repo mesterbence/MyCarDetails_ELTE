@@ -13,7 +13,7 @@ public class FuelingServiceImpl implements FuelingService {
     private FuelingRepository fuelingRepository;
 
     @Override
-    public Double getSum(Long carId) {
+    public Double getFuelSum(Long carId) {
         return fuelingRepository.getSum(carId);
     }
 }

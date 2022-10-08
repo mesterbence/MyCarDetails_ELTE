@@ -28,7 +28,12 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public Integer getSum(Long carId) {
+    public Integer getPriceSum(Long carId) {
         return costRepository.getSum(carId);
+    }
+
+    @Override
+    public Integer getTraveledDistance(Long carId) {
+        return costRepository.getTraveledDistance(carId);
     }
 }

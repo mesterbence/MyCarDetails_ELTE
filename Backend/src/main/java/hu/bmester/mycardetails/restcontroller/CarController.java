@@ -92,8 +92,10 @@ public class CarController {
     @GetMapping("/api/car/stat/{carId}")
     public ResponseEntity<?> getSum(@PathVariable Long carId) {
         CostStatistic costStatistic = new CostStatistic();
-        costStatistic.setPriceSum(costService.getSum(carId));
-        costStatistic.setFuelingSum(fuelingService.getSum(carId));
+        costStatistic.setPriceSum(costService.getPriceSum(carId));
+        costStatistic.setFuelingSum(fuelingService.getFuelSum(carId));
+        costStatistic.setMileageSum(costService.getTraveledDistance(carId));
+        costStatistic.setConsumption(costStatistic.getFuelingSum() / costStatistic.getMileageSum() * 100);
         return new ResponseEntity<>(costStatistic, HttpStatus.OK);
     }
 }

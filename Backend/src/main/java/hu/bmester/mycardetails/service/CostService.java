@@ -8,5 +8,6 @@ public interface CostService {
     List<Cost> findAllCosts();
     List<Cost> findByCarId(Long carId);
     Cost saveCost(Cost cost);
-    Integer getSum(Long carId);
+    Integer getPriceSum(Long carId);
+    Integer getTraveledDistance(Long carId);
 }
