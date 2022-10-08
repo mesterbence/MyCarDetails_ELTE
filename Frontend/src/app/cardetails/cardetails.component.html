@@ -35,8 +35,8 @@
                     <ul class="list-group">
                         <li class="list-group-item">Összes költött összeg: {{ getNum(this.carStat.priceSum, "Ft") }}</li>
                         <li class="list-group-item">Összes tankolt mennyiség: {{ getNum(this.carStat.fuelingSum, "liter") }}</li>
-                        <li class="list-group-item"></li>
-                        <li class="list-group-item"></li>
+                        <li class="list-group-item">Összes megtett kilométer: {{ getNum(this.carStat.mileageSum, "km") }}</li>
+                        <li class="list-group-item">Átlagfogyasztás: {{ getNum(this.carStat.consumption, "l/100 km") }}</li>
                     </ul>
                 </div>
             </div>
