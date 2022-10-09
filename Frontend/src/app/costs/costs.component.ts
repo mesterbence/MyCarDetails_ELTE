@@ -31,7 +31,6 @@ export class CostsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.breakpoint = (window.innerWidth <= 400) ? 1 : 5;
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') !== null) {
         this.carId = Number(params.get('id'));
@@ -48,10 +47,6 @@ export class CostsComponent implements OnInit {
     } else {
       this.expanded = row
     }
-  }
-
-  onResize(event: any) {
-    this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 5;
   }
   loadCosts() {
     this.costService.getAllCostsById(this.carId).subscribe(
