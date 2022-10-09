@@ -62,7 +62,7 @@ public class UserController {
             String token = jwtUtil.generateToken(body.getUsername());
             return new ResponseEntity<Map<String, Object>>(Collections.singletonMap("token", token),HttpStatus.OK);
         } catch (AuthenticationException authExc){
-            return new ResponseEntity<Map<String, Object>>(Collections.singletonMap("error", "Hibás felhasználónév vagy jelszó!"),HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Hibás felhasználónév vagy jelszó!",HttpStatus.UNAUTHORIZED);
         }
     }
 

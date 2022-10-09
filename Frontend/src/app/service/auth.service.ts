@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -25,7 +24,6 @@ export class AuthService {
   register(username: string, email: string, password: string) {
     return this.httpClient.post<any>(environment.baseUrl + "/user/create", { username, email, password })
       .subscribe((data) => {
-        console.log(data)
         this.authenticate(username, password);
       });
   }
