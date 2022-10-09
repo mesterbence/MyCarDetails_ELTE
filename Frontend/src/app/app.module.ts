@@ -25,6 +25,7 @@ import { NewcarComponent } from './newcar/newcar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MyprofileComponent } from './myprofile/myprofile.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { MyprofileComponent } from './myprofile/myprofile.component';
     MatTabsModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -30,6 +30,8 @@ export class RegisterComponent implements OnInit {
 
   onLoginSubmit() {
     this.authService.authenticate(this.loginForm.get('username')?.value,this.loginForm.get('password')?.value);
+    this.loginForm.get('username')?.setValue("");
+    this.loginForm.get('password')?.setValue("");
   }
   onRegisterSubmit() {
     this.authService.register(this.registerForm.get('username')?.value,this.registerForm.get('email')?.value,this.registerForm.get('password')?.value);
