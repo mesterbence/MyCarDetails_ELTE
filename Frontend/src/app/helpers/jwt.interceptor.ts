@@ -20,7 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
             catchError((err: any) => {
                 return throwError(() => {
                     new Error(err.error);
-                    this.snackBar.open(err.error, 'Bezárás', { verticalPosition: 'top' });
+                    this.snackBar.open(err.error, 'Bezárás', { verticalPosition: 'top', duration: 3000 });
                 })
             })
         );
