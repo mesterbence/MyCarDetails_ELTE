@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Car } from '../model/car';
 import { Carstatistic } from '../model/carstatistic';
+import { Cost } from '../model/cost';
 import { FuelType } from '../model/fueltype';
 
 @Injectable({
@@ -34,5 +35,8 @@ export class CarService {
   }
   getCarStat(carId: number): Observable<Carstatistic> {
     return this.httpClient.get<Carstatistic>(`${environment.baseUrl}/car/stat/${carId}`);
+  }
+  getCarFuelings(carId: number): Observable<Cost[]> {
+    return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/fueling/${carId}`);
   }
 }

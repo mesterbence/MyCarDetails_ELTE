@@ -60,4 +60,9 @@ public class CostController {
         cost.setCar(car);
         return new ResponseEntity<>(costService.saveCost(cost), HttpStatus.CREATED); // TODO: rendes return
     }
+
+    @GetMapping("/api/cost/fueling/{carId}")
+    public ResponseEntity<?> getAllFuelingsByCarId(@PathVariable Long carId) {
+        return new ResponseEntity<>(costService.findFuelings(carId), HttpStatus.OK);
+    }
 }

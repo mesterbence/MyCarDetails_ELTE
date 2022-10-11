@@ -22,7 +22,7 @@
                             adatainak módosítása</button>
                         <button class="list-group-item list-group-item-action" (click)="open(newCost)">Költség
                             rögzítése</button>
-                        <button class="list-group-item list-group-item-action" disabled>További statisztikai adatok</button>
+                        <button [routerLink]="['/morestat', this.carId]" class="list-group-item list-group-item-action">További statisztikai adatok</button>
                         <button class="list-group-item list-group-item-action" disabled>Autó törlése</button>
                     </ul>
                 </div>

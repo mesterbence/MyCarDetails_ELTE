@@ -10,4 +10,5 @@ public interface CostService {
     Cost saveCost(Cost cost);
     Integer getPriceSum(Long carId);
     Integer getTraveledDistance(Long carId);
+    List<Cost> findFuelings(Long carId);
 }

@@ -26,6 +26,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MyprofileComponent } from './myprofile/myprofile.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MorestatComponent } from './morestat/morestat.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MycarsComponent,
     CardetailsComponent,
     NewcarComponent,
-    MyprofileComponent
+    MyprofileComponent,
+    MorestatComponent
   ],
   imports: [
     BrowserModule,

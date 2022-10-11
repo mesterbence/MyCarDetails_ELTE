@@ -36,4 +36,9 @@ public class CostServiceImpl implements CostService {
     public Integer getTraveledDistance(Long carId) {
         return costRepository.getTraveledDistance(carId);
     }
+
+    @Override
+    public List<Cost> findFuelings(Long carId) {
+        return costRepository.findCostsByFuelingIsNotNullAndCarIdOrderByDateDesc(carId);
+    }
 }
