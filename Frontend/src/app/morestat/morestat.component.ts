@@ -63,7 +63,6 @@ export class MorestatComponent implements OnInit {
             })
             this.lineChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.prices) - 50;
             this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
-            console.log(this.lineChart.dataTable)
           }
         );
       } else {
