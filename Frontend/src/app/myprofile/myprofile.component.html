@@ -1,12 +1,43 @@
-<div class="container">
-    <div class="row pt-2">
-        <div class="col-lg-12 pb-2">
-            <div class="bg-white rounded pt-2 p-3">
-                <p>Profilom</p>
-                <div>
-                    asdas
-                </div>
-            </div>
-        </div>
+<div class="pt-5">
+    <div class="container col-lg-4 p-3 shadow-lg bg-white rounded">
+        <mat-tab-group>
+            <mat-tab label="Profilom">
+                <form [formGroup]="profileGroup" class="reg-form">
+                    <div class="align-items-center justify-content-center pt-4">
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Felhasználónév</mat-label>
+                                <input formControlName="username" matInput>
+                                <mat-icon matSuffix>person</mat-icon>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Jelszó</mat-label>
+                                <input type="password" formControlName="password" matInput required>
+                                <mat-icon matSuffix>password</mat-icon>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Jelszó ismét</mat-label>
+                                <input type="password" formControlName="password2" matInput required>
+                                <mat-icon matSuffix>password</mat-icon>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input formControlName="email" matInput required>
+                                <mat-icon matSuffix>mail</mat-icon>
+                            </mat-form-field>
+                        </p>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-light">Módosítás</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </div>

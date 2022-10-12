@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-myprofile',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyprofileComponent implements OnInit {
 
-  constructor() { }
+  profileGroup!: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.profileGroup = this.formBuilder.group({
+      username: [''],
+      password: [''],
+      password2: [''],
+      email: ['']
+    })
+    this.profileGroup.controls['username'].disable();
   }
 
 }
