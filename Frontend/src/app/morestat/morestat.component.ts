@@ -26,7 +26,7 @@ export class MorestatComponent implements OnInit {
   public lineChart: GoogleChartInterface = {
     chartType: GoogleChartType.LineChart,
     dataTable: [
-      ['Dátum', 'Üzemanyag ára']
+      ['Dátum', 'Üzemanyag ára (Ft)']
     ],
     options: {
       title: 'Üzemanyag literenkénti ára',
