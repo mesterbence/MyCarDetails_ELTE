@@ -16,6 +16,7 @@ export class MorestatComponent implements OnInit {
 
   fuelings!: Cost[];
   carId!: number;
+  prices: number[] = [];
 
   constructor(private carService: CarService,
     private activatedRoute: ActivatedRoute,
@@ -35,7 +36,11 @@ export class MorestatComponent implements OnInit {
         {
           count: 15
         },
-        format: '' // enélkül vesszőt rak
+        format: '', // enélkül vesszőt rak
+        viewWindow: {
+          max:1000,
+          min:200
+        }
       },
       legend: { position: 'none' }
     }
@@ -48,14 +53,16 @@ export class MorestatComponent implements OnInit {
         this.carService.getCarFuelings(this.carId).subscribe(
           data => {
             this.fuelings = data;
-            console.log(this.fuelings)
             this.fuelings.slice().reverse().forEach((fueling) => {
               if (this.fuelings.length > 45) {
                 this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity]);
               } else {
                 this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity])
               }
+              this.prices.push(fueling.price / fueling.fueling.quantity);
             })
+            this.lineChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.prices) - 50;
+            this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
             console.log(this.lineChart.dataTable)
           }
         );
