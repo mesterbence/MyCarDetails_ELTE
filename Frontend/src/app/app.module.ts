@@ -27,6 +27,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MyprofileComponent } from './myprofile/myprofile.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MorestatComponent } from './morestat/morestat.component';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { MorestatComponent } from './morestat/morestat.component';
     ReactiveFormsModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    Ng2GoogleChartsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

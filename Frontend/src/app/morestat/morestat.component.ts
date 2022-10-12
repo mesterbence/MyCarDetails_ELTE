@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cost } from '../model/cost';
 import { CarService } from '../service/car.service';
+import { GoogleChartInterface, GoogleChartType } from 'ng2-google-charts';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-morestat',
   templateUrl: './morestat.component.html',
-  styleUrls: ['./morestat.component.css']
+  styleUrls: ['./morestat.component.css'],
+  providers: [DatePipe]
 })
 export class MorestatComponent implements OnInit {
 
@@ -15,7 +19,27 @@ export class MorestatComponent implements OnInit {
 
   constructor(private carService: CarService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private datePipe: DatePipe) { }
+
+  public lineChart: GoogleChartInterface = {
+    chartType: GoogleChartType.LineChart,
+    dataTable: [
+      ['Dátum', 'Üzemanyag ára']
+    ],
+    options: {
+      title: 'Üzemanyag literenkénti ára',
+      height: 650,
+      vAxis: {
+        gridlines:
+        {
+          count: 15
+        },
+        format: '' // enélkül vesszőt rak
+      },
+      legend: { position: 'none' }
+    }
+  };
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -25,11 +49,22 @@ export class MorestatComponent implements OnInit {
           data => {
             this.fuelings = data;
             console.log(this.fuelings)
+            this.fuelings.slice().reverse().forEach((fueling) => {
+              if (this.fuelings.length > 45) {
+                this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity]);
+              } else {
+                this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity])
+              }
+            })
+            console.log(this.lineChart.dataTable)
           }
         );
       } else {
         this.router.navigate(['/mycars']);
       }
     });
+  }
+  onResize(event: any) {
+    this.lineChart.component?.draw();
   }
 }

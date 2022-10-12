@@ -1,5 +1,6 @@
 import { Car } from "./car";
 import { CostType } from "./costtype";
+import { Fueling } from "./fueling";
 
 export class Cost {
     id!: number;
@@ -10,4 +11,5 @@ export class Cost {
     note!: string;
     date!: Date;
     title!: string;
+    fueling!: Fueling;
 }
