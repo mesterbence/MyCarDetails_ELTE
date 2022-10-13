@@ -2,7 +2,7 @@
     <div class="container col-lg-4 p-3 shadow-lg bg-white rounded">
         <mat-tab-group>
             <mat-tab label="Profilom">
-                <form [formGroup]="profileGroup" class="reg-form">
+                <form [formGroup]="profileGroup" (ngSubmit)="onSubmit()" class="reg-form" *ngIf="this.userData">
                     <div class="align-items-center justify-content-center pt-4">
                         <p>
                             <mat-form-field appearance="outline">
@@ -13,23 +13,24 @@
                         </p>
                         <p>
                             <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input formControlName="email" matInput required>
+                                <mat-icon matSuffix>mail</mat-icon>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
                                 <mat-label>Jelszó</mat-label>
-                                <input type="password" formControlName="password" matInput required>
+                                <input type="password" formControlName="password" matInput>
                                 <mat-icon matSuffix>password</mat-icon>
                             </mat-form-field>
                         </p>
                         <p>
                             <mat-form-field appearance="outline">
                                 <mat-label>Jelszó ismét</mat-label>
-                                <input type="password" formControlName="password2" matInput required>
+                                <input type="password" formControlName="password2" matInput>
                                 <mat-icon matSuffix>password</mat-icon>
-                            </mat-form-field>
-                        </p>
-                        <p>
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email</mat-label>
-                                <input formControlName="email" matInput required>
-                                <mat-icon matSuffix>mail</mat-icon>
+                                <mat-hint>A jelszó mezőket hagyja üresen, ha nem szeretné módosítani!</mat-hint>
                             </mat-form-field>
                         </p>
                         <div class="text-center">

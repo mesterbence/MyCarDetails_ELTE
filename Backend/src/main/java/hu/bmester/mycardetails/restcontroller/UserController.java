@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,4 +73,18 @@ public class UserController {
         userService.changeUserPassword(passwordEncoder.encode(password));
         return true;
     }
+
+    @PostMapping("/api/user/changeMail")
+    public boolean changeMail(@RequestBody String mail){
+        userService.changeUserMail(mail);
+        return true;
+    }
+
+    @GetMapping("/api/user/me")
+    public ResponseEntity<?> getSelfUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object currentPrincipalName = authentication.getPrincipal();
+        return new ResponseEntity<>(userService.findUserByUsername(currentPrincipalName.toString()), HttpStatus.OK);
+    }
+
 }

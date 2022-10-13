@@ -46,4 +46,14 @@ public class UserServiceImpl implements UserService {
         currentUser.setPassword(password);
         userRepository.save(currentUser);
     }
+
+    @Override
+    public void changeUserMail(String mail) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getPrincipal().toString();
+        User currentUser = userRepository.findUserByUsername(currentUserName);
+        if(currentUser == null) { throw new UsernameNotFoundException(currentUserName + " felhasználó nem létezik."); }
+        currentUser.setEmail(mail);
+        userRepository.save(currentUser);
+    }
 }
