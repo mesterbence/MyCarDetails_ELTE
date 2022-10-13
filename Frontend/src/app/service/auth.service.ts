@@ -4,11 +4,14 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../model/user';
+import { UserRole } from '../model/userrole';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  userData: User = new User();
 
   constructor(private httpClient: HttpClient,
     private router: Router,
@@ -20,6 +23,7 @@ export class AuthService {
       .subscribe((data) => {
         this.cookieService.set('token', data.token);
         this.router.navigate(['/mycars']);
+        this.storeSelfUser();
       });
   }
   register(username: string, email: string, password: string) {
@@ -31,6 +35,16 @@ export class AuthService {
 
   getSelfUser() {
     return this.httpClient.get<User>(`${environment.baseUrl}/user/me`);
+  }
+  storeSelfUser() {
+    this.httpClient.get<User>(`${environment.baseUrl}/user/me`).subscribe(
+      data => {
+        this.userData = data;
+      }
+    );
+  }
+  isAdmin(): boolean {
+    return this.userData.role === UserRole.ADMIN;
   }
 
   hasToken(): boolean {

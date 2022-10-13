@@ -29,7 +29,7 @@
             <li class="nav-item" *ngIf="!this.authService.hasToken()">
                 <a class="nav-link" routerLink="login" (click)="menu.dismiss()">Csatlakozás</a>
             </li>
-            <li class="nav-item" *ngIf="this.authService.hasToken() && this.isAdmin">
+            <li class="nav-item" *ngIf="this.authService.hasToken() && this.authService.isAdmin()">
                 <a class="nav-link" routerLink="mycars" (click)="menu.dismiss()">Admin</a>
             </li>
             <li class="nav-item" *ngIf="this.authService.hasToken()">
