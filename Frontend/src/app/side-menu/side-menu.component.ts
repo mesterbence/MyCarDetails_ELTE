@@ -18,15 +18,17 @@ export class SideMenuComponent implements OnInit {
     protected authService: AuthService) { }
 
   ngOnInit(): void {
-    this.authService.getSelfUser().subscribe(
-      data => {
-        this.userData = data;
-        this.isAdmin = (this.userData.role === UserRole.ADMIN);
-        console.log(this.isAdmin)
-        console.log(this.userData);
-        console.log(UserRole.USER);
-      }
-    );
+    if (this.authService.hasToken()) {
+      this.authService.getSelfUser().subscribe(
+        data => {
+          this.userData = data;
+          this.isAdmin = (this.userData.role === UserRole.ADMIN);
+          console.log(this.isAdmin)
+          console.log(this.userData);
+          console.log(UserRole.USER);
+        }
+      );
+    }
   }
 
   open(content: any) {
