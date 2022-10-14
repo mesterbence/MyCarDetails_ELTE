@@ -28,6 +28,7 @@ import { MyprofileComponent } from './myprofile/myprofile.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MorestatComponent } from './morestat/morestat.component';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { Ng2GoogleChartsModule } from 'ng2-google-charts';
     CardetailsComponent,
     NewcarComponent,
     MyprofileComponent,
-    MorestatComponent
+    MorestatComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
