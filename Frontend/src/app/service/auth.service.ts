@@ -11,8 +11,6 @@ import { UserRole } from '../model/userrole';
 })
 export class AuthService {
 
-  userData: User = new User();
-
   constructor(private httpClient: HttpClient,
     private router: Router,
     private cookieService: CookieService) { }
@@ -22,8 +20,8 @@ export class AuthService {
     return this.httpClient.post<any>(environment.baseUrl + "/user/login", { username, password })
       .subscribe((data) => {
         this.cookieService.set('token', data.token);
+        this.cookieService.set('user', JSON.stringify(data.user));
         this.router.navigate(['/mycars']);
-        this.storeSelfUser();
       });
   }
   register(username: string, email: string, password: string) {
@@ -36,15 +34,8 @@ export class AuthService {
   getSelfUser() {
     return this.httpClient.get<User>(`${environment.baseUrl}/user/me`);
   }
-  storeSelfUser() {
-    this.httpClient.get<User>(`${environment.baseUrl}/user/me`).subscribe(
-      data => {
-        this.userData = data;
-      }
-    );
-  }
   isAdmin(): boolean {
-    return this.userData.role === UserRole.ADMIN;
+    return JSON.parse(this.cookieService.get('user')).role === UserRole.ADMIN;
   }
 
   hasToken(): boolean {
@@ -57,6 +48,7 @@ export class AuthService {
 
   logout(): void {
     this.cookieService.delete('token');
+    this.cookieService.delete('user');
     this.router.navigate(['/']);
   }
   changePass(password: String) {

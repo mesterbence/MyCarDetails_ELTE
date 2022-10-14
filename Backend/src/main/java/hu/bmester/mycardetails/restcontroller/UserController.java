@@ -2,6 +2,7 @@ package hu.bmester.mycardetails.restcontroller;
 
 import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.jwt.LoginCredentials;
+import hu.bmester.mycardetails.model.LoginResponse;
 import hu.bmester.mycardetails.model.User;
 import hu.bmester.mycardetails.model.UserRole;
 import hu.bmester.mycardetails.service.UserService;
@@ -58,11 +59,14 @@ public class UserController {
 
     @PostMapping("/api/user/login")
     public ResponseEntity<?> loginHandler(@RequestBody LoginCredentials body){
+        LoginResponse loginResponse = new LoginResponse();
         try {
             UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(body.getUsername(), body.getPassword());
             authManager.authenticate(authInputToken);
             String token = jwtUtil.generateToken(body.getUsername());
-            return new ResponseEntity<Map<String, Object>>(Collections.singletonMap("token", token),HttpStatus.OK);
+            loginResponse.setUser(userService.findUserByUsername(body.getUsername()));
+            loginResponse.setToken(token);
+            return new ResponseEntity<>(loginResponse,HttpStatus.OK);
         } catch (AuthenticationException authExc){
             return new ResponseEntity<>("Hibás felhasználónév vagy jelszó!",HttpStatus.UNAUTHORIZED);
         }

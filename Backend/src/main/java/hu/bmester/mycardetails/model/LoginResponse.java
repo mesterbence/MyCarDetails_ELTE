@@ -1,2 +1,9 @@
-package hu.bmester.mycardetails.model;public class LoginResponse {
+package hu.bmester.mycardetails.model;
+
+import lombok.Data;
+
+@Data
+public class LoginResponse {
+    String token;
+    User user;
 }
