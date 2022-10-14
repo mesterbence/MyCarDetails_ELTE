@@ -3,6 +3,7 @@ package hu.bmester.mycardetails.restcontroller;
 import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.model.Car;
 import hu.bmester.mycardetails.model.CostStatistic;
+import hu.bmester.mycardetails.model.Fueling;
 import hu.bmester.mycardetails.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,12 +92,14 @@ public class CarController {
 
     @GetMapping("/api/car/stat/{carId}")
     public ResponseEntity<?> getSum(@PathVariable Long carId) {
+        Car car = carService.findCarById(carId);
         CostStatistic costStatistic = new CostStatistic();
         costStatistic.setPriceSum(costService.getPriceSum(carId));
         costStatistic.setFuelingSum(fuelingService.getFuelSum(carId));
         costStatistic.setMileageSum(costService.getTraveledDistance(carId));
+        Fueling firstFueling = fuelingService.findFirstByCost_Car(car);
         if(costStatistic.getMileageSum() != null && costStatistic.getFuelingSum() != null) {
-            costStatistic.setConsumption(costStatistic.getFuelingSum() / costStatistic.getMileageSum() * 100);
+            costStatistic.setConsumption((costStatistic.getFuelingSum() - firstFueling.getQuantity()) / costStatistic.getMileageSum() * 100);
         }
         return new ResponseEntity<>(costStatistic, HttpStatus.OK);
     }

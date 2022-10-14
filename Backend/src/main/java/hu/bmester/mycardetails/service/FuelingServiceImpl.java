@@ -1,5 +1,7 @@
 package hu.bmester.mycardetails.service;
 
+import hu.bmester.mycardetails.model.Car;
+import hu.bmester.mycardetails.model.Fueling;
 import hu.bmester.mycardetails.repository.FuelingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,5 +17,10 @@ public class FuelingServiceImpl implements FuelingService {
     @Override
     public Double getFuelSum(Long carId) {
         return fuelingRepository.getSum(carId);
+    }
+
+    @Override
+    public Fueling findFirstByCost_Car(Car car) {
+        return fuelingRepository.findFirstByCost_CarOrderByCost_Date(car);
     }
 }
