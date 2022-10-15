@@ -41,4 +41,9 @@ public class CostServiceImpl implements CostService {
     public List<Cost> findFuelings(Long carId) {
         return costRepository.findCostsByFuelingIsNotNullAndCarIdOrderByDateDesc(carId);
     }
+
+    @Override
+    public List<Cost> findAllCostsWithMileage(Long carId) {
+        return costRepository.findCostsByCarIdAndAndMileageIsNotNullOrderByDate(carId);
+    }
 }

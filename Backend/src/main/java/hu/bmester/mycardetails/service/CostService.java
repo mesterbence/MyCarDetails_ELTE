@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface CostService {
     List<Cost> findAllCosts();
+    List<Cost> findAllCostsWithMileage(Long carId);
     List<Cost> findByCarId(Long carId);
     Cost saveCost(Cost cost);
     Integer getPriceSum(Long carId);

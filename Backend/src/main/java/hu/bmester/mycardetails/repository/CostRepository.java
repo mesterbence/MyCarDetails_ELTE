@@ -9,6 +9,7 @@ import java.util.List;
 public interface CostRepository extends JpaRepository<Cost, Long> {
     List<Cost> findCostsByCarIdOrderByDateDesc(Long carId);
     List<Cost> findCostsByFuelingIsNotNullAndCarIdOrderByDateDesc(Long carId);
+    List<Cost> findCostsByCarIdAndAndMileageIsNotNullOrderByDate(Long carId);
 
     @Query("select sum(c.price) from Cost c where c.car.id = :carId")
     Integer getSum(Long carId);

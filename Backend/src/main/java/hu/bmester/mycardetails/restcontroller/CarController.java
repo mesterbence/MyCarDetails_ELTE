@@ -4,6 +4,7 @@ import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.model.Car;
 import hu.bmester.mycardetails.model.CostStatistic;
 import hu.bmester.mycardetails.model.Fueling;
+import hu.bmester.mycardetails.model.Mileage;
 import hu.bmester.mycardetails.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -102,5 +104,15 @@ public class CarController {
             costStatistic.setConsumption((costStatistic.getFuelingSum() - firstFueling.getQuantity()) / costStatistic.getMileageSum() * 100);
         }
         return new ResponseEntity<>(costStatistic, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/car/mileages/{carId}")
+    public ResponseEntity<?> getMileages(@PathVariable Long carId) {
+        Car car = carService.findCarById(carId);
+        ArrayList<Mileage> mileages = new ArrayList<>();
+        costService.findAllCostsWithMileage(carId).forEach((cost) -> {
+            mileages.add(new Mileage(cost.getDate(), cost.getMileage()));
+        });
+        return new ResponseEntity<>(mileages, HttpStatus.OK);
     }
 }

@@ -4,6 +4,7 @@ import { Cost } from '../model/cost';
 import { CarService } from '../service/car.service';
 import { GoogleChartInterface, GoogleChartType } from 'ng2-google-charts';
 import { DatePipe } from '@angular/common';
+import { MileageStat } from '../model/mileage-stat';
 
 
 @Component({
@@ -15,8 +16,10 @@ import { DatePipe } from '@angular/common';
 export class MorestatComponent implements OnInit {
 
   fuelings!: Cost[];
+  mileages!: MileageStat[];
   carId!: number;
   prices: number[] = [];
+  storedMileages: number[] = [];
 
   constructor(private carService: CarService,
     private activatedRoute: ActivatedRoute,
@@ -46,6 +49,29 @@ export class MorestatComponent implements OnInit {
     }
   };
 
+  public mileageChart: GoogleChartInterface = {
+    chartType: GoogleChartType.LineChart,
+    dataTable: [
+      ['Dátum', 'Kilométeróra állása']
+    ],
+    options: {
+      title: 'Kilométeróra állása',
+      height: 650,
+      vAxis: {
+        gridlines:
+        {
+          count: 15
+        },
+        format: '', // enélkül vesszőt rak
+        viewWindow: {
+          max:200000,
+          min:70000
+        }
+      },
+      legend: { position: 'none' }
+    }
+  };
+
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') !== null) {
@@ -65,6 +91,21 @@ export class MorestatComponent implements OnInit {
             this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
           }
         );
+        this.carService.getCarMileages(this.carId).subscribe(
+          data => {
+            this.mileages = data;
+            this.mileages.forEach((mileage) => {
+              if (this.mileages.length > 45) {
+                this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), mileage.mileage]);
+              } else {
+                this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), mileage.mileage])
+              }
+              this.storedMileages.push(mileage.mileage);
+            })
+            this.mileageChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.storedMileages) - 5000;
+            this.mileageChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.storedMileages) + 5000;
+          }
+        );
       } else {
         this.router.navigate(['/mycars']);
       }
@@ -72,5 +113,6 @@ export class MorestatComponent implements OnInit {
   }
   onResize(event: any) {
     this.lineChart.component?.draw();
+    this.mileageChart.component?.draw();
   }
 }
