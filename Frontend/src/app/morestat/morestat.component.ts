@@ -68,7 +68,7 @@ export class MorestatComponent implements OnInit {
           min:70000
         }
       },
-      legend: { position: 'none' }
+      legend: 'none'
     }
   };
 
