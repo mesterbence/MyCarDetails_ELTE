@@ -115,7 +115,7 @@ public class CarController {
         });
         return new ResponseEntity<>(mileages, HttpStatus.OK);
     }
-    @GetMapping("/api/car/categ/{carId}")
+    @GetMapping("/api/car/categories/{carId}")
     public ResponseEntity<?> getCategs(@PathVariable Long carId) {
         return new ResponseEntity<>(costService.getCategoryStat(carId), HttpStatus.OK);
     }
