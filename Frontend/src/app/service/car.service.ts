@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Car } from '../model/car';
 import { Carstatistic } from '../model/carstatistic';
+import { CategoryStat } from '../model/category-stat';
 import { Cost } from '../model/cost';
 import { FuelType } from '../model/fueltype';
 import { MileageStat } from '../model/mileage-stat';
@@ -42,5 +43,8 @@ export class CarService {
   }
   getCarFuelings(carId: number): Observable<Cost[]> {
     return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/fueling/${carId}`);
+  }
+  getCarCostCategories(carId: number): Observable<CategoryStat[]> {
+    return this.httpClient.get<CategoryStat[]>(`${environment.baseUrl}/car/categories/${carId}`);
   }
 }

@@ -5,6 +5,7 @@ import { CarService } from '../service/car.service';
 import { GoogleChartInterface, GoogleChartType } from 'ng2-google-charts';
 import { DatePipe } from '@angular/common';
 import { MileageStat } from '../model/mileage-stat';
+import { CategoryStat } from '../model/category-stat';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class MorestatComponent implements OnInit {
 
   fuelings!: Cost[];
   mileages!: MileageStat[];
+  categories!: CategoryStat[];
   carId!: number;
   prices: number[] = [];
   storedMileages: number[] = [];
@@ -71,6 +73,25 @@ export class MorestatComponent implements OnInit {
       legend: 'none'
     }
   };
+  public categoryChart: GoogleChartInterface = {
+    chartType: GoogleChartType.ColumnChart,
+    dataTable: [
+      ['Kategória', 'Összeg']
+    ],
+    options: {
+      title: 'Kategóriák',
+      animation: {
+        duration: 1000,
+        easing: 'out',
+        startup: true
+      },
+      legend: 'none',
+      height: 650,
+      vAxis: {
+        format: '', // enélkül vesszőt rak
+      }
+    }
+  };
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -109,6 +130,14 @@ export class MorestatComponent implements OnInit {
       } else {
         this.router.navigate(['/mycars']);
       }
+      this.carService.getCarCostCategories(this.carId).subscribe(
+        data => {
+          this.categories = data;
+          this.categories.forEach((category) => {
+            this.categoryChart.dataTable.push([category.name, category.sum]);
+          });
+        }
+      );
     });
   }
   onResize(event: any) {
