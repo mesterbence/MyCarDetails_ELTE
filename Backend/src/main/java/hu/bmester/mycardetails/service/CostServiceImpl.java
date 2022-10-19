@@ -1,5 +1,6 @@
 package hu.bmester.mycardetails.service;
 
+import hu.bmester.mycardetails.model.CategoryStat;
 import hu.bmester.mycardetails.model.Cost;
 import hu.bmester.mycardetails.repository.CostRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -7,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -52,7 +51,7 @@ public class CostServiceImpl implements CostService {
     }
 
     @Override
-    public List<Object> getCategoryStat(Long carId) {
+    public List<CategoryStat> getCategoryStat(Long carId) {
         return costRepository.getCategoryStat(carId);
     }
 }
