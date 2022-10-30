@@ -10,4 +10,5 @@ public interface FuelingRepository extends JpaRepository<Fueling, Long> {
     @Query("select sum(f.quantity) from Fueling f where f.cost.car.id = :carId")
     Double getSum(Long carId);
     Fueling findFirstByCost_CarOrderByCost_Date(Car car);
+    Fueling findFirstByCost_CarOrderByCost_DateDesc(Car car);
 }

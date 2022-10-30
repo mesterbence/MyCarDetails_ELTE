@@ -12,6 +12,8 @@ import { FuelType } from '../model/fueltype';
 import { FueltypeService } from '../service/fueltype.service';
 import { Carstatistic } from '../model/carstatistic';
 import { CostsComponent } from '../costs/costs.component';
+import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { _isNumberValue } from '@angular/cdk/coercion';
 
 @Component({
   selector: 'app-cardetails',

@@ -100,8 +100,9 @@ public class CarController {
         costStatistic.setFuelingSum(fuelingService.getFuelSum(carId));
         costStatistic.setMileageSum(costService.getTraveledDistance(carId));
         Fueling firstFueling = fuelingService.findFirstByCost_Car(car);
-        if(costStatistic.getMileageSum() != null && costStatistic.getFuelingSum() != null) {
-            costStatistic.setConsumption((costStatistic.getFuelingSum() - firstFueling.getQuantity()) / costStatistic.getMileageSum() * 100);
+        Fueling lastFueling = fuelingService.findFirstByCost_CarDesc(car);
+        if(costStatistic.getMileageSum() != null && costStatistic.getFuelingSum() != null && firstFueling != lastFueling) {
+            costStatistic.setConsumption((costStatistic.getFuelingSum() - lastFueling.getQuantity()) / costStatistic.getMileageSum() * 100);
         }
         return new ResponseEntity<>(costStatistic, HttpStatus.OK);
     }

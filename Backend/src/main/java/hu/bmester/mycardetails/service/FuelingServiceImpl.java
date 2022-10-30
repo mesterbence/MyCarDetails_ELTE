@@ -23,4 +23,9 @@ public class FuelingServiceImpl implements FuelingService {
     public Fueling findFirstByCost_Car(Car car) {
         return fuelingRepository.findFirstByCost_CarOrderByCost_Date(car);
     }
+
+    @Override
+    public Fueling findFirstByCost_CarDesc(Car car) {
+        return fuelingRepository.findFirstByCost_CarOrderByCost_DateDesc(car);
+    }
 }
