@@ -28,6 +28,7 @@ export class CardetailsComponent implements OnInit {
   carData!: Car;
   newCostGroup!: FormGroup;
   modifyCarGroup!: FormGroup;
+  serviceGroup!: FormGroup;
   costTypes!: CostType[];
   fuelTypes!: FuelType[];
   carStat!: Carstatistic;
@@ -81,6 +82,11 @@ export class CardetailsComponent implements OnInit {
       fueling_quantity: [''],
       fueling_isPremium: ['']
     });
+    this.serviceGroup = this.formBuilder.group({
+      date: [''],
+      mileage: null,
+      note: [''],
+    })
   }
   onSubmit() {
     if (this.newCostGroup.get('costtype')?.value.name === "üzemanyag") {
@@ -142,6 +148,9 @@ export class CardetailsComponent implements OnInit {
     this.carService.modify(this.modifyCarGroup.get('numberplate')?.value, this.modifyCarGroup.get('brand')?.value, this.modifyCarGroup.get('model')?.value, this.modifyCarGroup.get('fuelType')?.value, this.carId)
     .subscribe((data: Car) => this.carData = data);
     this.modalService.dismissAll();
+  }
+  onServiceSubmit() {
+    console.log(this.serviceGroup.value)
   }
   getNum(num: number, unit: String) {
     if (num === null || isNaN(num)) { return "Még nincs adat"; }

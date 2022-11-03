@@ -19,11 +19,13 @@
                 <div class="col-lg-12 shadow-lg bg-white rounded">
                     <ul class="list-group list-group-green">
                         <button class="list-group-item list-group-item-action" (click)="openModify(modifyCar)">Autó
-                            adatainak módosítása</button>
-                        <button class="list-group-item list-group-item-action" (click)="open(newCost)">Költség
-                            rögzítése</button>
+                            adatainak módosítása
+                        </button>
+                        <button class="list-group-item list-group-item-action" (click)="open(newCost)">
+                            Költség rögzítése
+                        </button>
+                        <button class="list-group-item list-group-item-action" (click)="open(service)">Szervizesedékesség rögzítése</button>
                         <button [routerLink]="['/morestat', this.carId]" class="list-group-item list-group-item-action">További statisztikai adatok</button>
-                        <button class="list-group-item list-group-item-action" disabled>Autó törlése</button>
                     </ul>
                 </div>
             </div>
@@ -172,6 +174,42 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-light w-100">Mentés</button>
+        </div>
+    </form>
+</ng-template>
+<ng-template #service let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Szervizesedékesség rögzítése</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <form [formGroup]="serviceGroup" (ngSubmit)="onServiceSubmit()" class="reg-form">
+        <div class="modal-body">
+            <div class="align-items-center justify-content-center pt-4">
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dátum</mat-label>
+                        <input formControlName="date" type="date" matInput>
+                        <mat-icon matSuffix>calendar_month</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Kilométeróra állása</mat-label>
+                        <input formControlName="mileage" (keypress)="numberOnly($event)" type="text" matInput>
+                        <mat-icon matSuffix>speed</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Megjegyzés</mat-label>
+                        <input formControlName="note" type="text" matInput>
+                        <mat-icon matSuffix>edit</mat-icon>
+                    </mat-form-field>
+                </p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-light w-100">Rögzítés</button>
         </div>
     </form>
 </ng-template>
