@@ -25,10 +25,11 @@ import { NewcarComponent } from './newcar/newcar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MyprofileComponent } from './myprofile/myprofile.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MorestatComponent } from './morestat/morestat.component';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { AdminComponent } from './admin/admin.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { AdminComponent } from './admin/admin.component';
     MatExpansionModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    MatBadgeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

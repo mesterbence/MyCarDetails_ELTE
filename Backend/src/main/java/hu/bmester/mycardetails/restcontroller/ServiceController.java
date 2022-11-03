@@ -25,18 +25,6 @@ public class ServiceController {
     @Autowired
     private ServiceService serviceService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CostService costService;
-
-    @Autowired
-    private FuelingService fuelingService;
-
     @GetMapping("/api/service/services")
     public ResponseEntity<?> getAllServices() {
         return new ResponseEntity<>(serviceService.findAllServices(), HttpStatus.OK);
