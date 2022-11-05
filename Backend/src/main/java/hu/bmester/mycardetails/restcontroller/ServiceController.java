@@ -6,7 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -18,6 +23,9 @@ public class ServiceController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/api/service/services")
     public ResponseEntity<?> getAllServices() {
@@ -31,4 +39,18 @@ public class ServiceController {
         return new ResponseEntity<>(serviceService.saveService(service), HttpStatus.CREATED);
     }
 
+    @GetMapping("/api/service/own/sum")
+    public ResponseEntity<?> getOwnServices() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object currentPrincipalName = authentication.getPrincipal();
+        User user = userService.findUserByUsername(currentPrincipalName.toString());
+        List<Car> cars = carService.findCarsByOwner(user);
+        List<ServiceSummary> sum = new ArrayList<>();
+        cars.forEach(car -> {
+            List<Service> services = serviceService.findServicesByCarId(car.getId());
+            sum.add(new ServiceSummary(car.getId(), services.size()));
+        });
+
+        return new ResponseEntity<>(sum, HttpStatus.OK);
+    }
 }

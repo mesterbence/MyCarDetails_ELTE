@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CategoryStat {
-    private String name;
-    private Long sum;
+public class ServiceSummary {
+    private Long carId;
+    private Integer serviceSum;
 }

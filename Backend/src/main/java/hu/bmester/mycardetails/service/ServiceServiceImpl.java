@@ -21,4 +21,9 @@ public class ServiceServiceImpl implements ServiceService {
     public hu.bmester.mycardetails.model.Service saveService(hu.bmester.mycardetails.model.Service service) {
         return serviceRepository.save(service);
     }
+
+    @Override
+    public List<hu.bmester.mycardetails.model.Service> findServicesByCarId(Long carId) {
+        return serviceRepository.findServicesByCar_Id(carId);
+    }
 }
