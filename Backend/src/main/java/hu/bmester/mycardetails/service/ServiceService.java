@@ -9,4 +9,5 @@ public interface ServiceService {
     List<Service> findAllServices();
     Service saveService(Service service);
     List<Service> findServicesByCarId(Long carId);
+    List<Service> findActualServicesByCarId(Long carId);
 }

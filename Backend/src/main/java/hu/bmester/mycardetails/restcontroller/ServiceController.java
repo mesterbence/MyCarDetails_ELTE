@@ -39,7 +39,7 @@ public class ServiceController {
         return new ResponseEntity<>(serviceService.saveService(service), HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/service/own/sum")
+    @GetMapping("/api/service/own/sum/actual")
     public ResponseEntity<?> getOwnServices() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object currentPrincipalName = authentication.getPrincipal();
@@ -47,7 +47,7 @@ public class ServiceController {
         List<Car> cars = carService.findCarsByOwner(user);
         List<ServiceSummary> sum = new ArrayList<>();
         cars.forEach(car -> {
-            List<Service> services = serviceService.findServicesByCarId(car.getId());
+            List<Service> services = serviceService.findActualServicesByCarId(car.getId());
             sum.add(new ServiceSummary(car.getId(), services.size()));
         });
 

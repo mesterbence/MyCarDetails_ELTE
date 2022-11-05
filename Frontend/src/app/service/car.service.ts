@@ -10,6 +10,7 @@ import { Cost } from '../model/cost';
 import { FuelType } from '../model/fueltype';
 import { MileageStat } from '../model/mileage-stat';
 import { Service } from '../model/service';
+import { ServiceSummary } from '../model/service-summary';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,8 @@ export class CarService {
   }
   getCarCostCategories(carId: number): Observable<CategoryStat[]> {
     return this.httpClient.get<CategoryStat[]>(`${environment.baseUrl}/car/categories/${carId}`);
+  }
+  getServiceSum(): Observable<ServiceSummary[]> {
+    return this.httpClient.get<ServiceSummary[]>(`${environment.baseUrl}/service/own/sum/actual`);
   }
 }
