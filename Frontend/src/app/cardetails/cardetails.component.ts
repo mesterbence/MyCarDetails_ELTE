@@ -150,6 +150,7 @@ export class CardetailsComponent implements OnInit {
     this.modalService.dismissAll();
   }
   onServiceSubmit() {
+    this.carService.createService(this.serviceGroup.value,this.carId).subscribe((data) => console.log("xs"));
     console.log(this.serviceGroup.value)
   }
   getNum(num: number, unit: String) {

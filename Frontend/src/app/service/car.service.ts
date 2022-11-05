@@ -9,6 +9,7 @@ import { CategoryStat } from '../model/category-stat';
 import { Cost } from '../model/cost';
 import { FuelType } from '../model/fueltype';
 import { MileageStat } from '../model/mileage-stat';
+import { Service } from '../model/service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,9 @@ export class CarService {
       .subscribe((data) => {
         this.router.navigate(['/mycars']);
       });
+  }
+  createService(service: Service, carId: number) {
+    return this.httpClient.post<any>(environment.baseUrl + `/service/new/${carId}`, service);
   }
 
   modify(numberplate: string, brand: string, model: string, fuelType: FuelType, carId: number) {
