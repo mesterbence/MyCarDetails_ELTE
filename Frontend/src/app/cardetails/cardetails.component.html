@@ -146,8 +146,11 @@
 </ng-template>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-        <a [routerLink]="['/newcar']" class="btn btn-light">Új autó felvétele</a>
+    <button mat-menu-item [routerLink]="['/newcar']">
+        Új autó felvétele
+    </button>
+    <button mat-menu-item (click)="open(newCost)">
+        Költség rögzítése
     </button>
 </mat-menu>
 
