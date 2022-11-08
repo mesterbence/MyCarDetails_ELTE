@@ -48,3 +48,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .list-group-green .list-group-item:hover {
     background-color: #B6E388;
 }
+.fixed-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: block;
+}

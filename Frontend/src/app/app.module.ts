@@ -30,6 +30,8 @@ import { MorestatComponent } from './morestat/morestat.component';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { AdminComponent } from './admin/admin.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -63,7 +65,9 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatCheckboxModule,
     MatSnackBarModule,
     Ng2GoogleChartsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatButtonModule,
+    MatMenuModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
