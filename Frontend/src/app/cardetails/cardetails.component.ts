@@ -89,6 +89,7 @@ export class CardetailsComponent implements OnInit {
     })
   }
   onSubmit() {
+    this.newCostGroup.get('fueling_quantity')?.setValue(this.newCostGroup.get('fueling_quantity')?.value.replace(',','.'));
     if (this.newCostGroup.get('costtype')?.value.name === "üzemanyag") {
       this.costService.saveCostWithFueling(
         this.carId,
