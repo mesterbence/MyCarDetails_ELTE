@@ -150,6 +150,7 @@ export class MorestatComponent implements OnInit {
   onResize(event: any) {
     this.lineChart.component?.draw();
     this.mileageChart.component?.draw();
+    this.categoryChart.component?.draw();
   }
   filterChangeYear(year: number) {
     this.filterValue = year;
