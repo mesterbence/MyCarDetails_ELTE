@@ -22,6 +22,8 @@ export class MorestatComponent implements OnInit {
   carId!: number;
   prices: number[] = [];
   storedMileages: number[] = [];
+  years: number[] = [0];
+  filterValue: number = 0;
 
   constructor(private carService: CarService,
     private activatedRoute: ActivatedRoute,
@@ -97,6 +99,11 @@ export class MorestatComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') !== null) {
         this.carId = Number(params.get('id'));
+        this.carService.getDistinctYears(this.carId).subscribe(
+          data => {
+            this.years = [...this.years,...data];
+          }
+        )
         this.carService.getCarFuelings(this.carId).subscribe(
           data => {
             this.fuelings = data;
@@ -143,5 +150,9 @@ export class MorestatComponent implements OnInit {
   onResize(event: any) {
     this.lineChart.component?.draw();
     this.mileageChart.component?.draw();
+  }
+  filterChangeYear(year: number) {
+    this.filterValue = year;
+    console.log(this.filterValue)
   }
 }
