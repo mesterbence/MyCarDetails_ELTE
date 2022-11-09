@@ -54,4 +54,9 @@ public class CostServiceImpl implements CostService {
     public List<CategoryStat> getCategoryStat(Long carId) {
         return costRepository.getCategoryStat(carId);
     }
+
+    @Override
+    public List<Integer> findDistinctYearsByCarId(Long carId) {
+        return costRepository.findDistinctYearsByCarId(carId);
+    }
 }

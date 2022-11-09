@@ -21,4 +21,7 @@ public interface CostRepository extends JpaRepository<Cost, Long> {
     // nem elég a new CategoryStat a query annotációba
     @Query("select new hu.bmester.mycardetails.model.CategoryStat(c.type.name, coalesce(sum(c.price),0)) from Cost c where c.car.id = :carId group by c.type.name having sum(c.price) > 0")
     List<CategoryStat> getCategoryStat(Long carId);
+
+    @Query("select distinct extract(year from c.date) from Cost c where c.date is not null and c.car.id=:carId order by extract(year from c.date) desc")
+    List<Integer> findDistinctYearsByCarId(Long carId);
 }

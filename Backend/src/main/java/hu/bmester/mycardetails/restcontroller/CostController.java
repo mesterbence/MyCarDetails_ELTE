@@ -65,4 +65,9 @@ public class CostController {
     public ResponseEntity<?> getAllFuelingsByCarId(@PathVariable Long carId) {
         return new ResponseEntity<>(costService.findFuelings(carId), HttpStatus.OK);
     }
+
+    @GetMapping("/api/cost/years/{carId}")
+    public ResponseEntity<?> getDistinctYear(@PathVariable Long carId) {
+        return new ResponseEntity<>(costService.findDistinctYearsByCarId(carId), HttpStatus.OK);
+    }
 }

@@ -15,4 +15,5 @@ public interface CostService {
     Integer getTraveledDistance(Long carId);
     List<Cost> findFuelings(Long carId);
     List<CategoryStat> getCategoryStat(Long carId);
+    List<Integer> findDistinctYearsByCarId(Long carId);
 }
