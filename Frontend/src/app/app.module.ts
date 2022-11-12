@@ -32,6 +32,7 @@ import { AdminComponent } from './admin/admin.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { ServicelistComponent } from './servicelist/servicelist.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { MatMenuModule } from '@angular/material/menu';
     NewcarComponent,
     MyprofileComponent,
     MorestatComponent,
-    AdminComponent
+    AdminComponent,
+    ServicelistComponent
   ],
   imports: [
     BrowserModule,
