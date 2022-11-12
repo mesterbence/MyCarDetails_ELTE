@@ -21,3 +21,15 @@ a {
 .mat-checkbox-checked .mat-checkbox-background {
     background-color: #B6E388 !important;
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
