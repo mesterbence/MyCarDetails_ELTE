@@ -1,21 +1,21 @@
-<div class="container">
+<div class="container" *ngIf="serviceList">
     <div class="row pt-2">
-        <table mat-table class="mat-elevation-z8" [dataSource]="serviceList" *ngIf="serviceList" >
+        <table mat-table class="mat-elevation-z8" [dataSource]="serviceList" matSort matSortActive="done" matSortDirection="asc">
 
             <ng-container matColumnDef="done">
-                <th mat-header-cell *matHeaderCellDef>Állapot</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Állapot</th>
                 <td mat-cell *matCellDef="let element">
                     <mat-icon>{{element.done ? "done" : "" }}</mat-icon>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef>Esedékesség időpontja</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Esedékesség időpontja</th>
                 <td mat-cell *matCellDef="let element"> {{element.date | date: 'yyyy.MM.dd'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="mileage">
-                <th mat-header-cell *matHeaderCellDef>Esedékesség óraállása</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Esedékesség óraállása</th>
                 <td mat-cell *matCellDef="let element"> {{element.mileage }} </td>
             </ng-container>
 
