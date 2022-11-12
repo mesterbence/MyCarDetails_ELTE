@@ -1,6 +1,13 @@
 <div class="container">
     <div class="row pt-2">
-        <table mat-table class="mat-elevation-z8" [dataSource]="serviceList" *ngIf="serviceList">
+        <table mat-table class="mat-elevation-z8" [dataSource]="serviceList" *ngIf="serviceList" >
+
+            <ng-container matColumnDef="done">
+                <th mat-header-cell *matHeaderCellDef>Állapot</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon>{{element.done ? "done" : "" }}</mat-icon>
+                </td>
+            </ng-container>
 
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef>Esedékesség időpontja</th>

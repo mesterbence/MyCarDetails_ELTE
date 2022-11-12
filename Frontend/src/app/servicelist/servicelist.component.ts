@@ -3,7 +3,7 @@ import {ServiceService} from "../service/service.service";
 import {Service} from "../model/service";
 import {ActivatedRoute} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
-import {animate, state, style, transition, trigger} from "@angular/animations";
+
 
 @Component({
     selector: 'app-servicelist',
@@ -17,17 +17,16 @@ export class ServicelistComponent implements OnInit {
     }
 
     serviceList!: any;
-    displayedColumns: string[] = ['date', 'mileage', 'note'];
+    displayedColumns: string[] = ['done','date', 'mileage', 'note'];
+
 
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe(params => {
             if (params.get('id') !== null) {
                 this.serviceService.getAllServices(params.get('id')).subscribe(data => {
                     this.serviceList = new MatTableDataSource(data);
-                    console.log(data)
                 })
             }
         })
     }
-
 }

@@ -33,6 +33,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { ServicelistComponent } from './servicelist/servicelist.component';
+import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -49,28 +50,29 @@ import { ServicelistComponent } from './servicelist/servicelist.component';
     AdminComponent,
     ServicelistComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatTableModule,
-    MatGridListModule,
-    NgbModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatIconModule,
-    MatTabsModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    MatCheckboxModule,
-    MatSnackBarModule,
-    Ng2GoogleChartsModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatMenuModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatTableModule,
+        MatGridListModule,
+        NgbModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatIconModule,
+        MatTabsModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        MatCheckboxModule,
+        MatSnackBarModule,
+        Ng2GoogleChartsModule,
+        MatBadgeModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatSortModule
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     CookieService
