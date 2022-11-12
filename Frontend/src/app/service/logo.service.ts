@@ -9,6 +9,6 @@ export class LogoService {
   logoUrl: String = "./assets/images/brand-logos/"
 
   getBrandUrl(brand:String) : String {
-    return this.logoUrl + brand.toLowerCase().replace(' ', '-');
+    return this.logoUrl + brand.toLowerCase().replace(' ', '-') + ".png";
   }
 }

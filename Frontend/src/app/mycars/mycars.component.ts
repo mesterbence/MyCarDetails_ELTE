@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Car } from '../model/car';
 import { ServiceSummary } from '../model/service-summary';
 import { CarService } from '../service/car.service';
+import { LogoService } from '../service/logo.service';
 
 @Component({
   selector: 'app-mycars',
@@ -15,7 +16,8 @@ export class MycarsComponent implements OnInit {
   serviceSummary!: ServiceSummary[];
 
   constructor(private carService: CarService,
-    private router: Router) { }
+    private router: Router,
+    protected logoService: LogoService) { }
 
   ngOnInit(): void {
     this.carService.getAllOwnCars().subscribe(
@@ -39,5 +41,8 @@ export class MycarsComponent implements OnInit {
       return this.serviceSummary.find(service => service.carId === carId)!.serviceSum;
     }
     return 0;
+  }
+  handleMissingImage(event: Event) {
+    (event.target as HTMLImageElement).style.display = 'none';
   }
 }

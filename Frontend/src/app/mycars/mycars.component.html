@@ -3,12 +3,29 @@
         <div class="row">
             <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex" *ngFor="let car of cars">
                 <div class="card mb-3 flex-fill shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ car.numberplate }}</h5>
+                    <a [routerLink]="['/cardetails', car.id]">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h5 class="card-title">{{ car.numberplate }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ car.brand + " " + car.model }}</h6>
+                                    <p class="card-text"></p>
+                                </div>
+                                <div class="col-4"><img class="col-12" src="{{ logoService.getBrandUrl(car.brand) }}"
+                                        (error)="handleMissingImage($event)">
+                                </div>
+                            </div>
+                            <a [routerLink]="['/cardetails', car.id]" class="btn btn-light"
+                                [matBadgeHidden]="getBadgeValue(car.id) === 0" matBadge="{{ getBadgeValue(car.id) }}"
+                                matBadgePosition="before" matBadgeColor="accent">Kiválasztás</a>
+                            <!-- <h5 class="card-title">{{ car.numberplate }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ car.brand + " " + car.model }}</h6>
                         <p class="card-text"></p>
+                        
                         <a [routerLink]="['/cardetails', car.id]" class="btn btn-light" [matBadgeHidden]="getBadgeValue(car.id) === 0" matBadge="{{ getBadgeValue(car.id) }}" matBadgePosition="before" matBadgeColor="accent">Kiválasztás</a>
-                    </div>
+                        -->
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex">
