@@ -26,8 +26,48 @@
 
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="main-row">
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;" (click)="clickedService(element,editService)">
             </tr>
         </table>
     </div>
 </div>
+
+<ng-template #editService let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Szervizesedékesség szerkesztése</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <form [formGroup]="editServiceFG" (ngSubmit)="onEditSubmit()" class="reg-form">
+        <div class="modal-body">
+            <div class="align-items-center justify-content-center pt-4">
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dátum</mat-label>
+                        <input formControlName="date" type="date" matInput>
+                        <mat-icon matSuffix>calendar_month</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Kilométeróra állása</mat-label>
+                        <input formControlName="mileage" (keypress)="numberOnly($event)" type="text" matInput>
+                        <mat-icon matSuffix>speed</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Megjegyzés</mat-label>
+                        <input formControlName="note" type="text" matInput>
+                        <mat-icon matSuffix>edit</mat-icon>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-checkbox class="example-margin" formControlName="done">Elvégezve</mat-checkbox>
+                </p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-light w-100">Szerkesztés</button>
+        </div>
+    </form>
+</ng-template>

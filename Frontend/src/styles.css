@@ -15,3 +15,9 @@ a {
 .mcd-button {
     background-color: #B6E388 !important;
 }
+.mat-form-field {
+    min-width: 100%;
+}
+.mat-checkbox-checked .mat-checkbox-background {
+    background-color: #B6E388 !important;
+}
