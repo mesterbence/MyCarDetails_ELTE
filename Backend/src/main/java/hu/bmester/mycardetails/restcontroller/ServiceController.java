@@ -53,4 +53,9 @@ public class ServiceController {
 
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
+
+    @GetMapping("/api/services/{carId}")
+    public ResponseEntity<?> getServicesByCarId(@PathVariable Long carId) {
+        return new ResponseEntity<>(serviceService.findServicesByCarId(carId), HttpStatus.OK);
+    }
 }
