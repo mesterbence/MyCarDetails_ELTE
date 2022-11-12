@@ -7,24 +7,28 @@ import {MatSort, Sort} from "@angular/material/sort";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DatePipe} from "@angular/common";
 
 
 @Component({
     selector: 'app-servicelist',
     templateUrl: './servicelist.component.html',
-    styleUrls: ['./servicelist.component.css']
+    styleUrls: ['./servicelist.component.css'],
+    providers: [DatePipe]
 })
 export class ServicelistComponent implements OnInit {
 
     constructor(private serviceService: ServiceService,
                 private activatedRoute: ActivatedRoute,
                 private formBuilder: FormBuilder,
-                private modalService: NgbModal) {
+                private modalService: NgbModal,
+                public datepipe: DatePipe) {
     }
 
     serviceList!: any;
     displayedColumns: string[] = ['done','date', 'mileage', 'note'];
     editServiceFG!: FormGroup;
+    carId!: any;
 
     @ViewChild(MatSort) set matSort(sort: MatSort) {
         if(this.serviceList) {
@@ -36,7 +40,8 @@ export class ServicelistComponent implements OnInit {
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe(params => {
             if (params.get('id') !== null) {
-                this.serviceService.getAllServices(params.get('id')).subscribe(data => {
+                this.carId = params.get('id');
+                this.serviceService.getAllServices(this.carId).subscribe(data => {
                     this.serviceList = new MatTableDataSource(data);
                 })
             }
@@ -44,15 +49,17 @@ export class ServicelistComponent implements OnInit {
     }
     clickedService(service: Service,content:any) {
         this.editServiceFG = this.formBuilder.group({
-            date: service.date,
+            id: service.id,
+            date: this.datepipe.transform(service.date, 'yyyy-MM-dd'),
             mileage: service.mileage,
             note: service.note,
             done: service.done
         });
+        console.log(this.editServiceFG.value)
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
     }
     onEditSubmit() {
-        console.log(this.editServiceFG)
+        this.serviceService.updateService(this.editServiceFG.value,this.carId).subscribe((data) => console.log("xs"));
     }
     numberOnly(event: any): boolean {
         const charCode = (event.which) ? event.which : event.keyCode;

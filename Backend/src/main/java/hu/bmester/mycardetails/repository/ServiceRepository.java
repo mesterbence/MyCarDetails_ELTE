@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ServiceRepository extends JpaRepository<Service, Long> {
     List<Service> findServicesByCar_IdOrderByDate(Long carId);
+    Service findServiceById(Long serviceId);
 
     @Query(value = "SELECT s.*" +
             " FROM Services s" +

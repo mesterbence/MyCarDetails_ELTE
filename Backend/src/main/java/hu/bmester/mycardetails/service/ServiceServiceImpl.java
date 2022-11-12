@@ -31,4 +31,9 @@ public class ServiceServiceImpl implements ServiceService {
     public List<hu.bmester.mycardetails.model.Service> findActualServicesByCarId(Long carId) {
         return serviceRepository.findActualServicesByCar_Id(carId);
     }
+
+    @Override
+    public hu.bmester.mycardetails.model.Service findServiceById(Long serviceId) {
+        return serviceRepository.findServiceById(serviceId);
+    }
 }

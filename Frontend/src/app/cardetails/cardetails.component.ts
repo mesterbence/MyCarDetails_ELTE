@@ -14,6 +14,7 @@ import { Carstatistic } from '../model/carstatistic';
 import { CostsComponent } from '../costs/costs.component';
 import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { _isNumberValue } from '@angular/cdk/coercion';
+import {ServiceService} from "../service/service.service";
 
 @Component({
   selector: 'app-cardetails',
@@ -34,13 +35,14 @@ export class CardetailsComponent implements OnInit {
   carStat!: Carstatistic;
 
   constructor(private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private carService: CarService,
-    private costService: CostService,
-    private modalService: NgbModal,
-    private formBuilder: FormBuilder,
-    private costTypeService: CosttypeService,
-    private fuelTypeService: FueltypeService) { }
+              private router: Router,
+              private carService: CarService,
+              private costService: CostService,
+              private modalService: NgbModal,
+              private formBuilder: FormBuilder,
+              private costTypeService: CosttypeService,
+              private fuelTypeService: FueltypeService,
+              private serviceService: ServiceService) { }
 
   ngOnInit(): void {
 
@@ -151,7 +153,7 @@ export class CardetailsComponent implements OnInit {
     this.modalService.dismissAll();
   }
   onServiceSubmit() {
-    this.carService.createService(this.serviceGroup.value,this.carId).subscribe((data) => console.log("xs"));
+    this.serviceService.createService(this.serviceGroup.value,this.carId).subscribe((data) => console.log("xs"));
     console.log(this.serviceGroup.value)
   }
   getNum(num: number, unit: String) {

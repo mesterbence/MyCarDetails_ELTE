@@ -39,6 +39,18 @@ public class ServiceController {
         return new ResponseEntity<>(serviceService.saveService(service), HttpStatus.CREATED);
     }
 
+    @PostMapping("/api/service/update/{carId}")
+    public ResponseEntity<?> updateService(@RequestBody Service service, @PathVariable Long carId) {
+        Service toUpdate = serviceService.findServiceById(service.getId());
+        if(null == toUpdate) {
+            return new ResponseEntity<>("Nincs ilyen szerviz!",HttpStatus.NOT_FOUND);
+        }
+        toUpdate = service;
+        Car car = carService.findCarById(carId);
+        toUpdate.setCar(car);
+        return new ResponseEntity<>(serviceService.saveService(toUpdate), HttpStatus.CREATED);
+    }
+
     @GetMapping("/api/service/own/sum/actual")
     public ResponseEntity<?> getOwnServices() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

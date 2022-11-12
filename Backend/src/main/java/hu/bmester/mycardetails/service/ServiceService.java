@@ -10,4 +10,5 @@ public interface ServiceService {
     Service saveService(Service service);
     List<Service> findServicesByCarId(Long carId);
     List<Service> findActualServicesByCarId(Long carId);
+    Service findServiceById(Long serviceId);
 }

@@ -15,4 +15,10 @@ export class ServiceService {
   getAllServices(carId: any): Observable<Service[]> {
     return this.httpClient.get<Service[]>(`${environment.baseUrl}/services/${carId}`);
   }
+  createService(service: Service, carId: number) {
+    return this.httpClient.post<any>(`${environment.baseUrl}/service/new/${carId}`, service);
+  }
+  updateService(service: Service, carId: number) {
+    return this.httpClient.post<any>(`${environment.baseUrl}/service/update/${carId}`, service);
+  }
 }

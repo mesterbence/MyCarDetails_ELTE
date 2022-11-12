@@ -33,9 +33,6 @@ export class CarService {
         this.router.navigate(['/mycars']);
       });
   }
-  createService(service: Service, carId: number) {
-    return this.httpClient.post<any>(environment.baseUrl + `/service/new/${carId}`, service);
-  }
 
   modify(numberplate: string, brand: string, model: string, fuelType: FuelType, carId: number) {
     return this.httpClient.post<any>(environment.baseUrl + `/car/modify/${carId}`, { numberplate, brand, model, fuelType });
