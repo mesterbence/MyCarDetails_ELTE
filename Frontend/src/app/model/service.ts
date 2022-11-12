@@ -6,4 +6,5 @@ export class Service {
     date!: Date;
     mileage!: number;
     note!: Text;
+    done!: boolean;
 }

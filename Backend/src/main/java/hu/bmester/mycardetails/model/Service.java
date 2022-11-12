@@ -28,4 +28,7 @@ public class Service {
 
     @Column(name = "note")
     private String note;
+
+    @Column(name = "done")
+    private Boolean done;
 }
