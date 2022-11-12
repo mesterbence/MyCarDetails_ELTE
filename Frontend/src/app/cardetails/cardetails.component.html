@@ -18,16 +18,22 @@
                 <p>Műveletek</p>
                 <div class="col-lg-12 shadow-lg bg-white rounded">
                     <ul class="list-group list-group-green">
-                        <button class="list-group-item list-group-item-action" (click)="openModify(modifyCar)">Autó
-                            adatainak módosítása
+                        <button class="list-group-item list-group-item-action" (click)="openModify(modifyCar)">
+                            Autó adatainak módosítása
+                            <mat-icon class="float-end">edit</mat-icon>
                         </button>
-                        <button class="list-group-item list-group-item-action" (click)="open(newCost)">
-                            Költség rögzítése
+                        <button [routerLink]="['/morestat', this.carId]" class="list-group-item list-group-item-action">
+                            Statisztikai diagramok
+                            <mat-icon class="float-end">ssid_chart</mat-icon>
                         </button>
-                        <button class="list-group-item list-group-item-action"
-                            (click)="open(service)">Szervizesedékesség rögzítése</button>
-                        <button [routerLink]="['/morestat', this.carId]"
-                            class="list-group-item list-group-item-action">További statisztikai adatok</button>
+                        <button [routerLink]="['/morestat', this.carId]" class="list-group-item list-group-item-action">
+                            Statisztikai adatok
+                            <mat-icon class="float-end">leaderboard</mat-icon>
+                        </button>
+                        <button [routerLink]="['/services', this.carId]" class="list-group-item list-group-item-action">
+                            Szervizesedékességek áttekintése
+                            <mat-icon class="float-end">construction</mat-icon>
+                        </button>
                     </ul>
                 </div>
             </div>
