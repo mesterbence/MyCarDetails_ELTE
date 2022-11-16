@@ -6,6 +6,7 @@ import { GoogleChartInterface, GoogleChartType } from 'ng2-google-charts';
 import { DatePipe } from '@angular/common';
 import { MileageStat } from '../model/mileage-stat';
 import { CategoryStat } from '../model/category-stat';
+import {MoreCarstat} from "../model/more-carstat";
 
 
 @Component({
@@ -24,6 +25,7 @@ export class MorestatComponent implements OnInit {
   storedMileages: number[] = [];
   years: number[] = [0];
   filterValue: number = 0;
+  moreCarStat!: MoreCarstat;
 
   constructor(private carService: CarService,
     private activatedRoute: ActivatedRoute,
@@ -134,6 +136,11 @@ export class MorestatComponent implements OnInit {
             this.mileageChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.storedMileages) + 5000;
           }
         );
+        this.carService.getCarStatistic(this.carId).subscribe(
+            data => {
+              this.moreCarStat = data;
+            }
+        )
       } else {
         this.router.navigate(['/mycars']);
       }
@@ -154,6 +161,18 @@ export class MorestatComponent implements OnInit {
   }
   filterChangeYear(year: number) {
     this.filterValue = year;
-    console.log(this.filterValue)
+    if(this.filterValue !== 0) {
+      this.carService.getCarStatisticByYear(this.carId,this.filterValue).subscribe(
+          data => {
+            this.moreCarStat = data;
+          }
+      )
+    } else {
+      this.carService.getCarStatistic(this.carId).subscribe(
+          data => {
+            this.moreCarStat = data;
+          }
+      )
+    }
   }
 }

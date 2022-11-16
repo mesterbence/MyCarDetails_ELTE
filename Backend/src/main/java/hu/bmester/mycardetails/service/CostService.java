@@ -12,7 +12,9 @@ public interface CostService {
     List<Cost> findByCarId(Long carId);
     Cost saveCost(Cost cost);
     Integer getPriceSum(Long carId);
+    Integer getPriceSumByYear(Long carId, Integer year);
     Integer getTraveledDistance(Long carId);
+    Integer getTraveledDistanceByYear(Long carId,Integer year);
     List<Cost> findFuelings(Long carId);
     List<CategoryStat> getCategoryStat(Long carId);
     List<Integer> findDistinctYearsByCarId(Long carId);

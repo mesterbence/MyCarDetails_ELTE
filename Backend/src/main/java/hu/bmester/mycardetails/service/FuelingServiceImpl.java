@@ -20,6 +20,11 @@ public class FuelingServiceImpl implements FuelingService {
     }
 
     @Override
+    public Double getFuelSumByYear(Long carId, Integer year) {
+        return fuelingRepository.getSumByYear(carId, year);
+    }
+
+    @Override
     public Fueling findFirstByCost_Car(Car car) {
         return fuelingRepository.findFirstByCost_CarOrderByCost_Date(car);
     }

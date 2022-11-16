@@ -3,7 +3,6 @@
         <div class="col-lg-12 pb-2">
             <div class="bg-white rounded p-3" (window:resize)="onResize($event)">
                 <div>
-                    <!-- filtering -->
                     <mat-form-field appearance="fill">
                         <mat-label>Szűrés év szerint</mat-label>
                         <mat-select [value]="filterValue" (selectionChange)="filterChangeYear($event.value)">
@@ -13,11 +12,30 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <google-chart *ngIf="this.fuelings" [data]="lineChart"></google-chart>
+                <div class="pt-1 pb-1">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                További statisztikai adatok
+                            </mat-panel-title>
+                            <mat-panel-description>Kiválasztott év: {{ filterValue === 0 ? "Mindenkori" : filterValue }}</mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <ul class="list-group" *ngIf="moreCarStat">
+                            <li class="list-group-item">Autóra összesen költött összeg: {{moreCarStat.sumPrice}} Ft</li>
+                            <li class="list-group-item">Összes megtett kilométer: {{moreCarStat.sumMileage}} km</li>
+                            <li class="list-group-item">Összes tankolt üzemanyag mennyiség: {{moreCarStat.sumFueling}} liter</li>
+                            <li class="list-group-item">Ft / km díj: {{moreCarStat.pricePerKilometer}} Ft</li>
+                            <li class="list-group-item">Átlagfogyasztás: {{moreCarStat.avgConsumption}}</li>
+                            <li class="list-group-item" *ngIf="filterValue !== 0">{{filterValue}}. évben összesen elköltve: {{moreCarStat.selectedYearSum}} Ft</li>
+                            <li class="list-group-item" *ngIf="filterValue !== 0">Havi átlagos költség: {{moreCarStat.selectedYearMonthlyAvg}} Ft</li>
+                        </ul>
+                    </mat-expansion-panel>
+                </div>
+                <google-chart *ngIf="fuelings" [data]="lineChart"></google-chart>
                 <hr>
-                <google-chart *ngIf="this.mileages" [data]="mileageChart"></google-chart>
+                <google-chart *ngIf="mileages" [data]="mileageChart"></google-chart>
                 <hr>
-                <google-chart *ngIf="this.categories" [data]="categoryChart"></google-chart>
+                <google-chart *ngIf="categories" [data]="categoryChart"></google-chart>
             </div>
         </div>
     </div>

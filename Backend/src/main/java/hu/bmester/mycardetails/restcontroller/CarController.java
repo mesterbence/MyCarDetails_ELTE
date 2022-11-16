@@ -1,10 +1,7 @@
 package hu.bmester.mycardetails.restcontroller;
 
 import hu.bmester.mycardetails.jwt.JwtUtil;
-import hu.bmester.mycardetails.model.Car;
-import hu.bmester.mycardetails.model.CostStatistic;
-import hu.bmester.mycardetails.model.Fueling;
-import hu.bmester.mycardetails.model.Mileage;
+import hu.bmester.mycardetails.model.*;
 import hu.bmester.mycardetails.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,4 +117,38 @@ public class CarController {
     public ResponseEntity<?> getCategs(@PathVariable Long carId) {
         return new ResponseEntity<>(costService.getCategoryStat(carId), HttpStatus.OK);
     }
+
+    @GetMapping("/api/car/morestat/{carId}")
+    public ResponseEntity<?> getMoreStat(@PathVariable Long carId) {
+        CarStatistic carStatistic = new CarStatistic();
+        Car car = carService.findCarById(carId);
+        carStatistic.setSumPrice(costService.getPriceSum(carId));
+        carStatistic.setSumMileage(costService.getTraveledDistance(carId));
+        carStatistic.setSumFueling(fuelingService.getFuelSum(carId));
+        carStatistic.setPricePerKilometer((double) (carStatistic.getSumPrice() / carStatistic.getSumMileage()));
+        Fueling firstFueling = fuelingService.findFirstByCost_Car(car);
+        Fueling lastFueling = fuelingService.findFirstByCost_CarDesc(car);
+        if(carStatistic.getSumMileage() != null && carStatistic.getSumFueling() != null && firstFueling != lastFueling) {
+            carStatistic.setAvgConsumption((carStatistic.getSumFueling() - lastFueling.getQuantity()) / carStatistic.getSumMileage() * 100);
+        }
+        return new ResponseEntity<>(carStatistic, HttpStatus.OK);
+    }
+    @GetMapping("/api/car/morestat/{carId}/{year}")
+    public ResponseEntity<?> getMoreStat(@PathVariable Long carId, @PathVariable Integer year) {
+        CarStatistic carStatistic = new CarStatistic();
+        Car car = carService.findCarById(carId);
+        carStatistic.setSumPrice(costService.getPriceSum(carId));
+        carStatistic.setSumMileage(costService.getTraveledDistanceByYear(carId,year));
+        carStatistic.setSumFueling(fuelingService.getFuelSumByYear(carId,year));
+        carStatistic.setSelectedYearSum(costService.getPriceSumByYear(carId,year));
+        carStatistic.setPricePerKilometer((double) (carStatistic.getSelectedYearSum() / carStatistic.getSumMileage()));
+        Fueling firstFueling = fuelingService.findFirstByCost_Car(car);
+        Fueling lastFueling = fuelingService.findFirstByCost_CarDesc(car);
+        if(carStatistic.getSumMileage() != null && carStatistic.getSumFueling() != null && firstFueling != lastFueling) {
+            carStatistic.setAvgConsumption((carStatistic.getSumFueling() - lastFueling.getQuantity()) / carStatistic.getSumMileage() * 100);
+        }
+        carStatistic.setSelectedYearMonthlyAvg((double)costService.getPriceSumByYear(carId,year)/12);
+        return new ResponseEntity<>(carStatistic, HttpStatus.OK);
+    }
+
 }

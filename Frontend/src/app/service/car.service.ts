@@ -11,6 +11,7 @@ import { FuelType } from '../model/fueltype';
 import { MileageStat } from '../model/mileage-stat';
 import { Service } from '../model/service';
 import { ServiceSummary } from '../model/service-summary';
+import {MoreCarstat} from "../model/more-carstat";
 
 @Injectable({
   providedIn: 'root'
@@ -52,8 +53,13 @@ export class CarService {
   getServiceSum(): Observable<ServiceSummary[]> {
     return this.httpClient.get<ServiceSummary[]>(`${environment.baseUrl}/service/own/sum/actual`);
   }
-
   getDistinctYears(carId: number): Observable<number[]> {
     return this.httpClient.get<number[]>(`${environment.baseUrl}/cost/years/${carId}`);
+  }
+  getCarStatistic(carId: number): Observable<MoreCarstat> {
+    return this.httpClient.get<MoreCarstat>(`${environment.baseUrl}/car/morestat/${carId}`);
+  }
+  getCarStatisticByYear(carId: number,year:number): Observable<MoreCarstat> {
+    return this.httpClient.get<MoreCarstat>(`${environment.baseUrl}/car/morestat/${carId}/${year}`);
   }
 }

@@ -59,4 +59,14 @@ public class CostServiceImpl implements CostService {
     public List<Integer> findDistinctYearsByCarId(Long carId) {
         return costRepository.findDistinctYearsByCarId(carId);
     }
+
+    @Override
+    public Integer getPriceSumByYear(Long carId, Integer year) {
+        return costRepository.getSumByYear(carId,year);
+    }
+
+    @Override
+    public Integer getTraveledDistanceByYear(Long carId, Integer year) {
+        return costRepository.getTraveledDistanceByYear(carId,year);
+    }
 }
