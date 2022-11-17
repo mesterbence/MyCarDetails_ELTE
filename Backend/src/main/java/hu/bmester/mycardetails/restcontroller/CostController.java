@@ -8,6 +8,7 @@ import hu.bmester.mycardetails.service.FuelingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -64,6 +65,10 @@ public class CostController {
     @GetMapping("/api/cost/fueling/{carId}")
     public ResponseEntity<?> getAllFuelingsByCarId(@PathVariable Long carId) {
         return new ResponseEntity<>(costService.findFuelings(carId), HttpStatus.OK);
+    }
+    @GetMapping("/api/cost/fueling/{carId}/{year}")
+    public ResponseEntity<?> getAllFuelingsByCarIdByYear(@PathVariable Long carId, @PathVariable Integer year) {
+        return new ResponseEntity<>(costService.findFuelingsByYear(carId,year), HttpStatus.OK);
     }
 
     @GetMapping("/api/cost/years/{carId}")

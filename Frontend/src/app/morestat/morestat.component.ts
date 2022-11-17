@@ -174,5 +174,41 @@ export class MorestatComponent implements OnInit {
           }
       )
     }
+    this.lineChart.dataTable = [['Dátum', 'Üzemanyag ára (Ft)']];
+    if(this.filterValue === 0) {
+      this.carService.getCarFuelings(this.carId).subscribe(
+          data => {
+            this.fuelings = data;
+            this.fuelings.slice().reverse().forEach((fueling) => {
+              if (this.fuelings.length > 45) {
+                this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity]);
+              } else {
+                this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity])
+              }
+              this.prices.push(fueling.price / fueling.fueling.quantity);
+            })
+            this.lineChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.prices) - 50;
+            this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
+            this.lineChart.component?.draw();
+          }
+      );
+    } else {
+      this.carService.getCarFuelingsByYear(this.carId, year).subscribe(
+          data => {
+            this.fuelings = data;
+            this.fuelings.slice().reverse().forEach((fueling) => {
+              if (this.fuelings.length > 45) {
+                this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity]);
+              } else {
+                this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity])
+              }
+              this.prices.push(fueling.price / fueling.fueling.quantity);
+            })
+            this.lineChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.prices) - 50;
+            this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
+            this.lineChart.component?.draw();
+          }
+      );
+    }
   }
 }

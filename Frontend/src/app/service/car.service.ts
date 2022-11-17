@@ -47,6 +47,9 @@ export class CarService {
   getCarFuelings(carId: number): Observable<Cost[]> {
     return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/fueling/${carId}`);
   }
+  getCarFuelingsByYear(carId: number,year:number): Observable<Cost[]> {
+    return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/fueling/${carId}/${year}`);
+  }
   getCarCostCategories(carId: number): Observable<CategoryStat[]> {
     return this.httpClient.get<CategoryStat[]>(`${environment.baseUrl}/car/categories/${carId}`);
   }

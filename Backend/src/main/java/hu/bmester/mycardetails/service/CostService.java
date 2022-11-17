@@ -2,6 +2,7 @@ package hu.bmester.mycardetails.service;
 
 import hu.bmester.mycardetails.model.CategoryStat;
 import hu.bmester.mycardetails.model.Cost;
+import hu.bmester.mycardetails.model.FuelingStat;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ public interface CostService {
     Integer getTraveledDistance(Long carId);
     Integer getTraveledDistanceByYear(Long carId,Integer year);
     List<Cost> findFuelings(Long carId);
+    List<Cost> findFuelingsByYear(Long carId, Integer year);
     List<CategoryStat> getCategoryStat(Long carId);
     List<Integer> findDistinctYearsByCarId(Long carId);
 }

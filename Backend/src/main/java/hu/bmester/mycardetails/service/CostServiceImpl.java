@@ -2,6 +2,7 @@ package hu.bmester.mycardetails.service;
 
 import hu.bmester.mycardetails.model.CategoryStat;
 import hu.bmester.mycardetails.model.Cost;
+import hu.bmester.mycardetails.model.FuelingStat;
 import hu.bmester.mycardetails.repository.CostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,10 @@ public class CostServiceImpl implements CostService {
     @Override
     public Integer getTraveledDistanceByYear(Long carId, Integer year) {
         return costRepository.getTraveledDistanceByYear(carId,year);
+    }
+
+    @Override
+    public List<Cost> findFuelingsByYear(Long carId, Integer year) {
+        return costRepository.findFuelingsByYear(carId, year);
     }
 }

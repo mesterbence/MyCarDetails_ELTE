@@ -3,6 +3,7 @@ package hu.bmester.mycardetails.repository;
 import hu.bmester.mycardetails.model.CarStatistic;
 import hu.bmester.mycardetails.model.CategoryStat;
 import hu.bmester.mycardetails.model.Cost;
+import hu.bmester.mycardetails.model.FuelingStat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -31,5 +32,8 @@ public interface CostRepository extends JpaRepository<Cost, Long> {
 
     @Query("select distinct extract(year from c.date) from Cost c where c.date is not null and c.car.id=:carId order by extract(year from c.date) desc")
     List<Integer> findDistinctYearsByCarId(Long carId);
+
+    @Query(value = "select c.* from Costs c INNER JOIN Fuelings f on f.cost = c.id where c.car = :carId AND extract(year from c.date) = :year order by c.date desc",nativeQuery = true)
+    List<Cost> findFuelingsByYear(Long carId, Integer year);
 
 }
