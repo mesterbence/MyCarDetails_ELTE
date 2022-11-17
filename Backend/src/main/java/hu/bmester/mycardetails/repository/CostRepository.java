@@ -14,6 +14,9 @@ public interface CostRepository extends JpaRepository<Cost, Long> {
     List<Cost> findCostsByFuelingIsNotNullAndCarIdOrderByDateDesc(Long carId);
     List<Cost> findCostsByCarIdAndAndMileageIsNotNullOrderByDate(Long carId);
 
+    @Query(value = "select c.* from Costs c where c.car = :carId and c.mileage is not null and extract(year from c.date) = :year order by c.date", nativeQuery = true)
+    List<Cost> findAllCostsByCarIdAndYear(Long carId, Integer year);
+
     @Query("select sum(c.price) from Cost c where c.car.id = :carId")
     Integer getSum(Long carId);
 
@@ -29,6 +32,9 @@ public interface CostRepository extends JpaRepository<Cost, Long> {
     // nem elég a new CategoryStat a query annotációba
     @Query("select new hu.bmester.mycardetails.model.CategoryStat(c.type.name, coalesce(sum(c.price),0)) from Cost c where c.car.id = :carId group by c.type.name having sum(c.price) > 0")
     List<CategoryStat> getCategoryStat(Long carId);
+
+    @Query("select new hu.bmester.mycardetails.model.CategoryStat(c.type.name, coalesce(sum(c.price),0)) from Cost c where c.car.id = :carId AND extract(year from c.date) = :year group by c.type.name having sum(c.price) > 0")
+    List<CategoryStat> getCategoryStatByYear(Long carId, Integer year);
 
     @Query("select distinct extract(year from c.date) from Cost c where c.date is not null and c.car.id=:carId order by extract(year from c.date) desc")
     List<Integer> findDistinctYearsByCarId(Long carId);

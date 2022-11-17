@@ -75,4 +75,14 @@ public class CostServiceImpl implements CostService {
     public List<Cost> findFuelingsByYear(Long carId, Integer year) {
         return costRepository.findFuelingsByYear(carId, year);
     }
+
+    @Override
+    public List<Cost> findAllCostsWithMileageByCarIdAndYear(Long carId, Integer year) {
+        return costRepository.findAllCostsByCarIdAndYear(carId,year);
+    }
+
+    @Override
+    public List<CategoryStat> getCategoryStatByYear(Long carId, Integer year) {
+        return costRepository.getCategoryStatByYear(carId, year);
+    }
 }

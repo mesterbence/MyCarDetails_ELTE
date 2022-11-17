@@ -113,9 +113,22 @@ public class CarController {
         });
         return new ResponseEntity<>(mileages, HttpStatus.OK);
     }
+    @GetMapping("/api/car/mileages/{carId}/{year}")
+    public ResponseEntity<?> getMileagesByYear(@PathVariable Long carId, @PathVariable Integer year) {
+        ArrayList<Mileage> mileages = new ArrayList<>();
+        costService.findAllCostsWithMileageByCarIdAndYear(carId,year).forEach((cost) -> {
+            mileages.add(new Mileage(cost.getDate(), cost.getMileage()));
+        });
+        return new ResponseEntity<>(mileages, HttpStatus.OK);
+    }
     @GetMapping("/api/car/categories/{carId}")
     public ResponseEntity<?> getCategs(@PathVariable Long carId) {
         return new ResponseEntity<>(costService.getCategoryStat(carId), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/car/categories/{carId}/{year}")
+    public ResponseEntity<?> getCategsByYear(@PathVariable Long carId, @PathVariable Integer year) {
+        return new ResponseEntity<>(costService.getCategoryStatByYear(carId,year), HttpStatus.OK);
     }
 
     @GetMapping("/api/car/morestat/{carId}")
