@@ -17,7 +17,7 @@
 
     <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef>Összeg</th>
-        <td mat-cell *matCellDef="let element"> {{element.price }} {{ element.price > 0 ? " Ft" :"" }}</td>
+        <td mat-cell *matCellDef="let element"> {{element.price }} {{ element.price > 0 ? " Ft" : "" }}</td>
     </ng-container>
 
     <ng-container matColumnDef="mileage">
@@ -55,7 +55,22 @@
                             Prémium:
                         </div>
                         <div class="col-9 col-md-3 col-xl-1 d-flex justify-content-end justify-content-lg-start justify-content-xl-start">
-                            {{ element.fueling.isPremium ? "Igen":"Nem" }}
+                            {{ element.fueling.isPremium ? "Igen" : "Nem" }}
+                        </div>
+                    </div>
+                    <div class="row pb-3" *ngIf="fuelingData">
+                        <hr>
+                        <div class="col-8 col-md-5 col-xl-4 d-flex justify-content-start justify-content-lg-end justify-content-xl-end">
+                            Előző tankoláshoz képest:
+                        </div>
+                        <div class="col-4 col-md-1 col-xl-2 d-flex justify-content-end justify-content-lg-start justify-content-xl-start" *ngIf="fuelingData">
+                            {{ fuelingData.better ? "Keveseb" : "Több" }}
+                        </div>
+                        <div class="col-3 col-md-3 col-xl-2 d-flex justify-content-start justify-content-lg-end justify-content-xl-end">
+                            Fogyasztás:
+                        </div>
+                        <div class="col-9 col-md-3 col-xl-2 d-flex justify-content-end justify-content-lg-start justify-content-xl-start" *ngIf="fuelingData">
+                            {{ getNum(fuelingData.consumption,"l/100km") }}
                         </div>
                     </div>
                 </div>

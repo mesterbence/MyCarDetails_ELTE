@@ -4,7 +4,7 @@ import { Cost } from '../model/cost';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CostType } from '../model/costtype';
-import { Fueling } from '../model/fueling';
+import {FuelingCostResult} from "../model/fueling-cost-result";
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +48,8 @@ export class CostService {
           "isPremium": fueling_isPremium
         }
       });
+  }
+  getLastThreeFueling(carId: number, date: String, mileage:number) : Observable<FuelingCostResult> {
+      return this.httpClient.get<FuelingCostResult>(`${environment.baseUrl}/cost/fueling/${carId}/${date}/${mileage}`);
   }
 }
