@@ -5,15 +5,23 @@ import hu.bmester.mycardetails.service.CarService;
 import hu.bmester.mycardetails.service.CostService;
 import hu.bmester.mycardetails.service.CostTypeService;
 import hu.bmester.mycardetails.service.FuelingService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@Slf4j
 public class CostController {
 
     @Autowired
@@ -24,6 +32,9 @@ public class CostController {
 
     @Autowired
     private CostTypeService costTypeService;
+
+    @Autowired
+    private FuelingService fuelingService;
 
 
     @GetMapping("/api/cost/costs")
@@ -74,5 +85,19 @@ public class CostController {
     @GetMapping("/api/cost/years/{carId}")
     public ResponseEntity<?> getDistinctYear(@PathVariable Long carId) {
         return new ResponseEntity<>(costService.findDistinctYearsByCarId(carId), HttpStatus.OK);
+    }
+
+    @GetMapping("/api/cost/fueling/{carId}/{date}/{mileage}")
+    public ResponseEntity<?> getLastTwoFuelingBeforeCost(@PathVariable Long carId, @PathVariable String date, @PathVariable Integer mileage) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            List<FuelingCostResponse> lastThreeFueling = fuelingService.findLastThreeFuelingsByFuelingData(carId,new Timestamp(dateFormat.parse(date).getTime()),mileage);
+            double currentFuelingConsumption = lastThreeFueling.get(0).getQuantity() / (lastThreeFueling.get(0).getMileage() - lastThreeFueling.get(1).getMileage()) * 100;
+            double previousFuelingConsumption = lastThreeFueling.get(1).getQuantity() / (lastThreeFueling.get(1).getMileage() - lastThreeFueling.get(2).getMileage()) * 100;
+            return new ResponseEntity<>(new FuelingCostResult(currentFuelingConsumption<previousFuelingConsumption, currentFuelingConsumption), HttpStatus.OK);
+        } catch (ParseException e) {
+            log.error("PARSEEXCEPTION");
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

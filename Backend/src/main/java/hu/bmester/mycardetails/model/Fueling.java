@@ -27,4 +27,7 @@ public class Fueling {
 
     @Column(name = "ispremium")
     private Boolean isPremium;
+
+    @Column(name = "isfull")
+    private Boolean isFull;
 }
