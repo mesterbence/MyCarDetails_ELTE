@@ -51,6 +51,7 @@ export class CostsComponent implements OnInit {
     }
 
     toggleRow(row: any) {
+        this.fuelingData = undefined;
         if (this.expanded === row) {
             this.expanded = null;
             this.fuelingData = undefined;
