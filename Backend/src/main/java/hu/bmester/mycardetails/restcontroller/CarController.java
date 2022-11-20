@@ -1,6 +1,5 @@
 package hu.bmester.mycardetails.restcontroller;
 
-import hu.bmester.mycardetails.exceptionhandler.CarNotFoundException;
 import hu.bmester.mycardetails.exceptionhandler.ValidationException;
 import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.model.*;
@@ -9,13 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -40,6 +33,9 @@ public class CarController {
     @Autowired
     private FuelingService fuelingService;
 
+    @Autowired
+    private ControllerUtils controllerUtils;
+
     @GetMapping("/api/car/cars")
     public ResponseEntity<?> getAllCars() {
         return new ResponseEntity<>(carService.findAllCars(), HttpStatus.OK);
@@ -54,7 +50,7 @@ public class CarController {
     @GetMapping("/api/car/get/{carId}")
     public ResponseEntity<?> getCarById(@PathVariable Long carId) {
         Car car = carService.findCarById(carId);
-        validateExistsAndOwner(car);
+        controllerUtils.validateCarExistsAndOwner(car);
         return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
@@ -72,7 +68,7 @@ public class CarController {
     @PostMapping("/api/car/modify/{carId}")
     public ResponseEntity<?> editCar(@PathVariable Long carId, @Valid @RequestBody Car car) {
         Car carToUpdate = carService.findCarById(carId);
-        validateExistsAndOwner(carToUpdate);
+        controllerUtils.validateCarExistsAndOwner(carToUpdate);
         carToUpdate.setOwner(jwtUtil.getAuthenticatedUser());
         carToUpdate.setNumberplate(car.getNumberplate());
         carToUpdate.setBrand(car.getBrand());
@@ -85,7 +81,7 @@ public class CarController {
     @GetMapping("/api/car/stat/{carId}")
     public ResponseEntity<?> getSum(@PathVariable Long carId) {
         Car car = carService.findCarById(carId);
-        validateExistsAndOwner(car);
+        controllerUtils.validateCarExistsAndOwner(car);
         CostStatistic costStatistic = new CostStatistic();
         costStatistic.setPriceSum(costService.getPriceSum(carId));
         costStatistic.setFuelingSum(fuelingService.getFuelSum(carId));
@@ -100,7 +96,7 @@ public class CarController {
 
     @GetMapping("/api/car/mileages/{carId}")
     public ResponseEntity<?> getMileages(@PathVariable Long carId) {
-        validateExistsAndOwner(carId);
+        controllerUtils.validateCarExistsAndOwner(carId);
         ArrayList<Mileage> mileages = new ArrayList<>();
         costService.findAllCostsWithMileage(carId).forEach((cost) -> {
             mileages.add(new Mileage(cost.getDate(), cost.getMileage()));
@@ -110,7 +106,7 @@ public class CarController {
 
     @GetMapping("/api/car/mileages/{carId}/{year}")
     public ResponseEntity<?> getMileagesByYear(@PathVariable Long carId, @PathVariable Integer year) {
-        validateExistsAndOwner(carId);
+        controllerUtils.validateCarExistsAndOwner(carId);
         ArrayList<Mileage> mileages = new ArrayList<>();
         costService.findAllCostsWithMileageByCarIdAndYear(carId, year).forEach((cost) -> {
             mileages.add(new Mileage(cost.getDate(), cost.getMileage()));
@@ -120,20 +116,20 @@ public class CarController {
 
     @GetMapping("/api/car/categories/{carId}")
     public ResponseEntity<?> getCategs(@PathVariable Long carId) {
-        validateExistsAndOwner(carId);
+        controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(costService.getCategoryStat(carId), HttpStatus.OK);
     }
 
     @GetMapping("/api/car/categories/{carId}/{year}")
     public ResponseEntity<?> getCategsByYear(@PathVariable Long carId, @PathVariable Integer year) {
-        validateExistsAndOwner(carId);
+        controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(costService.getCategoryStatByYear(carId, year), HttpStatus.OK);
     }
 
     @GetMapping("/api/car/morestat/{carId}")
     public ResponseEntity<?> getMoreStat(@PathVariable Long carId) {
         Car car = carService.findCarById(carId);
-        validateExistsAndOwner(car);
+        controllerUtils.validateCarExistsAndOwner(car);
         CarStatistic carStatistic = new CarStatistic();
         carStatistic.setSumPrice(costService.getPriceSum(carId));
         carStatistic.setSumMileage(costService.getTraveledDistance(carId));
@@ -151,7 +147,7 @@ public class CarController {
     public ResponseEntity<?> getMoreStat(@PathVariable Long carId, @PathVariable Integer year) {
         CarStatistic carStatistic = new CarStatistic();
         Car car = carService.findCarById(carId);
-        validateExistsAndOwner(car);
+        controllerUtils.validateCarExistsAndOwner(car);
         carStatistic.setSumPrice(costService.getPriceSum(carId));
         carStatistic.setSumMileage(costService.getTraveledDistanceByYear(carId, year));
         carStatistic.setSumFueling(fuelingService.getFuelSumByYear(carId, year));
@@ -164,17 +160,5 @@ public class CarController {
         }
         carStatistic.setSelectedYearMonthlyAvg((double) costService.getPriceSumByYear(carId, year) / 12);
         return new ResponseEntity<>(carStatistic, HttpStatus.OK);
-    }
-    private void validateExistsAndOwner(Long carId) {
-        Car car = carService.findCarById(carId);
-        validateExistsAndOwner(car);
-    }
-    private void validateExistsAndOwner(Car car) {
-        if(car == null) {
-            throw new CarNotFoundException("Nincs ilyen autó!");
-        }
-        if(!car.getOwner().equals(jwtUtil.getAuthenticatedUser()) && !jwtUtil.getAuthenticatedUser().getRole().equals(UserRole.ADMIN)) {
-            throw new AccessDeniedException("Nincs joga az autó adatainak lekéréséhez!");
-        }
     }
 }

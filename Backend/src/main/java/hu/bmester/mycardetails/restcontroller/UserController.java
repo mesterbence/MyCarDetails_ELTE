@@ -1,5 +1,6 @@
 package hu.bmester.mycardetails.restcontroller;
 
+import hu.bmester.mycardetails.exceptionhandler.ValidationException;
 import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.jwt.LoginCredentials;
 import hu.bmester.mycardetails.model.LoginResponse;
@@ -14,12 +15,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -46,10 +46,10 @@ public class UserController {
     public ResponseEntity<?> createNewUser(@Valid @RequestBody User user) {
         user.setRole(UserRole.USER);
         if(null != userService.findUserByUsername(user.getUsername())) {
-            return new ResponseEntity<>("Foglalt felhasználói név!",HttpStatus.CONFLICT);
+            throw new ValidationException("Foglalt felhasználói név!");
         }
         if(null != userService.findUserByEmail(user.getEmail())) {
-            return new ResponseEntity<>("Foglalt e-mail cím!",HttpStatus.CONFLICT);
+            throw new ValidationException("Foglalt e-mail cím!");
         }
         String encodedPass = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPass);
@@ -68,7 +68,7 @@ public class UserController {
             loginResponse.setToken(token);
             return new ResponseEntity<>(loginResponse,HttpStatus.OK);
         } catch (AuthenticationException authExc){
-            return new ResponseEntity<>("Hibás felhasználónév vagy jelszó!",HttpStatus.UNAUTHORIZED);
+            throw new UsernameNotFoundException("Hibás felhasználói név vagy jelszó!");
         }
     }
 

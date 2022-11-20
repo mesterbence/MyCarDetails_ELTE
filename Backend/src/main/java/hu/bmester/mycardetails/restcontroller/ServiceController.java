@@ -1,5 +1,7 @@
 package hu.bmester.mycardetails.restcontroller;
 
+import hu.bmester.mycardetails.exceptionhandler.ServiceNotFoundException;
+import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.model.*;
 import hu.bmester.mycardetails.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,12 @@ public class ServiceController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ControllerUtils controllerUtils;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @GetMapping("/api/service/services")
     public ResponseEntity<?> getAllServices() {
         return new ResponseEntity<>(serviceService.findAllServices(), HttpStatus.OK);
@@ -35,6 +43,7 @@ public class ServiceController {
     @PostMapping("/api/service/new/{carId}")
     public ResponseEntity<?> addNewService(@RequestBody Service service, @PathVariable Long carId) {
         Car car = carService.findCarById(carId);
+        controllerUtils.validateCarExistsAndOwner(car);
         service.setCar(car);
         return new ResponseEntity<>(serviceService.saveService(service), HttpStatus.CREATED);
     }
@@ -43,19 +52,18 @@ public class ServiceController {
     public ResponseEntity<?> updateService(@RequestBody Service service, @PathVariable Long carId) {
         Service toUpdate = serviceService.findServiceById(service.getId());
         if(null == toUpdate) {
-            return new ResponseEntity<>("Nincs ilyen szerviz!",HttpStatus.NOT_FOUND);
+            throw new ServiceNotFoundException("Nincs ilyen szerviz!");
         }
         toUpdate = service;
         Car car = carService.findCarById(carId);
+        controllerUtils.validateCarExistsAndOwner(car);
         toUpdate.setCar(car);
         return new ResponseEntity<>(serviceService.saveService(toUpdate), HttpStatus.CREATED);
     }
 
     @GetMapping("/api/service/own/sum/actual")
     public ResponseEntity<?> getOwnServices() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object currentPrincipalName = authentication.getPrincipal();
-        User user = userService.findUserByUsername(currentPrincipalName.toString());
+        User user = jwtUtil.getAuthenticatedUser();
         List<Car> cars = carService.findCarsByOwner(user);
         List<ServiceSummary> sum = new ArrayList<>();
         cars.forEach(car -> {
@@ -68,6 +76,7 @@ public class ServiceController {
 
     @GetMapping("/api/services/{carId}")
     public ResponseEntity<?> getServicesByCarId(@PathVariable Long carId) {
+        controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(serviceService.findServicesByCarId(carId), HttpStatus.OK);
     }
 }

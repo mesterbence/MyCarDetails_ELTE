@@ -1,5 +1,6 @@
 package hu.bmester.mycardetails.restcontroller;
 
+import hu.bmester.mycardetails.exceptionhandler.ValidationException;
 import hu.bmester.mycardetails.model.*;
 import hu.bmester.mycardetails.service.CarService;
 import hu.bmester.mycardetails.service.CostService;
@@ -35,6 +36,9 @@ public class CostController {
     @Autowired
     private FuelingService fuelingService;
 
+    @Autowired
+    private ControllerUtils controllerUtils;
+
 
     @GetMapping("/api/cost/costs")
     public ResponseEntity<?> getAllCosts() {
@@ -49,15 +53,16 @@ public class CostController {
 
     @GetMapping("/api/cost/bycar/{carId}")
     public ResponseEntity<?> getAllCostsByCarId(@PathVariable Long carId) {
+        controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(costService.findByCarId(carId), HttpStatus.OK);
     }
 
     @PostMapping("/api/cost/create/{costTypeId}/{carId}")
     public ResponseEntity<?> createNewCost(@PathVariable Long carId, @PathVariable int costTypeId, @RequestBody Cost cost) {
         Car car = carService.findCarById(carId);
-        if(null == car) return new ResponseEntity<>("Nincs ilyen autó!",HttpStatus.NOT_FOUND); // TODO: json hibássá tenni
+        controllerUtils.validateCarExistsAndOwner(car);
         CostType type = costTypeService.findCostById(costTypeId);
-        if(null == type) return new ResponseEntity<>("Nincs ilyen típus!",HttpStatus.NOT_FOUND);
+        if(null == type) throw new ValidationException("Nincs ilyen típus!");
         cost.setCar(car);
         cost.setType(type);
         costService.saveCost(cost);
@@ -67,28 +72,32 @@ public class CostController {
     @PostMapping("/api/cost/create/{carId}")
     public ResponseEntity<?> createNewCost2(@PathVariable Long carId, @RequestBody Cost cost) {
         Car car = carService.findCarById(carId);
-        if(null == car) return new ResponseEntity<>("Nincs ilyen autó!",HttpStatus.NOT_FOUND); // TODO: json hibássá tenni
+        controllerUtils.validateCarExistsAndOwner(car);
         cost.setCar(car);
         return new ResponseEntity<>(costService.saveCost(cost), HttpStatus.CREATED); // TODO: rendes return
     }
 
     @GetMapping("/api/cost/fueling/{carId}")
     public ResponseEntity<?> getAllFuelingsByCarId(@PathVariable Long carId) {
+        controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(costService.findFuelings(carId), HttpStatus.OK);
     }
     @GetMapping("/api/cost/fueling/{carId}/{year}")
     public ResponseEntity<?> getAllFuelingsByCarIdByYear(@PathVariable Long carId, @PathVariable Integer year) {
+        controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(costService.findFuelingsByYear(carId,year), HttpStatus.OK);
     }
 
     @GetMapping("/api/cost/years/{carId}")
     public ResponseEntity<?> getDistinctYear(@PathVariable Long carId) {
+        controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(costService.findDistinctYearsByCarId(carId), HttpStatus.OK);
     }
 
     @GetMapping("/api/cost/fueling/{carId}/{date}/{mileage}")
     public ResponseEntity<?> getLastTwoFuelingBeforeCost(@PathVariable Long carId, @PathVariable String date, @PathVariable Integer mileage) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        controllerUtils.validateCarExistsAndOwner(carId);
         try {
             AtomicBoolean allFull = new AtomicBoolean(true);
             List<FuelingCostResponse> lastThreeFueling = fuelingService.findLastThreeFuelingsByFuelingData(carId,new Timestamp(dateFormat.parse(date).getTime()),mileage);
@@ -102,8 +111,7 @@ public class CostController {
             double previousFuelingConsumption = lastThreeFueling.get(1).getQuantity() / (lastThreeFueling.get(1).getMileage() - lastThreeFueling.get(2).getMileage()) * 100;
             return new ResponseEntity<>(new FuelingCostResult(currentFuelingConsumption<previousFuelingConsumption, currentFuelingConsumption), HttpStatus.OK);
         } catch (ParseException e) {
-            log.error("PARSEEXCEPTION");
+            throw new ValidationException("Hibás dátum formátum!");
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
