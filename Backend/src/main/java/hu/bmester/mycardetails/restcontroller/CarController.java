@@ -54,10 +54,8 @@ public class CarController {
     @GetMapping("/api/car/get/{carId}")
     public ResponseEntity<?> getCarById(@PathVariable Long carId) {
         Car car = carService.findCarById(carId);
-        if (!car.getOwner().equals(jwtUtil.getAuthenticatedUser())) {
-            throw new AccessDeniedException("Nincs hozzáférése ehhez az autóhoz!");
-        }
-        return new ResponseEntity<>(carService.findCarById(carId), HttpStatus.OK);
+        validateExistsAndOwner(car);
+        return new ResponseEntity<>(car, HttpStatus.OK);
     }
 
 
@@ -175,7 +173,7 @@ public class CarController {
         if(car == null) {
             throw new CarNotFoundException("Nincs ilyen autó!");
         }
-        if(!car.getOwner().equals(jwtUtil.getAuthenticatedUser())) {
+        if(!car.getOwner().equals(jwtUtil.getAuthenticatedUser()) && !jwtUtil.getAuthenticatedUser().getRole().equals(UserRole.ADMIN)) {
             throw new AccessDeniedException("Nincs joga az autó adatainak lekéréséhez!");
         }
     }

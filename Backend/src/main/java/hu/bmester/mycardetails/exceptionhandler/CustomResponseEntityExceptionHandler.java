@@ -34,7 +34,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler(CarNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleCarNotFoundException(ValidationException e, WebRequest request) {
+    public ResponseEntity<ErrorMessage> handleCarNotFoundException(CarNotFoundException e, WebRequest request) {
         ErrorMessage errorMessage = new ErrorMessage(new Date(), e.getMessage(), request.getDescription(false));
         log.error(jwtUtil.getAuthenticatedUser().getUsername() + ": CarNotFoundException " + errorMessage.toString());
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
