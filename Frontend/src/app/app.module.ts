@@ -34,6 +34,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {ServicelistComponent} from './servicelist/servicelist.component';
 import {MatSortModule} from "@angular/material/sort";
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {MatSortModule} from "@angular/material/sort";
         MyprofileComponent,
         MorestatComponent,
         AdminComponent,
-        ServicelistComponent
+        ServicelistComponent,
+        AdminUsersComponent
     ],
     imports: [
         BrowserModule,

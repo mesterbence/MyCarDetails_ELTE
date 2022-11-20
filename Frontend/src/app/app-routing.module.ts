@@ -9,6 +9,7 @@ import { MyprofileComponent } from './myprofile/myprofile.component';
 import { NewcarComponent } from './newcar/newcar.component';
 import { RegisterComponent } from './register/register.component';
 import {ServicelistComponent} from "./servicelist/servicelist.component";
+import {AdminUsersComponent} from "./admin/admin-users/admin-users.component";
 
 const routes: Routes = [
   { path: 'costs', component: CostsComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'newcar', component: NewcarComponent },
   { path: 'myprofile', component: MyprofileComponent },
   { path: 'morestat/:id', component: MorestatComponent },
+  { path: 'admin/users', component: AdminUsersComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'services/:id', component: ServicelistComponent },
   { path: '', component: RegisterComponent }

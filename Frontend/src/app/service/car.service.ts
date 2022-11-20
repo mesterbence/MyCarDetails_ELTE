@@ -24,6 +24,9 @@ export class CarService {
   getAllOwnCars(): Observable<Car[]> {
     return this.httpClient.get<Car[]>(`${environment.baseUrl}/car/own`);
   }
+  getAllCars(): Observable<Car[]> {
+    return this.httpClient.get<Car[]>(`${environment.baseUrl}/car/cars`);
+  }
   getCarById(carId: number): Observable<Car> {
     return this.httpClient.get<Car>(`${environment.baseUrl}/car/get/${carId}`);
   }
