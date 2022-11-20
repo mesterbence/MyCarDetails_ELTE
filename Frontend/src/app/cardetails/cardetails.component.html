@@ -23,16 +23,16 @@
                             <mat-icon class="float-end">edit</mat-icon>
                         </button>
                         <button [routerLink]="['/morestat', this.carId]" class="list-group-item list-group-item-action">
-                            Statisztikai diagramok
-                            <mat-icon class="float-end">ssid_chart</mat-icon>
-                        </button>
-                        <button [routerLink]="['/morestatdata', this.carId]" class="list-group-item list-group-item-action">
                             Statisztikai adatok
-                            <mat-icon class="float-end">leaderboard</mat-icon>
+                            <mat-icon class="float-end">ssid_chart</mat-icon>
                         </button>
                         <button [routerLink]="['/services', this.carId]" class="list-group-item list-group-item-action">
                             Szervizesedékességek áttekintése
                             <mat-icon class="float-end">construction</mat-icon>
+                        </button>
+                        <button class="list-group-item list-group-item-action disabled">
+                            Autó törlése
+                            <mat-icon class="float-end">delete</mat-icon>
                         </button>
                     </ul>
                 </div>
