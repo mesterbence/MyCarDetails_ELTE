@@ -19,9 +19,9 @@ export class JwtInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             catchError((err: any) => {
                 return throwError(() => {
-                    new Error(err.error);
+                    new Error(err.error.message);
                     console.log(err)
-                    this.snackBar.open(err.error, 'Bezárás', { verticalPosition: 'top', duration: 3000 });
+                    this.snackBar.open(err.error.message, 'Bezárás', { verticalPosition: 'top', duration: 3000 });
                 })
             })
         );

@@ -6,7 +6,13 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import hu.bmester.mycardetails.model.User;
+import hu.bmester.mycardetails.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -16,6 +22,9 @@ public class JwtUtil {
 
     @Value("${jwt.secret}")
     private String secret;
+
+    @Autowired
+    private UserService userService;
 
     public String generateToken(String username) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()
@@ -33,6 +42,12 @@ public class JwtUtil {
                 .build();
         DecodedJWT jwt = verifier.verify(token);
         return jwt.getClaim("username").asString();
+    }
+
+    public User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object currentPrincipalName = authentication.getPrincipal();
+        return userService.findUserByUsername(currentPrincipalName.toString());
     }
 
 }
