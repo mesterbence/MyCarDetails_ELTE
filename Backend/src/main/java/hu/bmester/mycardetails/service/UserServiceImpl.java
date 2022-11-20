@@ -1,5 +1,6 @@
 package hu.bmester.mycardetails.service;
 
+import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.model.User;
 import hu.bmester.mycardetails.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public List<User> findAllUsers() {
@@ -39,20 +43,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeUserPassword(String password) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getPrincipal().toString();
-        User currentUser = userRepository.findUserByUsername(currentUserName);
-        if(currentUser == null) { throw new UsernameNotFoundException(currentUserName + " felhasználó nem létezik."); }
+        User currentUser = jwtUtil.getAuthenticatedUser();
+        if(currentUser == null) { throw new UsernameNotFoundException("Felhasználó nem létezik!"); }
         currentUser.setPassword(password);
         userRepository.save(currentUser);
     }
 
     @Override
     public void changeUserMail(String mail) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getPrincipal().toString();
-        User currentUser = userRepository.findUserByUsername(currentUserName);
-        if(currentUser == null) { throw new UsernameNotFoundException(currentUserName + " felhasználó nem létezik."); }
+        User currentUser = jwtUtil.getAuthenticatedUser();
+        if(currentUser == null) { throw new UsernameNotFoundException("Felhasználó nem létezik!"); }
         currentUser.setEmail(mail);
         userRepository.save(currentUser);
     }
