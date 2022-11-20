@@ -8,6 +8,7 @@ import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DatePipe} from "@angular/common";
+import Utils from "../helpers/utils";
 
 
 @Component({
@@ -36,6 +37,7 @@ export class ServicelistComponent implements OnInit {
         }
     }
 
+    numberOnly = Utils.numberOnly;
 
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe(params => {
@@ -60,12 +62,5 @@ export class ServicelistComponent implements OnInit {
     }
     onEditSubmit() {
         this.serviceService.updateService(this.editServiceFG.value,this.carId).subscribe((data) => console.log("xs"));
-    }
-    numberOnly(event: any): boolean {
-        const charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            return false;
-        }
-        return true;
     }
 }

@@ -4,6 +4,7 @@ import { Car } from '../model/car';
 import { ServiceSummary } from '../model/service-summary';
 import { CarService } from '../service/car.service';
 import { LogoService } from '../service/logo.service';
+import Utils from "../helpers/utils";
 
 @Component({
   selector: 'app-mycars',
@@ -18,6 +19,8 @@ export class MycarsComponent implements OnInit {
   constructor(private carService: CarService,
     private router: Router,
     protected logoService: LogoService) { }
+
+  handleMissingImage = Utils.handleMissingImage;
 
   ngOnInit(): void {
     this.carService.getAllOwnCars().subscribe(
@@ -41,8 +44,5 @@ export class MycarsComponent implements OnInit {
       return this.serviceSummary.find(service => service.carId === carId)!.serviceSum;
     }
     return 0;
-  }
-  handleMissingImage(event: Event) {
-    (event.target as HTMLImageElement).style.display = 'none';
   }
 }

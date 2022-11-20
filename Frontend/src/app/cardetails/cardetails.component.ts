@@ -46,6 +46,7 @@ export class CardetailsComponent implements OnInit {
               private serviceService: ServiceService) { }
 
   getNum = Utils.getNum;
+  numberOnly = Utils.numberOnly;
 
   ngOnInit(): void {
 
@@ -142,13 +143,6 @@ export class CardetailsComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  numberOnly(event: any): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
-  }
 
   onModifySubmit() {
     this.carService.modify(this.modifyCarGroup.get('numberplate')?.value, this.modifyCarGroup.get('brand')?.value, this.modifyCarGroup.get('model')?.value, this.modifyCarGroup.get('fuelType')?.value, this.carId)

@@ -34,7 +34,7 @@ export class CostsComponent implements OnInit {
     constructor(private costService: CostService,
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
-                private datepipe: DatePipe) {
+                private datePipe: DatePipe) {
     }
 
     getNum = Utils.getNum;
@@ -80,15 +80,13 @@ export class CostsComponent implements OnInit {
 
     getConsumptionData(element: any) {
         if (element.car.id !== null && element.date !== null && element.mileage !== null) {
-            this.costService.getLastThreeFueling(element.car.id, this.datepipe.transform(element.date, 'yyyy-MM-dd')!, element.mileage).subscribe(
+            this.costService.getLastThreeFueling(element.car.id, this.datePipe.transform(element.date, 'yyyy-MM-dd')!, element.mileage).subscribe(
                 (data) => {
                     if (data !== null) {
                         this.fuelingData = data;
-                        console.log("adatok betöltve")
                     }
                 }
             );
-            console.log(this.fuelingData)
         }
     }
 
