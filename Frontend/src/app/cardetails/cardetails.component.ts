@@ -15,6 +15,7 @@ import { CostsComponent } from '../costs/costs.component';
 import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { _isNumberValue } from '@angular/cdk/coercion';
 import {ServiceService} from "../service/service.service";
+import Utils from "../helpers/utils";
 
 @Component({
   selector: 'app-cardetails',
@@ -43,6 +44,8 @@ export class CardetailsComponent implements OnInit {
               private costTypeService: CosttypeService,
               private fuelTypeService: FueltypeService,
               private serviceService: ServiceService) { }
+
+  getNum = Utils.getNum;
 
   ngOnInit(): void {
 
@@ -155,12 +158,5 @@ export class CardetailsComponent implements OnInit {
   onServiceSubmit() {
     this.serviceService.createService(this.serviceGroup.value,this.carId).subscribe((data) => console.log("xs"));
     console.log(this.serviceGroup.value)
-  }
-  getNum(num: number, unit: String) {
-    if (num === null || isNaN(num)) { return "Még nincs adat"; }
-    if( num % 1 !== 0) { 
-      return (Math.round(num * 10**2) / 10**2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + unit;
-    }
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + unit;
   }
 }

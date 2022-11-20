@@ -6,6 +6,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FuelingCostResult} from "../model/fueling-cost-result";
 import {DatePipe} from "@angular/common";
+import Utils from "../helpers/utils";
 
 @Component({
     selector: 'app-costs',
@@ -35,6 +36,8 @@ export class CostsComponent implements OnInit {
                 private router: Router,
                 private datepipe: DatePipe) {
     }
+
+    getNum = Utils.getNum;
 
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe(params => {
@@ -88,13 +91,4 @@ export class CostsComponent implements OnInit {
         }
     }
 
-    getNum(num: number, unit: String) {
-        if (num === null || isNaN(num)) {
-            return "Még nincs adat";
-        }
-        if (num % 1 !== 0) {
-            return (Math.round(num * 10 ** 2) / 10 ** 2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + unit;
-        }
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + unit;
-    }
 }
