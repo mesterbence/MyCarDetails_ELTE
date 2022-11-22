@@ -34,8 +34,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {ServicelistComponent} from './servicelist/servicelist.component';
 import {MatSortModule} from "@angular/material/sort";
-import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
+import {AdminUsersComponent} from './admin/admin-users/admin-users.component';
 import {AdminCarsComponent} from "./admin/admin-cars/admin-cars.component";
+import {MatDialogModule} from '@angular/material/dialog';
+import {DeleteDialogComponent} from "./cardetails/dialog/delete-dialog/delete-dialog.component";
 
 
 @NgModule({
@@ -52,7 +54,8 @@ import {AdminCarsComponent} from "./admin/admin-cars/admin-cars.component";
         AdminComponent,
         ServicelistComponent,
         AdminUsersComponent,
-        AdminCarsComponent
+        AdminCarsComponent,
+        DeleteDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -75,7 +78,8 @@ import {AdminCarsComponent} from "./admin/admin-cars/admin-cars.component";
         MatBadgeModule,
         MatButtonModule,
         MatMenuModule,
-        MatSortModule
+        MatSortModule,
+        MatDialogModule
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

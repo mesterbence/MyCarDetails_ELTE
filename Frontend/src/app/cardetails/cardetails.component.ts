@@ -5,17 +5,16 @@ import { CarService } from '../service/car.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CostType } from '../model/costtype';
-import { UserRole } from '../model/userrole';
 import { CosttypeService } from '../service/costtype.service';
 import { CostService } from '../service/cost.service';
 import { FuelType } from '../model/fueltype';
 import { FueltypeService } from '../service/fueltype.service';
 import { Carstatistic } from '../model/carstatistic';
 import { CostsComponent } from '../costs/costs.component';
-import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
-import { _isNumberValue } from '@angular/cdk/coercion';
 import {ServiceService} from "../service/service.service";
 import Utils from "../helpers/utils";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "./dialog/delete-dialog/delete-dialog.component";
 
 @Component({
   selector: 'app-cardetails',
@@ -43,7 +42,8 @@ export class CardetailsComponent implements OnInit {
               private formBuilder: FormBuilder,
               private costTypeService: CosttypeService,
               private fuelTypeService: FueltypeService,
-              private serviceService: ServiceService) { }
+              private serviceService: ServiceService,
+              private dialog: MatDialog) { }
 
   getNum = Utils.getNum;
   numberOnly = Utils.numberOnly;
@@ -152,5 +152,14 @@ export class CardetailsComponent implements OnInit {
   onServiceSubmit() {
     this.serviceService.createService(this.serviceGroup.value,this.carId).subscribe((data) => console.log("xs"));
     console.log(this.serviceGroup.value)
+  }
+
+  openDeleteCar(): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed: ' + result);
+      //this.animal = result;
+    });
   }
 }
