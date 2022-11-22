@@ -10,7 +10,7 @@
                                     <h5 class="card-title">{{ car.numberplate }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">{{ car.brand + " " + car.model }}</h6>
                                 </div>
-                                <div class="col-4"><img class="col-12" src="{{ logoService.getBrandUrl(car.brand) }}"
+                                <div class="col-4"><img class="col-12" [src]="logoService.getBrandUrl(car.brand)"
                                                         (error)="handleMissingImage($event)">
                                 </div>
                             </div>
