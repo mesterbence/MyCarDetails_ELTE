@@ -35,6 +35,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {ServicelistComponent} from './servicelist/servicelist.component';
 import {MatSortModule} from "@angular/material/sort";
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
+import {AdminCarsComponent} from "./admin/admin-cars/admin-cars.component";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
         MorestatComponent,
         AdminComponent,
         ServicelistComponent,
-        AdminUsersComponent
+        AdminUsersComponent,
+        AdminCarsComponent
     ],
     imports: [
         BrowserModule,
