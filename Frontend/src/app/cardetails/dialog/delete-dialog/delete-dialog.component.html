@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Biztosan törli az autót?</h1>
+<div mat-dialog-content>
+    <p>Az autóhoz tartozó összes adat törlődik!</p>
+    <hr>
+    <p>A megerősítéshez írja be az autó rendszámát:</p>
+    <mat-form-field appearance="outline">
+        <mat-label>Rendszám</mat-label>
+        <input matInput [(ngModel)]="data">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions class="justify-content-center">
+    <button mat-button class="mcd-button" (click)="onClose()">Bezárás</button>
+    <button mat-button class="mcd-button" [mat-dialog-close]="data">Törlés</button>
+</div>
