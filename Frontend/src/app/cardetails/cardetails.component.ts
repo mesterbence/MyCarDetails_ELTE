@@ -88,7 +88,8 @@ export class CardetailsComponent implements OnInit {
             note: [''],
             fueling_type: [''],
             fueling_quantity: [''],
-            fueling_isPremium: ['']
+            fueling_isPremium: [''],
+            fueling_isFull: [''],
         });
         this.serviceGroup = this.formBuilder.group({
             date: [''],
@@ -110,7 +111,8 @@ export class CardetailsComponent implements OnInit {
                 this.newCostGroup.get('note')?.value,
                 this.newCostGroup.get('fueling_type')?.value,
                 this.newCostGroup.get('fueling_quantity')?.value,
-                this.newCostGroup.get('fueling_isPremium')?.value
+                this.newCostGroup.get('fueling_isPremium')?.value,
+                this.newCostGroup.get('fueling_isFull')?.value
             ).subscribe((data) => {
                 this.costs?.addCost(data);
             })
@@ -168,7 +170,7 @@ export class CardetailsComponent implements OnInit {
             if(result !== undefined) {
                 this.delCarNumberPlate = result;
                 if(this.delCarNumberPlate === this.carData.numberplate) {
-                    console.log("Deletekár: " + this.delCarNumberPlate)
+                    this.carService.deleteCar(this.carData.id).subscribe(data => this.router.navigate(['/mycars']));
                 }
             }
 

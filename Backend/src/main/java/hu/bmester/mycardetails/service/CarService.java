@@ -12,4 +12,5 @@ public interface CarService {
     List<Car> findCarsByOwner(User owner);
     Car findCarById(Long id);
     Car updateCar(Car car);
+    void delete(Car car);
 }

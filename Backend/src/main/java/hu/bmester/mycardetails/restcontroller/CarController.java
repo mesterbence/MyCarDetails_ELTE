@@ -8,10 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -35,6 +37,9 @@ public class CarController {
 
     @Autowired
     private ControllerUtils controllerUtils;
+
+    @Autowired
+    private ServiceService serviceService;
 
     @GetMapping("/api/car/cars")
     public ResponseEntity<?> getAllCars() {
@@ -160,5 +165,25 @@ public class CarController {
         }
         carStatistic.setSelectedYearMonthlyAvg((double) costService.getPriceSumByYear(carId, year) / 12);
         return new ResponseEntity<>(carStatistic, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/api/car/delete/{carId}")
+    @Transactional
+    public ResponseEntity<?> deleteCar(@PathVariable Long carId) {
+        Car car = carService.findCarById(carId);
+        List<Service> services = serviceService.findServicesByCarId(carId);
+        controllerUtils.validateCarExistsAndOwner(car);
+        List<Cost> costs = costService.findByCarId(carId);
+        services.forEach(service -> {
+            service.setCar(null);
+            serviceService.delete(service);
+
+        });
+        costs.forEach(cost -> {
+            cost.setCar(null);
+            costService.delete(cost);
+        });
+        carService.delete(car);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

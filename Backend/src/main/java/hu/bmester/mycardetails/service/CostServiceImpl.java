@@ -85,4 +85,9 @@ public class CostServiceImpl implements CostService {
     public List<CategoryStat> getCategoryStatByYear(Long carId, Integer year) {
         return costRepository.getCategoryStatByYear(carId, year);
     }
+
+    @Override
+    public void delete(Cost cost) {
+        costRepository.delete(cost);
+    }
 }

@@ -15,4 +15,5 @@ public interface FuelingService {
     Fueling findFirstByCost_Car(Car car);
     Fueling findFirstByCost_CarDesc(Car car);
     List<FuelingCostResponse> findLastThreeFuelingsByFuelingData(Long carId, Timestamp date, Integer mileage);
+    void delete(Fueling fueling);
 }

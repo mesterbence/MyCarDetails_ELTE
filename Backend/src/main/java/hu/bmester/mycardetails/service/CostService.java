@@ -22,4 +22,5 @@ public interface CostService {
     List<CategoryStat> getCategoryStatByYear(Long carId,Integer year);
     List<Integer> findDistinctYearsByCarId(Long carId);
     List<Cost> findAllCostsWithMileageByCarIdAndYear(Long carId, Integer year);
+    void delete(Cost cost);
 }

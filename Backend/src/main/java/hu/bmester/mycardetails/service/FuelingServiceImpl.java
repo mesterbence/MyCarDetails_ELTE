@@ -42,4 +42,9 @@ public class FuelingServiceImpl implements FuelingService {
     public List<FuelingCostResponse> findLastThreeFuelingsByFuelingData(Long carId, Timestamp date, Integer mileage) {
         return fuelingRepository.findLastThreeFuelingsByFuelingData(carId,date,mileage);
     }
+
+    @Override
+    public void delete(Fueling fueling) {
+        fuelingRepository.delete(fueling);
+    }
 }

@@ -7,4 +7,5 @@ export class Fueling {
     quantity!: number;
     type!: FuelType;
     isPremium!: boolean;
+    isFull!: boolean;
 }

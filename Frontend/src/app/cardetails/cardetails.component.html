@@ -142,6 +142,15 @@
                             </mat-select>
                         </mat-form-field>
                     </p>
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Teletank</mat-label>
+                            <mat-select formControlName="fueling_isFull" required>
+                                <mat-option [value]="true">Igen</mat-option>
+                                <mat-option [value]="false">Nem</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </p>
                 </div>
             </div>
         </div>

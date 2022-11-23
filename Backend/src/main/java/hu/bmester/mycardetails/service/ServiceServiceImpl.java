@@ -36,4 +36,9 @@ public class ServiceServiceImpl implements ServiceService {
     public hu.bmester.mycardetails.model.Service findServiceById(Long serviceId) {
         return serviceRepository.findServiceById(serviceId);
     }
+
+    @Override
+    public void delete(hu.bmester.mycardetails.model.Service service) {
+        serviceRepository.deleteById(service.getId());
+    }
 }

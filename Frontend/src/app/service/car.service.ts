@@ -74,4 +74,8 @@ export class CarService {
   getCarStatisticByYear(carId: number,year:number): Observable<MoreCarstat> {
     return this.httpClient.get<MoreCarstat>(`${environment.baseUrl}/car/morestat/${carId}/${year}`);
   }
+
+  deleteCar(carId: number) {
+    return this.httpClient.delete(`${environment.baseUrl}/car/delete/${carId}`);
+  }
 }
