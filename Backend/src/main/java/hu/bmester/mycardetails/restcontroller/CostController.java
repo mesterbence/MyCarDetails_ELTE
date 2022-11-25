@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin({"http://localhost:4200","https://bmester.hu"})
 @RestController
 @Slf4j
 public class CostController {
