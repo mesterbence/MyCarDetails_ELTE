@@ -22,19 +22,15 @@
                                 év: {{ filterValue === 0 ? "Mindenkori" : filterValue }}</mat-panel-description>
                         </mat-expansion-panel-header>
                         <ul class="list-group" *ngIf="moreCarStat">
-                            <li class="list-group-item">Autóra összesen költött összeg: {{moreCarStat.sumPrice}} Ft</li>
-                            <li class="list-group-item">Összes megtett kilométer: {{moreCarStat.sumMileage}} km</li>
-                            <li class="list-group-item">Összes tankolt üzemanyag mennyiség: {{moreCarStat.sumFueling}}
-                                liter
-                            </li>
-                            <li class="list-group-item">Ft / km díj: {{moreCarStat.pricePerKilometer}} Ft</li>
-                            <li class="list-group-item">Átlagfogyasztás: {{moreCarStat.avgConsumption}}</li>
+                            <li class="list-group-item">Autóra összesen költött összeg: {{getNum(moreCarStat.sumPrice,"Ft")}}</li>
+                            <li class="list-group-item">Összes megtett kilométer: {{getNum(moreCarStat.sumMileage,"km")}}</li>
+                            <li class="list-group-item">Összes tankolt üzemanyag mennyiség: {{getNum(moreCarStat.sumFueling,"liter")}}</li>
+                            <li class="list-group-item">Ft / km díj: {{getNum(moreCarStat.pricePerKilometer,"Ft/km")}}</li>
+                            <li class="list-group-item">Átlagfogyasztás: {{getNum(moreCarStat.avgConsumption,"l/100km")}}</li>
                             <li class="list-group-item" *ngIf="filterValue !== 0">{{filterValue}}. évben összesen
-                                elköltve: {{moreCarStat.selectedYearSum}} Ft
-                            </li>
+                                elköltve: {{getNum(moreCarStat.selectedYearSum,"Ft")}}</li>
                             <li class="list-group-item" *ngIf="filterValue !== 0">Havi átlagos
-                                költség: {{moreCarStat.selectedYearMonthlyAvg}} Ft
-                            </li>
+                                költség: {{getNum(moreCarStat.selectedYearMonthlyAvg,"Ft")}}</li>
                         </ul>
                     </mat-expansion-panel>
                 </div>

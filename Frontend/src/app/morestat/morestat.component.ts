@@ -7,6 +7,7 @@ import {DatePipe} from '@angular/common';
 import {MileageStat} from '../model/mileage-stat';
 import {CategoryStat} from '../model/category-stat';
 import {MoreCarstat} from "../model/more-carstat";
+import Utils from "../helpers/utils";
 
 
 @Component({
@@ -32,6 +33,8 @@ export class MorestatComponent implements OnInit {
                 private router: Router,
                 private datePipe: DatePipe) {
     }
+
+    getNum = Utils.getNum;
 
     public lineChart: GoogleChartInterface = {
         chartType: GoogleChartType.LineChart,
