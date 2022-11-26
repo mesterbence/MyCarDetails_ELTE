@@ -9,7 +9,7 @@ export default class Utils {
     private static datePipe: DatePipe;
 
     static getNum(num: number, unit: String) {
-        if (num === null || isNaN(num)) { return "Még nincs adat"; }
+        if (num === null || isNaN(num)) { return "Nincs adat"; }
         if( num % 1 !== 0) {
             return (Math.round(num * 10**2) / 10**2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " " + unit;
         }
@@ -17,7 +17,7 @@ export default class Utils {
     }
 
     static getDate(date: any) {
-        if (date === null) { return "Még nincs adat"; }
+        if (date === null) { return "Nincs adat"; }
         return this.datePipe.transform(date.date, 'yyyy.MM.dd.');
         //return date.date;
     }

@@ -26,7 +26,7 @@ export class CostsComponent implements OnInit {
 
     costs!: Cost[];
     dataSource!: any;
-    displayedColumns: string[] = ['date', 'type', 'price', 'title', 'mileage'];
+    displayedColumns: string[] = ['date', 'type', 'price', 'title', 'mileage','expandable'];
     expanded!: Cost | any;
     breakpoint !: number;
     carId!: number;
