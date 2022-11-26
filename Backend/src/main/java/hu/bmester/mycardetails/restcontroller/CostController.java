@@ -95,7 +95,7 @@ public class CostController {
     }
 
     @GetMapping("/api/cost/fueling/{carId}/{date}/{mileage}")
-    public ResponseEntity<?> getLastTwoFuelingBeforeCost(@PathVariable Long carId, @PathVariable String date, @PathVariable Integer mileage) throws ParseException {
+    public ResponseEntity<?> getLastTwoFuelingBeforeCost(@PathVariable Long carId, @PathVariable String date, @PathVariable Integer mileage) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         controllerUtils.validateCarExistsAndOwner(carId);
         try {
