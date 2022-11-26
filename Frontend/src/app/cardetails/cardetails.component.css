@@ -1,19 +1,3 @@
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-    color: #B6E388;
-}
-
-::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
-    color: #B6E388;
-}
-
-::ng-deep .mat-ink-bar {
-    background-color: #B6E388 !important;
-}
-
-mat-label {
-    color: gray !important;
-}
-
 .input-container input {
     border: none;
     box-sizing: border-box;
@@ -22,8 +6,6 @@ mat-label {
     position: relative;
     width: 100%;
 }
-
-
 .list-group-green .list-group-item:hover {
     background-color: #B6E388;
 }
