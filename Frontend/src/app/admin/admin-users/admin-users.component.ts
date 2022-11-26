@@ -19,7 +19,6 @@ export class AdminUsersComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe(data => {
       this.users = data;
-      console.log(data)
       this.dataSource = new MatTableDataSource(this.users);
     })
   }

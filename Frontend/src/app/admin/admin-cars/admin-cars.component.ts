@@ -23,7 +23,6 @@ export class AdminCarsComponent implements OnInit {
     ngOnInit(): void {
         this.carService.getAllCars().subscribe(data => {
             this.cars = data;
-            console.log(data)
             this.dataSource = new MatTableDataSource(this.cars);
         })
     }
