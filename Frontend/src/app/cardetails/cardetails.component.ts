@@ -70,11 +70,7 @@ export class CardetailsComponent implements OnInit {
                         this.fuelTypes = data;
                     }
                 );
-                this.carService.getCarStat(this.carId).subscribe(
-                    data => {
-                        this.carStat = data;
-                    }
-                );
+                this.loadCarStat(this.carId);
             } else {
                 this.router.navigate(['/mycars']);
             }
@@ -115,6 +111,7 @@ export class CardetailsComponent implements OnInit {
                 this.newCostGroup.get('fueling_isFull')?.value
             ).subscribe((data) => {
                 this.costs?.addCost(data);
+                this.loadCarStat(this.carId);
             })
         } else {
             this.costService.saveCost(
@@ -127,6 +124,7 @@ export class CardetailsComponent implements OnInit {
                 this.newCostGroup.get('note')?.value
             ).subscribe((data) => {
                 this.costs?.addCost(data);
+                this.loadCarStat(this.carId);
             })
         }
         this.modalService.dismissAll();
@@ -175,5 +173,12 @@ export class CardetailsComponent implements OnInit {
             }
 
         });
+    }
+    loadCarStat(carId: number) {
+        this.carService.getCarStat(carId).subscribe(
+            data => {
+                this.carStat = data;
+            }
+        );
     }
 }
