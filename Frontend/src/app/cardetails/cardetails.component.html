@@ -41,7 +41,7 @@
         <div class="col-lg-4 pb-2">
             <div class="bg-white rounded pt-2 p-3">
                 <div class="padding-title">
-                    Statisztika
+                    Statisztikák
                     <span class="float-end edit padding-button" [routerLink]="['/morestat', this.carId]"><mat-icon
                             class="float-end">more_horiz</mat-icon></span>
                 </div>
@@ -179,6 +179,9 @@
     </button>
     <button mat-menu-item [routerLink]="['/morestat', this.carId]">
         Statisztikai adatok megtekintése
+    </button>
+    <button mat-menu-item [routerLink]="['/services', this.carId]">
+        Szervizesedékességek áttekintése
     </button>
     <button mat-menu-item (click)="openDeleteCar()">
         Autó törlése
