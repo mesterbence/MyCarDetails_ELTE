@@ -51,7 +51,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleUsernameNotFoundException(UsernameNotFoundException e, WebRequest request) {
         ErrorMessage errorMessage = new ErrorMessage(new Date(), e.getMessage(), request.getDescription(false));
-        log.error(jwtUtil.getAuthenticatedUser().getUsername() + ": UsernameNotFoundException " + errorMessage.toString());
+        log.error("UsernameNotFoundException " + errorMessage.toString());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
