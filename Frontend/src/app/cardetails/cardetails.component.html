@@ -129,7 +129,7 @@
                     <p>
                         <mat-form-field appearance="outline">
                             <mat-label>Tankolt mennyiség</mat-label>
-                            <input formControlName="fueling_quantity" type="text" matInput>
+                            <input (keypress)="numberOnlyWithComma($event)" formControlName="fueling_quantity" type="text" matInput>
                             <mat-icon matSuffix>60fps</mat-icon>
                         </mat-form-field>
                     </p>

@@ -49,6 +49,7 @@ export class CardetailsComponent implements OnInit {
 
     getNum = Utils.getNum;
     numberOnly = Utils.numberOnly;
+    numberOnlyWithComma = Utils.numberOnlyWithComma;
 
     ngOnInit(): void {
 
