@@ -38,6 +38,9 @@ import {AdminUsersComponent} from './admin/admin-users/admin-users.component';
 import {AdminCarsComponent} from "./admin/admin-cars/admin-cars.component";
 import {MatDialogModule} from '@angular/material/dialog';
 import {DeleteDialogComponent} from "./cardetails/dialog/delete-dialog/delete-dialog.component";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
+import {MyDateAdapter} from "./helpers/my-date-adapter";
 
 
 @NgModule({
@@ -80,11 +83,15 @@ import {DeleteDialogComponent} from "./cardetails/dialog/delete-dialog/delete-di
         MatMenuModule,
         MatSortModule,
         MatDialogModule,
-        FormsModule
+        FormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-        CookieService
+        CookieService,
+        {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
+        {provide: DateAdapter, useClass: MyDateAdapter},
     ],
     bootstrap: [AppComponent]
 })
