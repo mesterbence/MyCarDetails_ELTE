@@ -30,13 +30,11 @@
                 </div>
             </div>
             <div class="col-xl-2 col-lg-4 col-sm-6 col-12 d-flex">
-                <div class="card mb-3 flex-fill shadow">
-                    <a [routerLink]="['/newcar']">
-                        <div class="card-body">
-                            <h5 class="card-title">Új autó rögzítése</h5>
-                            <!--                        <a [routerLink]="['/newcar']" class="btn btn-light">Felvétel</a>-->
-                        </div>
-                    </a>
+                <div class="card mb-3 flex-fill shadow" [routerLink]="['/newcar']">
+                    <div class="card-body">
+                        <h5 class="card-title">Új autó rögzítése</h5>
+                        <!--                        <a [routerLink]="['/newcar']" class="btn btn-light">Felvétel</a>-->
+                    </div>
                 </div>
             </div>
         </div>
