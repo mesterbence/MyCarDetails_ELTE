@@ -44,23 +44,26 @@ export class CarService {
   getCarStat(carId: number): Observable<Carstatistic> {
     return this.httpClient.get<Carstatistic>(`${environment.baseUrl}/car/stat/${carId}`);
   }
-  getCarMileages(carId: number): Observable<MileageStat[]> {
-    return this.httpClient.get<MileageStat[]>(`${environment.baseUrl}/car/mileages/${carId}`);
+  getCarMileages(carId: number, year: number | null): Observable<MileageStat[]> {
+    if(year) {
+      return this.httpClient.get<MileageStat[]>(`${environment.baseUrl}/car/mileages/${carId}/${year}`);
+    } else {
+      return this.httpClient.get<MileageStat[]>(`${environment.baseUrl}/car/mileages/${carId}`);
+    }
   }
-  getCarMileagesByYear(carId: number, year:number): Observable<MileageStat[]> {
-    return this.httpClient.get<MileageStat[]>(`${environment.baseUrl}/car/mileages/${carId}/${year}`);
+  getCarFuelings(carId: number, year: number | null): Observable<Cost[]> {
+    if(year) {
+      return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/fueling/${carId}/${year}`);
+    } else {
+      return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/fueling/${carId}`);
+    }
   }
-  getCarFuelings(carId: number): Observable<Cost[]> {
-    return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/fueling/${carId}`);
-  }
-  getCarFuelingsByYear(carId: number,year:number): Observable<Cost[]> {
-    return this.httpClient.get<Cost[]>(`${environment.baseUrl}/cost/fueling/${carId}/${year}`);
-  }
-  getCarCostCategories(carId: number): Observable<CategoryStat[]> {
-    return this.httpClient.get<CategoryStat[]>(`${environment.baseUrl}/car/categories/${carId}`);
-  }
-  getCarCostCategoriesByYear(carId: number, year: number): Observable<CategoryStat[]> {
-    return this.httpClient.get<CategoryStat[]>(`${environment.baseUrl}/car/categories/${carId}/${year}`);
+  getCarCostCategories(carId: number, year: number | null): Observable<CategoryStat[]> {
+    if(year) {
+      return this.httpClient.get<CategoryStat[]>(`${environment.baseUrl}/car/categories/${carId}/${year}`);
+    } else {
+      return this.httpClient.get<CategoryStat[]>(`${environment.baseUrl}/car/categories/${carId}`);
+    }
   }
   getServiceSum(): Observable<ServiceSummary[]> {
     return this.httpClient.get<ServiceSummary[]>(`${environment.baseUrl}/service/own/sum/actual`);
@@ -68,11 +71,12 @@ export class CarService {
   getDistinctYears(carId: number): Observable<number[]> {
     return this.httpClient.get<number[]>(`${environment.baseUrl}/cost/years/${carId}`);
   }
-  getCarStatistic(carId: number): Observable<MoreCarstat> {
-    return this.httpClient.get<MoreCarstat>(`${environment.baseUrl}/car/morestat/${carId}`);
-  }
-  getCarStatisticByYear(carId: number,year:number): Observable<MoreCarstat> {
-    return this.httpClient.get<MoreCarstat>(`${environment.baseUrl}/car/morestat/${carId}/${year}`);
+  getCarStatistic(carId: number, year: number | null): Observable<MoreCarstat> {
+    if(year) {
+      return this.httpClient.get<MoreCarstat>(`${environment.baseUrl}/car/morestat/${carId}/${year}`);
+    } else {
+      return this.httpClient.get<MoreCarstat>(`${environment.baseUrl}/car/morestat/${carId}`);
+    }
   }
 
   deleteCar(carId: number) {

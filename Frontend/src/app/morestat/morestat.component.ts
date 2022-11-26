@@ -35,9 +35,6 @@ export class MorestatComponent implements OnInit {
 
     public lineChart: GoogleChartInterface = {
         chartType: GoogleChartType.LineChart,
-        dataTable: [
-            ['Dátum', 'Üzemanyag ára (Ft)']
-        ],
         options: {
             title: 'Üzemanyag literenkénti ára',
             height: 650,
@@ -58,9 +55,6 @@ export class MorestatComponent implements OnInit {
 
     public mileageChart: GoogleChartInterface = {
         chartType: GoogleChartType.LineChart,
-        dataTable: [
-            ['Dátum', 'Kilométeróra állása']
-        ],
         options: {
             title: 'Kilométeróra állása',
             height: 650,
@@ -80,9 +74,6 @@ export class MorestatComponent implements OnInit {
     };
     public categoryChart: GoogleChartInterface = {
         chartType: GoogleChartType.ColumnChart,
-        dataTable: [
-            ['Kategória', 'Összeg']
-        ],
         options: {
             title: 'Kategóriák',
             animation: {
@@ -107,52 +98,14 @@ export class MorestatComponent implements OnInit {
                         this.years = [...this.years, ...data];
                     }
                 )
-                this.carService.getCarFuelings(this.carId).subscribe(
-                    data => {
-                        this.fuelings = data;
-                        this.fuelings.slice().reverse().forEach((fueling) => {
-                            if (this.fuelings.length > 45) {
-                                this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity]);
-                            } else {
-                                this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity])
-                            }
-                            this.prices.push(fueling.price / fueling.fueling.quantity);
-                        })
-                        this.lineChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.prices) - 50;
-                        this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
-                    }
-                );
-                this.carService.getCarMileages(this.carId).subscribe(
-                    data => {
-                        this.mileages = data;
-                        this.mileages.forEach((mileage) => {
-                            if (this.mileages.length > 45) {
-                                this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), mileage.mileage]);
-                            } else {
-                                this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), mileage.mileage])
-                            }
-                            this.storedMileages.push(mileage.mileage);
-                        })
-                        this.mileageChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.storedMileages) - 5000;
-                        this.mileageChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.storedMileages) + 5000;
-                    }
-                );
-                this.carService.getCarStatistic(this.carId).subscribe(
-                    data => {
-                        this.moreCarStat = data;
-                    }
-                )
+                this.loadFuelingChartData(this.carId, 0);
+                this.loadCarMileagesChartData(this.carId, 0);
+                this.loadCostCategoriesChartData(this.carId,0);
+                this.loadCarStatistic(this.carId,0);
             } else {
                 this.router.navigate(['/mycars']);
             }
-            this.carService.getCarCostCategories(this.carId).subscribe(
-                data => {
-                    this.categories = data;
-                    this.categories.forEach((category) => {
-                        this.categoryChart.dataTable.push([category.name, category.sum]);
-                    });
-                }
-            );
+
         });
     }
 
@@ -164,24 +117,18 @@ export class MorestatComponent implements OnInit {
 
     filterChangeYear(year: number) {
         this.filterValue = year;
-        if (this.filterValue !== 0) {
-            this.carService.getCarStatisticByYear(this.carId, this.filterValue).subscribe(
-                data => {
-                    this.moreCarStat = data;
-                }
-            )
-        } else {
-            this.carService.getCarStatistic(this.carId).subscribe(
-                data => {
-                    this.moreCarStat = data;
-                }
-            )
-        }
+        this.loadCarStatistic(this.carId,this.filterValue);
+        this.loadFuelingChartData(this.carId,this.filterValue);
+        this.loadCarMileagesChartData(this.carId,this.filterValue);
+        this.loadCostCategoriesChartData(this.carId,this.filterValue);
+    }
+
+    loadFuelingChartData(carId: number, year: number) {
         this.lineChart.dataTable = [['Dátum', 'Üzemanyag ára (Ft)']];
-        if (this.filterValue === 0) {
-            this.carService.getCarFuelings(this.carId).subscribe(
-                data => {
-                    this.fuelings = data;
+        this.carService.getCarFuelings(carId, year === 0 ? null : year).subscribe(
+            data => {
+                this.fuelings = data;
+                if (this.fuelings.length > 0) {
                     this.fuelings.slice().reverse().forEach((fueling) => {
                         if (this.fuelings.length > 45) {
                             this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity]);
@@ -194,82 +141,51 @@ export class MorestatComponent implements OnInit {
                     this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
                     this.lineChart.component?.draw();
                 }
-            );
-        } else {
-            this.carService.getCarFuelingsByYear(this.carId, year).subscribe(
-                data => {
-                    this.fuelings = data;
-                    this.fuelings.slice().reverse().forEach((fueling) => {
-                        if (this.fuelings.length > 45) {
-                            this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity]);
-                        } else {
-                            this.lineChart.dataTable.push([this.datePipe.transform(fueling.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), fueling.price / fueling.fueling.quantity])
-                        }
-                        this.prices.push(fueling.price / fueling.fueling.quantity);
-                    })
-                    this.lineChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.prices) - 50;
-                    this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
-                    this.lineChart.component?.draw();
-                }
-            );
-        }
-        this.mileageChart.dataTable = [['Dátum', 'Kilométeróra állása']];
-        if (this.filterValue === 0) {
-            this.carService.getCarMileages(this.carId).subscribe(
-                data => {
-                    this.mileages = data;
-                    this.mileages.forEach((mileage) => {
-                        if (this.mileages.length > 45) {
-                            this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), mileage.mileage]);
-                        } else {
-                            this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), mileage.mileage])
-                        }
-                        this.storedMileages.push(mileage.mileage);
-                    })
-                    this.mileageChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.storedMileages) - 5000;
-                    this.mileageChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.storedMileages) + 5000;
-                    this.mileageChart.component?.draw();
-                }
-            );
-        } else {
-            this.carService.getCarMileagesByYear(this.carId, this.filterValue).subscribe(
-                data => {
-                    this.mileages = data;
-                    this.mileages.forEach((mileage) => {
-                        if (this.mileages.length > 45) {
-                            this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), mileage.mileage]);
-                        } else {
-                            this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), mileage.mileage])
-                        }
-                        this.storedMileages.push(mileage.mileage);
-                    })
-                    this.mileageChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.storedMileages) - 5000;
-                    this.mileageChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.storedMileages) + 5000;
-                    this.mileageChart.component?.draw();
-                }
-            );
-        }
+
+            }
+        );
+    }
+    loadCostCategoriesChartData(carId: number, year:number) {
         this.categoryChart.dataTable = [['Kategória', 'Összeg']];
-        if (this.filterValue === 0) {
-            this.carService.getCarCostCategories(this.carId).subscribe(
-                data => {
-                    this.categories = data;
+        this.carService.getCarCostCategories(carId,year === 0 ? null : year).subscribe(
+            data => {
+                this.categories = data;
+                if (this.categories.length > 0) {
                     this.categories.forEach((category) => {
                         this.categoryChart.dataTable.push([category.name, category.sum]);
                     });
                     this.categoryChart.component?.draw();
                 }
-            );
-        } else {
-            this.carService.getCarCostCategoriesByYear(this.carId, this.filterValue).subscribe(
-                data => {
-                    this.categories = data;
-                    this.categories.forEach((category) => {
-                        this.categoryChart.dataTable.push([category.name, category.sum]);
-                    });
-                    this.categoryChart.component?.draw();
+
+            }
+        );
+    }
+    loadCarMileagesChartData(carId: number, year: number) {
+        this.mileageChart.dataTable = [['Dátum', 'Kilométeróra állása']];
+        this.carService.getCarMileages(carId,year === 0 ? null : year).subscribe(
+            data => {
+                this.mileages = data;
+                if (this.mileages.length > 0) {
+                    this.mileages.forEach((mileage) => {
+                        if (this.mileages.length > 45) {
+                            this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM')?.toString().replaceAll('-', '.'), mileage.mileage]);
+                        } else {
+                            this.mileageChart.dataTable.push([this.datePipe.transform(mileage.date, 'yyyy-MM-dd')?.toString().replaceAll('-', '.'), mileage.mileage])
+                        }
+                        this.storedMileages.push(mileage.mileage);
+                    })
+                    this.mileageChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.storedMileages) - 5000;
+                    this.mileageChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.storedMileages) + 5000;
+                    this.mileageChart.component?.draw();
                 }
-            );
-        }
+            }
+        );
+    }
+    loadCarStatistic(carId: number, year: number) {
+        this.carService.getCarStatistic(carId,year === 0 ? null : year).subscribe(
+            data => {
+                this.moreCarStat = data;
+            }
+        )
     }
 }

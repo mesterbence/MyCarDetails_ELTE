@@ -18,24 +18,35 @@
                             <mat-panel-title>
                                 További statisztikai adatok
                             </mat-panel-title>
-                            <mat-panel-description>Kiválasztott év: {{ filterValue === 0 ? "Mindenkori" : filterValue }}</mat-panel-description>
+                            <mat-panel-description>Kiválasztott
+                                év: {{ filterValue === 0 ? "Mindenkori" : filterValue }}</mat-panel-description>
                         </mat-expansion-panel-header>
                         <ul class="list-group" *ngIf="moreCarStat">
                             <li class="list-group-item">Autóra összesen költött összeg: {{moreCarStat.sumPrice}} Ft</li>
                             <li class="list-group-item">Összes megtett kilométer: {{moreCarStat.sumMileage}} km</li>
-                            <li class="list-group-item">Összes tankolt üzemanyag mennyiség: {{moreCarStat.sumFueling}} liter</li>
+                            <li class="list-group-item">Összes tankolt üzemanyag mennyiség: {{moreCarStat.sumFueling}}
+                                liter
+                            </li>
                             <li class="list-group-item">Ft / km díj: {{moreCarStat.pricePerKilometer}} Ft</li>
                             <li class="list-group-item">Átlagfogyasztás: {{moreCarStat.avgConsumption}}</li>
-                            <li class="list-group-item" *ngIf="filterValue !== 0">{{filterValue}}. évben összesen elköltve: {{moreCarStat.selectedYearSum}} Ft</li>
-                            <li class="list-group-item" *ngIf="filterValue !== 0">Havi átlagos költség: {{moreCarStat.selectedYearMonthlyAvg}} Ft</li>
+                            <li class="list-group-item" *ngIf="filterValue !== 0">{{filterValue}}. évben összesen
+                                elköltve: {{moreCarStat.selectedYearSum}} Ft
+                            </li>
+                            <li class="list-group-item" *ngIf="filterValue !== 0">Havi átlagos
+                                költség: {{moreCarStat.selectedYearMonthlyAvg}} Ft
+                            </li>
                         </ul>
                     </mat-expansion-panel>
                 </div>
-                <google-chart *ngIf="fuelings" [data]="lineChart"></google-chart>
-                <hr>
-                <google-chart *ngIf="mileages" [data]="mileageChart"></google-chart>
-                <hr>
-                <google-chart *ngIf="categories" [data]="categoryChart"></google-chart>
+                <google-chart *ngIf="fuelings && fuelings.length > 0" [data]="lineChart"></google-chart>
+                <hr *ngIf="fuelings && fuelings.length > 0">
+                <google-chart *ngIf="mileages && mileages.length > 0" [data]="mileageChart"></google-chart>
+                <hr *ngIf="mileages && mileages.length > 0">
+                <google-chart *ngIf="categories && categories.length > 0" [data]="categoryChart"></google-chart>
+                <div *ngIf="(!fuelings || fuelings.length === 0) && (!mileages || mileages.length === 0) && (!categories || categories.length === 0)"
+                     class="d-flex justify-content-center pt-5 pb-3">
+                    Rögzítsen további költségeket, hogy grafikont készíthessünk!
+                </div>
             </div>
         </div>
     </div>
