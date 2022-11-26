@@ -23,10 +23,6 @@ mat-label {
     width: 100%;
 }
 
-::ng-deep .cdk-overlay-container {
-    z-index: 9999;
-}
-
 
 .list-group-green .list-group-item:hover {
     background-color: #B6E388;

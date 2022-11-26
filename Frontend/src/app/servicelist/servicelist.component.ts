@@ -43,10 +43,13 @@ export class ServicelistComponent implements OnInit {
         this.activatedRoute.paramMap.subscribe(params => {
             if (params.get('id') !== null) {
                 this.carId = params.get('id');
-                this.serviceService.getAllServices(this.carId).subscribe(data => {
-                    this.serviceList = new MatTableDataSource(data);
-                })
+                this.loadServices(this.carId);
             }
+        })
+    }
+    loadServices(carId: number) {
+        this.serviceService.getAllServices(carId).subscribe(data => {
+            this.serviceList = new MatTableDataSource(data);
         })
     }
     clickedService(service: Service,content:any) {
@@ -57,10 +60,12 @@ export class ServicelistComponent implements OnInit {
             note: service.note,
             done: service.done
         });
-        console.log(this.editServiceFG.value)
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
     }
     onEditSubmit() {
-        this.serviceService.updateService(this.editServiceFG.value,this.carId).subscribe((data) => console.log("xs"));
+        this.serviceService.updateService(this.editServiceFG.value,this.carId).subscribe(data => {
+            this.loadServices(this.carId);
+            this.modalService.dismissAll();
+        });
     }
 }

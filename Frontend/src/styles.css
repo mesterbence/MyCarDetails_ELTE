@@ -40,3 +40,6 @@ mat-label {
 .mat-tab-label {
     width: 100%;
 }
+.cdk-overlay-container {
+    z-index: 9999;
+}

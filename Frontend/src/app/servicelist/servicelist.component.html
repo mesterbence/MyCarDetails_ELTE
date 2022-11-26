@@ -47,9 +47,9 @@
             <div class="align-items-center justify-content-center pt-4">
                 <p>
                     <mat-form-field appearance="outline">
-                        <mat-label>Dátum</mat-label>
-                        <input formControlName="date" type="date" matInput>
-                        <mat-icon matSuffix>calendar_month</mat-icon>
+                        <input formControlName="date" matInput [matDatepicker]="date">
+                        <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                        <mat-datepicker #date></mat-datepicker>
                     </mat-form-field>
                 </p>
                 <p>
