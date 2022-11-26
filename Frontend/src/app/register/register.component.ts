@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../service/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -17,9 +18,13 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private httpClient: HttpClient,
     private authService: AuthService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+              private router:Router) { }
 
   ngOnInit(): void {
+    if(this.authService.hasToken()) {
+      this.router.navigate(['/mycars']);
+    }
     this.loginForm = this.formBuilder.group({
       username: [''],
       password: ['']
