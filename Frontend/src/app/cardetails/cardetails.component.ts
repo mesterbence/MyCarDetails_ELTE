@@ -76,18 +76,7 @@ export class CardetailsComponent implements OnInit {
                 this.router.navigate(['/mycars']);
             }
         });
-        this.newCostGroup = this.formBuilder.group({
-            costtype: [''],
-            price: [''],
-            mileage: [''],
-            title: [''],
-            date: [''],
-            note: [''],
-            fueling_type: [''],
-            fueling_quantity: [''],
-            fueling_isPremium: [''],
-            fueling_isFull: [''],
-        });
+        this.initNewCostGroup();
         this.serviceGroup = this.formBuilder.group({
             date: [''],
             mileage: null,
@@ -113,6 +102,7 @@ export class CardetailsComponent implements OnInit {
             ).subscribe((data) => {
                 this.costs?.addCost(data);
                 this.loadCarStat(this.carId);
+                this.initNewCostGroup();
             })
         } else {
             this.costService.saveCost(
@@ -126,6 +116,7 @@ export class CardetailsComponent implements OnInit {
             ).subscribe((data) => {
                 this.costs?.addCost(data);
                 this.loadCarStat(this.carId);
+                this.initNewCostGroup();
             })
         }
         this.modalService.dismissAll();
@@ -183,5 +174,19 @@ export class CardetailsComponent implements OnInit {
                 this.carStat = data;
             }
         );
+    }
+    initNewCostGroup() {
+        this.newCostGroup = this.formBuilder.group({
+            costtype: [''],
+            price: [''],
+            mileage: [''],
+            title: [''],
+            date: [''],
+            note: [''],
+            fueling_type: [''],
+            fueling_quantity: [''],
+            fueling_isPremium: [''],
+            fueling_isFull: [''],
+        });
     }
 }
