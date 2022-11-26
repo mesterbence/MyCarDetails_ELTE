@@ -1,4 +1,5 @@
-<table mat-table class="mat-elevation-z8" [dataSource]="dataSource" *ngIf="dataSource" multiTemplateDataRows>
+<div class="pt-3 pb-3 bg-white rounded d-flex justify-content-center" *ngIf="costs && costs.length === 0">Még nincs költés. Új költés rögzítéséhez használja a bal alsó gombot!</div>
+<table mat-table class="mat-elevation-z8" [dataSource]="dataSource" *ngIf="dataSource && costs.length !== 0" multiTemplateDataRows>
 
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>Időpont</th>
