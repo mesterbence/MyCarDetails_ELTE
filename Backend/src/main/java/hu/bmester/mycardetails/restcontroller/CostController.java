@@ -106,8 +106,7 @@ public class CostController {
                     allFull.set(false);
                 }
             });
-            if(lastThreeFueling.size() != 3 || !allFull.get()) { return new ResponseEntity<>(null,HttpStatus.NOT_FOUND); }
-            // TODO: Előző sorban hiba van, megnézni
+            if(lastThreeFueling.size() != 3 || !allFull.get()) { return new ResponseEntity<>(null,HttpStatus.OK); }
             double currentFuelingConsumption = lastThreeFueling.get(0).getQuantity() / (lastThreeFueling.get(0).getMileage() - lastThreeFueling.get(1).getMileage()) * 100;
             double previousFuelingConsumption = lastThreeFueling.get(1).getQuantity() / (lastThreeFueling.get(1).getMileage() - lastThreeFueling.get(2).getMileage()) * 100;
             return new ResponseEntity<>(new FuelingCostResult(currentFuelingConsumption<previousFuelingConsumption, currentFuelingConsumption), HttpStatus.OK);
