@@ -156,8 +156,10 @@ export class CardetailsComponent implements OnInit {
     }
 
     onServiceSubmit() {
-        this.serviceService.createService(this.serviceGroup.value, this.carId).subscribe((data) => console.log("xs"));
-        console.log(this.serviceGroup.value)
+        this.serviceService.createService(this.serviceGroup.value, this.carId).subscribe((data) => {
+            this.modalService.dismissAll();
+            this.router.navigate(['/services',this.carId]);
+        });
     }
 
     openDeleteCar(): void {
