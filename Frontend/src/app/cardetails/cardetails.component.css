@@ -15,3 +15,12 @@
     left: 20px;
     display: block;
 }
+.padding-title {
+    margin-top: 5px;
+    padding-bottom: 15px;
+}
+.edit:hover {
+    background-color: #B6E388;
+    border-radius: 25px;
+    padding: 5px;
+}

@@ -2,7 +2,11 @@
     <div class="row pt-2">
         <div class="col-lg-4 pb-2">
             <div class="bg-white rounded pt-2 p-3">
-                <p>Autó adatai</p>
+                <div class="padding-title">
+                    Autó adatai
+                    <span class="float-end edit padding-button delete-button" (click)="openModify(modifyCar)"><mat-icon
+                            class="float-end">edit</mat-icon></span>
+                </div>
                 <div class="col-lg-12 shadow-lg bg-white rounded">
                     <ul class="list-group">
                         <li class="list-group-item">Rendszám: {{ carData.numberplate }}</li>
@@ -15,32 +19,36 @@
         </div>
         <div class="col-lg-4 pb-2">
             <div class="bg-white rounded pt-2 p-3">
-                <p>Műveletek</p>
+                <div class="padding-title">Műveletek</div>
                 <div class="col-lg-12 shadow-lg bg-white rounded">
                     <ul class="list-group list-group-green">
-                        <button class="list-group-item list-group-item-action" (click)="openModify(modifyCar)">
+                        <!-- <button class="list-group-item list-group-item-action" (click)="openModify(modifyCar)">
                             Autó adatainak módosítása
                             <mat-icon class="float-end">edit</mat-icon>
                         </button>
                         <button [routerLink]="['/morestat', this.carId]" class="list-group-item list-group-item-action">
                             Statisztikai adatok
                             <mat-icon class="float-end">ssid_chart</mat-icon>
-                        </button>
+                        </button> -->
                         <button [routerLink]="['/services', this.carId]" class="list-group-item list-group-item-action">
                             Szervizesedékességek áttekintése
                             <mat-icon class="float-end">construction</mat-icon>
                         </button>
-                        <button class="list-group-item list-group-item-action" (click)="openDeleteCar()">
+                        <!-- <button class="list-group-item list-group-item-action" (click)="openDeleteCar()">
                             Autó törlése
                             <mat-icon class="float-end">delete</mat-icon>
-                        </button>
+                        </button> -->
                     </ul>
                 </div>
             </div>
         </div>
         <div class="col-lg-4 pb-2">
             <div class="bg-white rounded pt-2 p-3">
-                <p>Költségek</p>
+                <div class="padding-title">
+                    Statisztika
+                    <span class="float-end edit padding-button" [routerLink]="['/morestat', this.carId]"><mat-icon
+                            class="float-end">more_horiz</mat-icon></span>
+                </div>
                 <div class="col-lg-12 shadow-lg bg-white rounded" *ngIf="this.carStat">
                     <ul class="list-group">
                         <li class="list-group-item">Összes költött összeg: {{ getNum(this.carStat.priceSum, "Ft") }}
@@ -61,7 +69,7 @@
     </div>
     <div class="fixed-button">
         <button mat-fab class="mcd-button" [matMenuTriggerFor]="menu">
-            <mat-icon>add</mat-icon>
+            <mat-icon>menu</mat-icon>
         </button>
     </div>
 </div>
@@ -130,7 +138,8 @@
                     <p>
                         <mat-form-field appearance="outline">
                             <mat-label>Tankolt mennyiség</mat-label>
-                            <input (keypress)="numberOnlyWithComma($event)" formControlName="fueling_quantity" type="text" matInput>
+                            <input (keypress)="numberOnlyWithComma($event)" formControlName="fueling_quantity"
+                                   type="text" matInput>
                             <mat-icon matSuffix>60fps</mat-icon>
                         </mat-form-field>
                     </p>
@@ -162,14 +171,25 @@
 </ng-template>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['/newcar']">
-        Új autó felvétele
-    </button>
+
     <button mat-menu-item (click)="open(newCost)">
-        Költség rögzítése
+        Új költség rögzítése
     </button>
     <button mat-menu-item (click)="open(service)">
-        Szervizesedékesség rögzítése
+        Új szervizesedékesség rögzítése
+    </button>
+    <button mat-menu-item (click)="openModify(modifyCar)">
+        Autó adatainak módosítása
+    </button>
+    <button mat-menu-item [routerLink]="['/morestat', this.carId]">
+        Statisztikai adatok megtekintése
+    </button>
+    <button mat-menu-item (click)="openDeleteCar()">
+        Autó törlése
+    </button>
+    <hr>
+    <button mat-menu-item [routerLink]="['/newcar']">
+        Új autó felvétele
     </button>
 </mat-menu>
 
