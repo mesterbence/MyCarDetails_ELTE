@@ -15,6 +15,9 @@ export class ServiceService {
   getAllServices(carId: any): Observable<Service[]> {
     return this.httpClient.get<Service[]>(`${environment.baseUrl}/services/${carId}`);
   }
+  findNextMOT(carId: number): Observable<Service> {
+    return this.httpClient.get<Service>(`${environment.baseUrl}/services/nextmot/${carId}`);
+  }
   createService(service: Service, carId: number) {
     return this.httpClient.post<any>(`${environment.baseUrl}/service/new/${carId}`, service);
   }

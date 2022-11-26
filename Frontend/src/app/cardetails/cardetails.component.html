@@ -19,25 +19,21 @@
         </div>
         <div class="col-lg-4 pb-2">
             <div class="bg-white rounded pt-2 p-3">
-                <div class="padding-title">Műveletek</div>
+                <div class="padding-title">Szervizek</div>
                 <div class="col-lg-12 shadow-lg bg-white rounded">
                     <ul class="list-group list-group-green">
-                        <!-- <button class="list-group-item list-group-item-action" (click)="openModify(modifyCar)">
-                            Autó adatainak módosítása
-                            <mat-icon class="float-end">edit</mat-icon>
-                        </button>
-                        <button [routerLink]="['/morestat', this.carId]" class="list-group-item list-group-item-action">
-                            Statisztikai adatok
-                            <mat-icon class="float-end">ssid_chart</mat-icon>
-                        </button> -->
-                        <button [routerLink]="['/services', this.carId]" class="list-group-item list-group-item-action">
+                        <button [routerLink]="['/services', this.carId]" class="list-group-item list-group-item-green list-group-item-action">
                             Szervizesedékességek áttekintése
                             <mat-icon class="float-end">construction</mat-icon>
                         </button>
-                        <!-- <button class="list-group-item list-group-item-action" (click)="openDeleteCar()">
-                            Autó törlése
-                            <mat-icon class="float-end">delete</mat-icon>
-                        </button> -->
+                        <button (click)="open(service)" class="list-group-item list-group-item-green list-group-item-action">
+                            Szervizesedékesség rögzítése
+                            <mat-icon class="float-end">add</mat-icon>
+                        </button>
+                        <li class="list-group-item">Következő műszaki vizsga: {{ getDate(nextMOT) }}
+                        </li>
+                        <li class="list-group-item">Esedékes szervizelések: {{ getBadgeValue(carId) }}
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import { ServiceSummary } from '../model/service-summary';
 import { CarService } from '../service/car.service';
 import { LogoService } from '../service/logo.service';
 import Utils from "../helpers/utils";
+import {ServiceService} from "../service/service.service";
 
 @Component({
   selector: 'app-mycars',

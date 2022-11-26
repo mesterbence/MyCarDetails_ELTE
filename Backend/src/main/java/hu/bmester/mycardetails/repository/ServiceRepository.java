@@ -15,4 +15,8 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
             " WHERE s.car = :carId AND (s.done IS NULL OR s.done IS FALSE) AND ((SELECT MAX(c.mileage) FROM Costs c where c.car = :carId) > s.mileage-1500 OR (now()+INTERVAL '15 day') > s.date) ORDER BY s.date DESC",
             nativeQuery = true)
     List<Service> findActualServicesByCar_Id(Long carId);
+
+    @Query(value = "select s.* from services s where car=:carId AND (done IS NULL OR done IS FALSE) and lower(note) like '%műszaki%' order by DATE_PART('day', date - now()) limit 1",
+            nativeQuery = true)
+    Service findNextMOT(Long carId); // Ministry of Transport = MOT = Műszaki
 }

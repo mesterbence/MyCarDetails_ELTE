@@ -12,4 +12,5 @@ public interface ServiceService {
     List<Service> findActualServicesByCarId(Long carId);
     Service findServiceById(Long serviceId);
     void delete(Service service);
+    Service findNextMOT(Long carId);
 }

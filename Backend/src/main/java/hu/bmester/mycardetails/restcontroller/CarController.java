@@ -151,6 +151,7 @@ public class CarController {
     }
 
     @GetMapping("/api/car/morestat/{carId}/{year}")
+    // TODO: itt még 0-val osztás van
     public ResponseEntity<?> getMoreStat(@PathVariable Long carId, @PathVariable Integer year) {
         CarStatistic carStatistic = new CarStatistic();
         Car car = carService.findCarById(carId);

@@ -79,4 +79,9 @@ public class ServiceController {
         controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(serviceService.findServicesByCarId(carId), HttpStatus.OK);
     }
+    @GetMapping("/api/services/nextmot/{carId}")
+    public ResponseEntity<?> getNextMOTByCarId(@PathVariable Long carId) {
+        controllerUtils.validateCarExistsAndOwner(carId);
+        return new ResponseEntity<>(serviceService.findNextMOT(carId), HttpStatus.OK);
+    }
 }

@@ -15,11 +15,15 @@ import {ServiceService} from "../service/service.service";
 import Utils from "../helpers/utils";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "./dialog/delete-dialog/delete-dialog.component";
+import {Service} from "../model/service";
+import {DatePipe} from "@angular/common";
+import {ServiceSummary} from "../model/service-summary";
 
 @Component({
     selector: 'app-cardetails',
     templateUrl: './cardetails.component.html',
-    styleUrls: ['./cardetails.component.css']
+    styleUrls: ['./cardetails.component.css'],
+    providers: [DatePipe]
 })
 export class CardetailsComponent implements OnInit {
 
@@ -34,6 +38,8 @@ export class CardetailsComponent implements OnInit {
     fuelTypes!: FuelType[];
     carStat!: Carstatistic;
     delCarNumberPlate!: String;
+    nextMOT: Service = new Service();
+    serviceSummary!: ServiceSummary[];
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
@@ -44,12 +50,14 @@ export class CardetailsComponent implements OnInit {
                 private costTypeService: CosttypeService,
                 private fuelTypeService: FueltypeService,
                 private serviceService: ServiceService,
-                private dialog: MatDialog) {
+                private dialog: MatDialog,
+                private datePipe: DatePipe) {
     }
 
     getNum = Utils.getNum;
     numberOnly = Utils.numberOnly;
     numberOnlyWithComma = Utils.numberOnlyWithComma;
+    getDate = Utils.getDate;
 
     ngOnInit(): void {
 
@@ -71,6 +79,11 @@ export class CardetailsComponent implements OnInit {
                         this.fuelTypes = data;
                     }
                 );
+                this.serviceService.findNextMOT(this.carId).subscribe(
+                    data => {
+                        this.nextMOT = data;
+                    }
+                )
                 this.loadCarStat(this.carId);
             } else {
                 this.router.navigate(['/mycars']);
@@ -81,7 +94,12 @@ export class CardetailsComponent implements OnInit {
             date: [''],
             mileage: null,
             note: [''],
-        })
+        });
+        this.carService.getServiceSum().subscribe(
+            data => {
+                this.serviceSummary = data;
+            }
+        );
     }
 
     onSubmit() {
@@ -149,7 +167,7 @@ export class CardetailsComponent implements OnInit {
     onServiceSubmit() {
         this.serviceService.createService(this.serviceGroup.value, this.carId).subscribe((data) => {
             this.modalService.dismissAll();
-            this.router.navigate(['/services',this.carId]);
+            this.router.navigate(['/services', this.carId]);
         });
     }
 
@@ -159,15 +177,16 @@ export class CardetailsComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if(result !== undefined) {
+            if (result !== undefined) {
                 this.delCarNumberPlate = result;
-                if(this.delCarNumberPlate === this.carData.numberplate) {
+                if (this.delCarNumberPlate === this.carData.numberplate) {
                     this.carService.deleteCar(this.carData.id).subscribe(data => this.router.navigate(['/mycars']));
                 }
             }
 
         });
     }
+
     loadCarStat(carId: number) {
         this.carService.getCarStat(carId).subscribe(
             data => {
@@ -175,6 +194,7 @@ export class CardetailsComponent implements OnInit {
             }
         );
     }
+
     initNewCostGroup() {
         this.newCostGroup = this.formBuilder.group({
             costtype: [''],
@@ -188,5 +208,11 @@ export class CardetailsComponent implements OnInit {
             fueling_isPremium: [''],
             fueling_isFull: [''],
         });
+    }
+    getBadgeValue(carId: number) {
+        if(this.serviceSummary) {
+            return this.serviceSummary.find(service => service.carId === carId)!.serviceSum;
+        }
+        return 0;
     }
 }

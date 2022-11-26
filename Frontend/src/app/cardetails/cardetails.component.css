@@ -6,7 +6,7 @@
     position: relative;
     width: 100%;
 }
-.list-group-green .list-group-item:hover {
+.list-group-green .list-group-item-green:hover {
     background-color: #B6E388;
 }
 .fixed-button {
