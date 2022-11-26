@@ -112,13 +112,13 @@
                         <mat-datepicker #date></mat-datepicker>
                     </mat-form-field>
                 </p>
-                <p>
+                <!-- <p>
                     <mat-form-field appearance="outline">
                         <mat-label>Megjegyzés</mat-label>
                         <input formControlName="note" type="text" matInput>
                         <mat-icon matSuffix>description</mat-icon>
                     </mat-form-field>
-                </p>
+                </p> -->
                 <div *ngIf="this.newCostGroup.get('costtype')?.value.name === 'üzemanyag'">
                     <p>
                         <mat-form-field appearance="outline">
