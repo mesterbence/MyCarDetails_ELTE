@@ -3,7 +3,7 @@
         <div class="col-lg-12 pb-2">
             <div class="bg-white rounded p-3" (window:resize)="onResize($event)">
                 <div>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="outline">
                         <mat-label>Szűrés év szerint</mat-label>
                         <mat-select [value]="filterValue" (selectionChange)="filterChangeYear($event.value)">
                             <mat-option *ngFor="let year of years" [value]="year">
