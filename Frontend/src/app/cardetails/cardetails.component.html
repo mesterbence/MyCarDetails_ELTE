@@ -32,7 +32,7 @@
                         </button>
                         <li class="list-group-item">Következő műszaki vizsga: {{ getDate(nextMOT) }}
                         </li>
-                        <li class="list-group-item">Esedékes szervizelések: {{ getBadgeValue(carId) }}
+                        <li class="list-group-item" *ngIf="serviceSummary">Esedékes szervizelések: {{ getBadgeValue(carId) }}
                         </li>
                     </ul>
                 </div>

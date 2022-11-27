@@ -74,6 +74,12 @@ public class ServiceController {
         return new ResponseEntity<>(sum, HttpStatus.OK);
     }
 
+    @GetMapping("/api/service/own/{carId}/actual")
+    public ResponseEntity<?> getOwnServices(@PathVariable Long carId) {
+        List<Service> services = serviceService.findActualServicesByCarId(carId);
+        return new ResponseEntity<>(new ServiceSummary(carId, services.size()), HttpStatus.OK);
+    }
+
     @GetMapping("/api/services/{carId}")
     public ResponseEntity<?> getServicesByCarId(@PathVariable Long carId) {
         controllerUtils.validateCarExistsAndOwner(carId);

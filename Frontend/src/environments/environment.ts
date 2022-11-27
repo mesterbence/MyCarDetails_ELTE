@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080/api'
+  baseUrl: 'https://mycardetails.herokuapp.com/api'
 };
 
 /*

@@ -95,9 +95,10 @@ export class CardetailsComponent implements OnInit {
             mileage: null,
             note: [''],
         });
-        this.carService.getServiceSum().subscribe(
+        this.carService.getServiceSumByCarId(this.carId).subscribe(
             data => {
                 this.serviceSummary = data;
+                console.log(data)
             }
         );
     }
