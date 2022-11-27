@@ -94,7 +94,7 @@ public class CarController {
         Fueling firstFueling = fuelingService.findFirstByCost_Car(car);
         Fueling lastFueling = fuelingService.findFirstByCost_CarDesc(car);
         if (costStatistic.getMileageSum() != null && costStatistic.getFuelingSum() != null && firstFueling != lastFueling) {
-            costStatistic.setConsumption((costStatistic.getFuelingSum() - lastFueling.getQuantity()) / costStatistic.getMileageSum() * 100);
+            costStatistic.setConsumption((costStatistic.getFuelingSum() - firstFueling.getQuantity()) / costStatistic.getMileageSum() * 100);
         }
         return new ResponseEntity<>(costStatistic, HttpStatus.OK);
     }
@@ -145,7 +145,7 @@ public class CarController {
         Fueling firstFueling = fuelingService.findFirstByCost_Car(car);
         Fueling lastFueling = fuelingService.findFirstByCost_CarDesc(car);
         if (carStatistic.getSumMileage() != null && carStatistic.getSumFueling() != null && firstFueling != lastFueling) {
-            carStatistic.setAvgConsumption((carStatistic.getSumFueling() - lastFueling.getQuantity()) / carStatistic.getSumMileage() * 100);
+            carStatistic.setAvgConsumption((carStatistic.getSumFueling() - firstFueling.getQuantity()) / carStatistic.getSumMileage() * 100);
         }
         return new ResponseEntity<>(carStatistic, HttpStatus.OK);
     }
@@ -164,7 +164,7 @@ public class CarController {
         Fueling firstFueling = fuelingService.findFirstByCost_Car(car);
         Fueling lastFueling = fuelingService.findFirstByCost_CarDesc(car);
         if (carStatistic.getSumMileage() != null && carStatistic.getSumFueling() != null && firstFueling != lastFueling) {
-            carStatistic.setAvgConsumption((carStatistic.getSumFueling() - lastFueling.getQuantity()) / carStatistic.getSumMileage() * 100);
+            carStatistic.setAvgConsumption((carStatistic.getSumFueling() - firstFueling.getQuantity()) / carStatistic.getSumMileage() * 100);
         }
         carStatistic.setSelectedYearMonthlyAvg((double) costService.getPriceSumByYear(carId, year) / 12);
         return new ResponseEntity<>(carStatistic, HttpStatus.OK);
