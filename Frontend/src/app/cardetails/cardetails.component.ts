@@ -39,7 +39,7 @@ export class CardetailsComponent implements OnInit {
     carStat!: Carstatistic;
     delCarNumberPlate!: String;
     nextMOT: Service = new Service();
-    serviceSummary!: ServiceSummary[];
+    serviceSummary!: ServiceSummary;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
@@ -98,7 +98,6 @@ export class CardetailsComponent implements OnInit {
         this.carService.getServiceSumByCarId(this.carId).subscribe(
             data => {
                 this.serviceSummary = data;
-                console.log(data)
             }
         );
     }
@@ -212,7 +211,7 @@ export class CardetailsComponent implements OnInit {
     }
     getBadgeValue(carId: number) {
         if(this.serviceSummary) {
-            return this.serviceSummary.find(service => service.carId === carId)!.serviceSum;
+            return this.serviceSummary.serviceSum;
         }
         return 0;
     }

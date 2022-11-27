@@ -68,8 +68,8 @@ export class CarService {
   getServiceSum(): Observable<ServiceSummary[]> {
     return this.httpClient.get<ServiceSummary[]>(`${environment.baseUrl}/service/own/sum/actual`);
   }
-  getServiceSumByCarId(carId: number): Observable<ServiceSummary[]> {
-    return this.httpClient.get<ServiceSummary[]>(`${environment.baseUrl}/service/own/${carId}/actual`);
+  getServiceSumByCarId(carId: number): Observable<ServiceSummary> {
+    return this.httpClient.get<ServiceSummary>(`${environment.baseUrl}/service/own/${carId}/actual`);
   }
   getDistinctYears(carId: number): Observable<number[]> {
     return this.httpClient.get<number[]>(`${environment.baseUrl}/cost/years/${carId}`);
