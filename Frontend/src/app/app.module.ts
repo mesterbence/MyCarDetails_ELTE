@@ -41,6 +41,7 @@ import {DeleteDialogComponent} from "./cardetails/dialog/delete-dialog/delete-di
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MyDateAdapter} from "./helpers/my-date-adapter";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import {MyDateAdapter} from "./helpers/my-date-adapter";
         MatDialogModule,
         FormsModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatPaginatorModule
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

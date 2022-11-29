@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Cost} from '../model/cost';
 import {CostService} from '../service/cost.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FuelingCostResult} from "../model/fueling-cost-result";
-import {DatePipe} from "@angular/common";
+import {DatePipe, DecimalPipe} from "@angular/common";
 import Utils from "../helpers/utils";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
     selector: 'app-costs',
@@ -31,6 +32,9 @@ export class CostsComponent implements OnInit {
     breakpoint !: number;
     carId!: number;
     fuelingData!: FuelingCostResult | undefined;
+    decimalPipe = new DecimalPipe('en-US');
+
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
 
     constructor(private costService: CostService,
                 private activatedRoute: ActivatedRoute,
@@ -70,6 +74,7 @@ export class CostsComponent implements OnInit {
             data => {
                 this.costs = data;
                 this.dataSource = new MatTableDataSource(this.costs);
+                this.initPaginator();
             }
         );
     }
@@ -90,5 +95,14 @@ export class CostsComponent implements OnInit {
             );
         }
     }
-
+    initPaginator() {
+        this.paginator!.length = this.costs.length;
+        this.paginator!._intl.itemsPerPageLabel = '';
+        this.paginator!._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+            const start = page * pageSize + 1;
+            const end = (page + 1) * pageSize;
+            return `${start} - ${end > length ? length : end} / ${this.decimalPipe.transform(length)}`;
+        };
+        this.dataSource.paginator = this.paginator;
+    }
 }
