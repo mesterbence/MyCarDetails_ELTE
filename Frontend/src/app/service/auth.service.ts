@@ -19,8 +19,10 @@ export class AuthService {
   authenticate(username: string, password: string) {
     return this.httpClient.post<any>(environment.baseUrl + "/user/login", { username, password })
       .subscribe((data) => {
-        this.cookieService.set('token', data.token);
-        this.cookieService.set('user', JSON.stringify(data.user));
+        //this.cookieService.set('token', data.token);
+        //this.cookieService.set('user', JSON.stringify(data.user));
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user',JSON.stringify(data.user));
         this.router.navigate(['/mycars']);
       });
   }
@@ -35,20 +37,25 @@ export class AuthService {
     return this.httpClient.get<User>(`${environment.baseUrl}/user/me`);
   }
   isAdmin(): boolean {
-    return JSON.parse(this.cookieService.get('user')).role === UserRole.ADMIN;
+    //return JSON.parse(this.cookieService.get('user')).role === UserRole.ADMIN;
+    return JSON.parse(localStorage.getItem('user')!).role === UserRole.ADMIN;
   }
 
   hasToken(): boolean {
-    return this.cookieService.check('token');
+    //return this.cookieService.check('token');
+    return localStorage.getItem('token') !== null;
   }
 
   getToken(): String {
-    return this.cookieService.get('token');
+    //return this.cookieService.get('token');
+    return localStorage.getItem('token')!;
   }
 
   logout(): void {
-    this.cookieService.delete('token');
-    this.cookieService.delete('user');
+    // this.cookieService.delete('token');
+    // this.cookieService.delete('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.router.navigate(['/']);
   }
   changePass(password: String) {
