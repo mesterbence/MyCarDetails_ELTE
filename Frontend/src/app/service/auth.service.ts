@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { CookieService } from 'ngx-cookie-service';
 import { User } from '../model/user';
 import { UserRole } from '../model/userrole';
 
@@ -12,8 +11,7 @@ import { UserRole } from '../model/userrole';
 export class AuthService {
 
   constructor(private httpClient: HttpClient,
-    private router: Router,
-    private cookieService: CookieService) { }
+    private router: Router) { }
 
 
   authenticate(username: string, password: string) {
