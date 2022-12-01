@@ -30,7 +30,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<ErrorMessage> handleValidationException(ValidationException e, WebRequest request) {
         ErrorMessage errorMessage = new ErrorMessage(new Date(), e.getMessage(), request.getDescription(false));
-        log.error(jwtUtil.getAuthenticatedUser().getUsername() + ": ValidationException " + errorMessage.toString());
+        log.error(jwtUtil.getAuthenticatedUser() != null ? jwtUtil.getAuthenticatedUser().getUsername() : "NO AUTH: " + ": ValidationException " + errorMessage.toString());
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 

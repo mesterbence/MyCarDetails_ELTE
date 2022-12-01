@@ -7,6 +7,7 @@ import hu.bmester.mycardetails.model.LoginResponse;
 import hu.bmester.mycardetails.model.User;
 import hu.bmester.mycardetails.model.UserRole;
 import hu.bmester.mycardetails.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 
 @CrossOrigin({"http://localhost:4200","https://bmester.hu"})
 @RestController
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -45,6 +47,7 @@ public class UserController {
     @PostMapping("/api/user/create")
     public ResponseEntity<?> createNewUser(@Valid @RequestBody User user) {
         user.setRole(UserRole.USER);
+        log.error(user.toString());
         if(null != userService.findUserByUsername(user.getUsername())) {
             throw new ValidationException("Foglalt felhasználói név!");
         }
