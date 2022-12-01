@@ -40,7 +40,7 @@
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>E-mail cím</mat-label>
-                <input formControlName="email" type="email" matInput required>
+                <input formControlName="email" type="email" matInput required [pattern]="emailPattern">
                 <mat-icon matSuffix>mail</mat-icon>
                 <!--<mat-hint>Hint</mat-hint>-->
               </mat-form-field>
