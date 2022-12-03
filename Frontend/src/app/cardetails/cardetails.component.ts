@@ -18,6 +18,7 @@ import {DeleteDialogComponent} from "./dialog/delete-dialog/delete-dialog.compon
 import {Service} from "../model/service";
 import {DatePipe} from "@angular/common";
 import {ServiceSummary} from "../model/service-summary";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-cardetails',
@@ -51,7 +52,8 @@ export class CardetailsComponent implements OnInit {
                 private fuelTypeService: FueltypeService,
                 private serviceService: ServiceService,
                 private dialog: MatDialog,
-                private datePipe: DatePipe) {
+                private datePipe: DatePipe,
+                private snackBar: MatSnackBar) {
     }
 
     getNum = Utils.getNum;
@@ -159,9 +161,16 @@ export class CardetailsComponent implements OnInit {
 
 
     onModifySubmit() {
-        this.carService.modify(this.modifyCarGroup.get('numberplate')?.value, this.modifyCarGroup.get('brand')?.value, this.modifyCarGroup.get('model')?.value, this.modifyCarGroup.get('fuelType')?.value, this.carId)
-            .subscribe((data: Car) => this.carData = data);
-        this.modalService.dismissAll();
+        if (this.modifyCarGroup.get("brand")?.value !== "" &&
+            this.modifyCarGroup.get("model")?.value !== "" &&
+            this.modifyCarGroup.get("fuel")?.value !== "" &&
+            this.modifyCarGroup.get("numberplate")?.value !== "") {
+            this.carService.modify(this.modifyCarGroup.get('numberplate')?.value, this.modifyCarGroup.get('brand')?.value, this.modifyCarGroup.get('model')?.value, this.modifyCarGroup.get('fuelType')?.value, this.carId)
+                .subscribe((data: Car) => this.carData = data);
+            this.modalService.dismissAll();
+        } else {
+            this.snackBar.open("A mezők kitöltése kötelező!", 'Bezárás', {verticalPosition: 'top', duration: 5000});
+        }
     }
 
     onServiceSubmit() {
