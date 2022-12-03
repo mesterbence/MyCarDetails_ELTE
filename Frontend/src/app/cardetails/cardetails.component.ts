@@ -105,7 +105,7 @@ export class CardetailsComponent implements OnInit {
     }
 
     onSubmit() {
-        if(this.newCostGroup.get('date')?.value !== "" && this.newCostGroup.get('costtype')?.value !== "") {
+        if (this.newCostGroup.get('date')?.value !== "" && this.newCostGroup.get('costtype')?.value !== "") {
             this.newCostGroup.get('fueling_quantity')?.setValue(this.newCostGroup.get('fueling_quantity')?.value.replace(',', '.'));
             if (this.newCostGroup.get('costtype')?.value.name === "üzemanyag") {
                 this.costService.saveCostWithFueling(
@@ -178,10 +178,18 @@ export class CardetailsComponent implements OnInit {
     }
 
     onServiceSubmit() {
-        this.serviceService.createService(this.serviceGroup.value, this.carId).subscribe((data) => {
-            this.modalService.dismissAll();
-            this.router.navigate(['/services', this.carId]);
-        });
+        if (this.serviceGroup.get('note')?.value !== "" &&
+            (this.serviceGroup.get('date')?.value !== "" || this.serviceGroup.get('mileage')?.value !== "")) {
+            this.serviceService.createService(this.serviceGroup.value, this.carId).subscribe((data) => {
+                this.modalService.dismissAll();
+                this.router.navigate(['/services', this.carId]);
+            });
+        } else {
+            this.snackBar.open("A megjegyzés mező, és a dátum vagy kilométeróra mező kitöltése kötelező!", 'Bezárás', {
+                verticalPosition: 'top',
+                duration: 5000
+            });
+        }
     }
 
     openDeleteCar(): void {
@@ -222,8 +230,9 @@ export class CardetailsComponent implements OnInit {
             fueling_isFull: [''],
         });
     }
+
     getBadgeValue(carId: number) {
-        if(this.serviceSummary) {
+        if (this.serviceSummary) {
             return this.serviceSummary.serviceSum;
         }
         return 0;

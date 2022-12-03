@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DatePipe} from "@angular/common";
 import Utils from "../helpers/utils";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -23,7 +24,8 @@ export class ServicelistComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private formBuilder: FormBuilder,
                 private modalService: NgbModal,
-                public datepipe: DatePipe) {
+                public datepipe: DatePipe,
+                private snackBar: MatSnackBar) {
     }
 
     serviceList!: any;
@@ -63,9 +65,14 @@ export class ServicelistComponent implements OnInit {
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
     }
     onEditSubmit() {
-        this.serviceService.updateService(this.editServiceFG.value,this.carId).subscribe(data => {
-            this.loadServices(this.carId);
-            this.modalService.dismissAll();
-        });
+        if(this.editServiceFG.get('note')?.value !== "" &&
+            (this.editServiceFG.get('date')?.value !== "" || this.editServiceFG.get('mileage')?.value !== "")) {
+            this.serviceService.updateService(this.editServiceFG.value,this.carId).subscribe(data => {
+                this.loadServices(this.carId);
+                this.modalService.dismissAll();
+            });
+        } else {
+            this.snackBar.open("A megjegyzés mező, és a dátum vagy kilométeróra mező kitöltése kötelező!", 'Bezárás', {verticalPosition: 'top', duration: 5000});
+        }
     }
 }
