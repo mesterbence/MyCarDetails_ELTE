@@ -105,41 +105,45 @@ export class CardetailsComponent implements OnInit {
     }
 
     onSubmit() {
-        this.newCostGroup.get('fueling_quantity')?.setValue(this.newCostGroup.get('fueling_quantity')?.value.replace(',', '.'));
-        if (this.newCostGroup.get('costtype')?.value.name === "üzemanyag") {
-            this.costService.saveCostWithFueling(
-                this.carId,
-                this.newCostGroup.get('costtype')?.value,
-                this.newCostGroup.get('price')?.value,
-                this.newCostGroup.get('mileage')?.value,
-                this.newCostGroup.get('title')?.value,
-                this.newCostGroup.get('date')?.value,
-                this.newCostGroup.get('note')?.value,
-                this.newCostGroup.get('fueling_type')?.value,
-                this.newCostGroup.get('fueling_quantity')?.value,
-                this.newCostGroup.get('fueling_isPremium')?.value,
-                this.newCostGroup.get('fueling_isFull')?.value
-            ).subscribe((data) => {
-                this.costs?.addCost(data);
-                this.loadCarStat(this.carId);
-                this.initNewCostGroup();
-            })
+        if(this.newCostGroup.get('date')?.value !== "" && this.newCostGroup.get('costtype')?.value !== "") {
+            this.newCostGroup.get('fueling_quantity')?.setValue(this.newCostGroup.get('fueling_quantity')?.value.replace(',', '.'));
+            if (this.newCostGroup.get('costtype')?.value.name === "üzemanyag") {
+                this.costService.saveCostWithFueling(
+                    this.carId,
+                    this.newCostGroup.get('costtype')?.value,
+                    this.newCostGroup.get('price')?.value,
+                    this.newCostGroup.get('mileage')?.value,
+                    this.newCostGroup.get('title')?.value,
+                    this.newCostGroup.get('date')?.value,
+                    this.newCostGroup.get('note')?.value,
+                    this.newCostGroup.get('fueling_type')?.value,
+                    this.newCostGroup.get('fueling_quantity')?.value,
+                    this.newCostGroup.get('fueling_isPremium')?.value,
+                    this.newCostGroup.get('fueling_isFull')?.value
+                ).subscribe((data) => {
+                    this.costs?.addCost(data);
+                    this.loadCarStat(this.carId);
+                    this.initNewCostGroup();
+                })
+            } else {
+                this.costService.saveCost(
+                    this.carId,
+                    this.newCostGroup.get('costtype')?.value,
+                    this.newCostGroup.get('price')?.value,
+                    this.newCostGroup.get('mileage')?.value,
+                    this.newCostGroup.get('title')?.value,
+                    this.newCostGroup.get('date')?.value,
+                    this.newCostGroup.get('note')?.value
+                ).subscribe((data) => {
+                    this.costs?.addCost(data);
+                    this.loadCarStat(this.carId);
+                    this.initNewCostGroup();
+                })
+            }
+            this.modalService.dismissAll();
         } else {
-            this.costService.saveCost(
-                this.carId,
-                this.newCostGroup.get('costtype')?.value,
-                this.newCostGroup.get('price')?.value,
-                this.newCostGroup.get('mileage')?.value,
-                this.newCostGroup.get('title')?.value,
-                this.newCostGroup.get('date')?.value,
-                this.newCostGroup.get('note')?.value
-            ).subscribe((data) => {
-                this.costs?.addCost(data);
-                this.loadCarStat(this.carId);
-                this.initNewCostGroup();
-            })
+            this.snackBar.open("A mezők kitöltése kötelező!", 'Bezárás', {verticalPosition: 'top', duration: 5000});
         }
-        this.modalService.dismissAll();
     }
 
     open(content: any) {
