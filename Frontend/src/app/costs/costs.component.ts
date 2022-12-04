@@ -43,6 +43,7 @@ export class CostsComponent implements OnInit {
     editCostGroup!: FormGroup;
     costTypes!: CostType[];
     enabledCostTypes!: CostType[];
+    clicked: boolean = false;
 
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | undefined;
 
@@ -79,16 +80,20 @@ export class CostsComponent implements OnInit {
     }
 
     toggleRow(row: any) {
-        this.fuelingData = undefined;
-        if (this.expanded === row) {
-            this.expanded = null;
+        if(!this.clicked) {
             this.fuelingData = undefined;
-        } else {
-            this.expanded = row;
-            let fuelings = this.costs.filter((cost) => cost.fueling !== null);
-            if (row.fueling && fuelings.length >= 3) {
-                this.getConsumptionData(row);
+            if (this.expanded === row) {
+                this.expanded = null;
+                this.fuelingData = undefined;
+            } else {
+                this.expanded = row;
+                let fuelings = this.costs.filter((cost) => cost.fueling !== null);
+                if (row.fueling && fuelings.length >= 3) {
+                    this.getConsumptionData(row);
+                }
             }
+        } else {
+            this.clicked = false;
         }
     }
 
@@ -131,6 +136,7 @@ export class CostsComponent implements OnInit {
     }
 
     clickedCost(cost: Cost, content: any) {
+        this.clicked = true;
         this.enabledCostTypes = [];
         if (cost.type.name === "üzemanyag") {
             this.costTypes.forEach((type) => {
