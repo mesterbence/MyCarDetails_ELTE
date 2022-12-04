@@ -147,7 +147,6 @@ public class CostController {
     @DeleteMapping("/api/cost/delete/{costId}")
     @Transactional
     public ResponseEntity<?> deleteCost(@PathVariable Long costId) {
-        log.error("sa");
         Cost costToDel = costService.findById(costId);
         controllerUtils.validateCarExistsAndOwner(costToDel.getCar());
         costToDel.setCar(null);
