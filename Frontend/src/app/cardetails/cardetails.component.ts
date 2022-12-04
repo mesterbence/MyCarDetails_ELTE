@@ -179,7 +179,7 @@ export class CardetailsComponent implements OnInit {
 
     onServiceSubmit() {
         if (this.serviceGroup.get('note')?.value !== "" &&
-            (this.serviceGroup.get('date')?.value !== "" || this.serviceGroup.get('mileage')?.value !== "")) {
+            ((this.serviceGroup.get('date')?.value !== "" && this.serviceGroup.get('date')?.value !== null) || (this.serviceGroup.get('mileage')?.value !== "" && this.serviceGroup.get('mileage')?.value !== null))) {
             this.serviceService.createService(this.serviceGroup.value, this.carId).subscribe((data) => {
                 this.modalService.dismissAll();
                 this.router.navigate(['/services', this.carId]);

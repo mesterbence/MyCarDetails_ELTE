@@ -66,7 +66,7 @@ export class ServicelistComponent implements OnInit {
     }
     onEditSubmit() {
         if(this.editServiceFG.get('note')?.value !== "" &&
-            (this.editServiceFG.get('date')?.value !== "" || this.editServiceFG.get('mileage')?.value !== "")) {
+            ((this.editServiceFG.get('date')?.value !== "" && this.editServiceFG.get('date')?.value !== null) || (this.editServiceFG.get('mileage')?.value !== "" && this.editServiceFG.get('mileage')?.value !== null))) {
             this.serviceService.updateService(this.editServiceFG.value,this.carId).subscribe(data => {
                 this.loadServices(this.carId);
                 this.modalService.dismissAll();
