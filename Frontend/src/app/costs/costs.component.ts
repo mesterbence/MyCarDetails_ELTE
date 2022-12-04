@@ -179,7 +179,8 @@ export class CostsComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.editCostGroup.get('date')?.value !== "" && this.editCostGroup.get('costtype')?.value !== "") {
+        console.log(this.editCostGroup.value)
+        if (this.editCostGroup.get('date')?.value !== "" && this.editCostGroup.get('date')?.value !== null && this.editCostGroup.get('costtype')?.value !== "") {
             if (this.editCostGroup.get('costtype')?.value.name === "üzemanyag") {
                 this.costService.editCostWithFueling(
                     this.carId,
@@ -190,7 +191,7 @@ export class CostsComponent implements OnInit {
                     this.editCostGroup.get('date')?.value,
                     this.editCostGroup.get('note')?.value,
                     this.editCostGroup.get('fueling_type')?.value,
-                    this.editCostGroup.get('fueling_quantity')?.value.replace(',', '.'),
+                    this.editCostGroup.get('fueling_quantity')?.value !== null && this.editCostGroup.get('fueling_quantity')?.value !== 0 ? this.editCostGroup.get('fueling_quantity')?.value.replace(',', '.') : '',
                     this.editCostGroup.get('fueling_isPremium')?.value,
                     this.editCostGroup.get('fueling_isFull')?.value,
                     this.editCostGroup.get('id')?.value
