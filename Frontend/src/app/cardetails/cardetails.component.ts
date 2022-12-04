@@ -202,6 +202,12 @@ export class CardetailsComponent implements OnInit {
                 this.delCarNumberPlate = result;
                 if (this.delCarNumberPlate === this.carData.numberplate) {
                     this.carService.deleteCar(this.carData.id).subscribe(data => this.router.navigate(['/mycars']));
+                } else {
+                    this.delCarNumberPlate = "";
+                    this.snackBar.open("A rendszám nem megfelelő!", 'Bezárás', {
+                        verticalPosition: 'top',
+                        duration: 5000
+                    });
                 }
             }
 
