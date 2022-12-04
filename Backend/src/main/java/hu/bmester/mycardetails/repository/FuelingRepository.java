@@ -28,4 +28,6 @@ public interface FuelingRepository extends JpaRepository<Fueling, Long> {
             " order by c.date desc, c.mileage desc" +
             " limit 3", nativeQuery = true)
     List<FuelingCostResponse> findLastThreeFuelingsByFuelingData(Long carId, Timestamp date, Integer mileage);
+
+    Fueling findFuelingById(Long id);
 }

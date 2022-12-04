@@ -52,6 +52,38 @@ export class CostService {
                 }
             });
     }
+    editCost(carId: number, costtype: CostType, price: number, mileage: number, title: String, date: String, note: String, id:number) {
+        return this.httpClient.post<any>(environment.baseUrl + `/cost/edit/${carId}`,
+            {
+                "id": id,
+                "type": costtype,
+                "price": price,
+                "mileage": mileage,
+                "note": note,
+                "date": date,
+                "title": title,
+                "fueling": null
+            });
+    }
+
+    editCostWithFueling(carId: number, costtype: CostType, price: number, mileage: number, title: String, date: String, note: String, fueling_type: String, fueling_quantity: number, fueling_isPremium: boolean, fueling_isFull: boolean, id:number) {
+        return this.httpClient.post<any>(environment.baseUrl + `/cost/edit/${carId}`,
+            {
+                "id": id,
+                "type": costtype,
+                "price": price,
+                "mileage": mileage,
+                "note": note,
+                "date": date,
+                "title": title,
+                "fueling": {
+                    "quantity": fueling_quantity,
+                    "type": fueling_type,
+                    "isPremium": fueling_isPremium,
+                    "isFull": fueling_isFull
+                }
+            });
+    }
 
     getLastThreeFueling(carId: number, date: String, mileage: number): Observable<FuelingCostResult> {
         return this.httpClient.get<FuelingCostResult>(`${environment.baseUrl}/cost/fueling/${carId}/${date}/${mileage}`);

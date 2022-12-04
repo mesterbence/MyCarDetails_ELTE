@@ -47,4 +47,9 @@ public class FuelingServiceImpl implements FuelingService {
     public void delete(Fueling fueling) {
         fuelingRepository.delete(fueling);
     }
+
+    @Override
+    public Fueling findFuelingById(Long id) {
+        return fuelingRepository.findFuelingById(id);
+    }
 }

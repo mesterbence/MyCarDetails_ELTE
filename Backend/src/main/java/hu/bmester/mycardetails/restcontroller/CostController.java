@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-@CrossOrigin({"http://localhost:4200","https://bmester.hu"})
+@CrossOrigin({"http://localhost:4200", "https://bmester.hu"})
 @RestController
 @Slf4j
 public class CostController {
@@ -62,7 +62,7 @@ public class CostController {
         Car car = carService.findCarById(carId);
         controllerUtils.validateCarExistsAndOwner(car);
         CostType type = costTypeService.findCostById(costTypeId);
-        if(null == type) throw new ValidationException("Nincs ilyen típus!");
+        if (null == type) throw new ValidationException("Nincs ilyen típus!");
         cost.setCar(car);
         cost.setType(type);
         costService.saveCost(cost);
@@ -77,15 +77,42 @@ public class CostController {
         return new ResponseEntity<>(costService.saveCost(cost), HttpStatus.CREATED); // TODO: rendes return
     }
 
+    @PostMapping("/api/cost/edit/{carId}")
+    public ResponseEntity<?> editCost(@PathVariable Long carId, @RequestBody Cost cost) {
+        Car car = carService.findCarById(carId);
+        controllerUtils.validateCarExistsAndOwner(car);
+        Cost costToUpdate = costService.findById(cost.getId());
+        if (costToUpdate.getType().getName().equals("üzemanyag") && !cost.getType().getName().equals("üzemanyag")) {
+            throw new ValidationException("Üzemanyag típus nem módosítható más típusra!");
+        }
+        if (!costToUpdate.getType().getName().equals("üzemanyag") && cost.getType().getName().equals("üzemanyag")) {
+            throw new ValidationException("Típus nem módosítható üzemanyag típusra!");
+        }
+        costToUpdate.setCar(car);
+        costToUpdate.setType(cost.getType());
+        costToUpdate.setPrice(cost.getPrice());
+        costToUpdate.setMileage(cost.getMileage());
+        costToUpdate.setTitle(cost.getTitle());
+        costToUpdate.setDate(cost.getDate());
+        if (cost.getFueling() != null) {
+            costToUpdate.getFueling().setQuantity(cost.getFueling().getQuantity());
+            costToUpdate.getFueling().setType(cost.getFueling().getType());
+            costToUpdate.getFueling().setIsFull(cost.getFueling().getIsFull());
+            costToUpdate.getFueling().setIsPremium(cost.getFueling().getIsPremium());
+        }
+        return new ResponseEntity<>(costService.saveCost(costToUpdate), HttpStatus.OK);
+    }
+
     @GetMapping("/api/cost/fueling/{carId}")
     public ResponseEntity<?> getAllFuelingsByCarId(@PathVariable Long carId) {
         controllerUtils.validateCarExistsAndOwner(carId);
         return new ResponseEntity<>(costService.findFuelings(carId), HttpStatus.OK);
     }
+
     @GetMapping("/api/cost/fueling/{carId}/{year}")
     public ResponseEntity<?> getAllFuelingsByCarIdByYear(@PathVariable Long carId, @PathVariable Integer year) {
         controllerUtils.validateCarExistsAndOwner(carId);
-        return new ResponseEntity<>(costService.findFuelingsByYear(carId,year), HttpStatus.OK);
+        return new ResponseEntity<>(costService.findFuelingsByYear(carId, year), HttpStatus.OK);
     }
 
     @GetMapping("/api/cost/years/{carId}")
@@ -100,16 +127,18 @@ public class CostController {
         controllerUtils.validateCarExistsAndOwner(carId);
         try {
             AtomicBoolean allFull = new AtomicBoolean(true);
-            List<FuelingCostResponse> lastThreeFueling = fuelingService.findLastThreeFuelingsByFuelingData(carId,new Timestamp(dateFormat.parse(date).getTime()),mileage);
+            List<FuelingCostResponse> lastThreeFueling = fuelingService.findLastThreeFuelingsByFuelingData(carId, new Timestamp(dateFormat.parse(date).getTime()), mileage);
             lastThreeFueling.forEach(fueling -> {
-                if(!fueling.getIsFull()) {
+                if (!fueling.getIsFull()) {
                     allFull.set(false);
                 }
             });
-            if(lastThreeFueling.size() != 3 || !allFull.get()) { return new ResponseEntity<>(null,HttpStatus.OK); }
+            if (lastThreeFueling.size() != 3 || !allFull.get()) {
+                return new ResponseEntity<>(null, HttpStatus.OK);
+            }
             double currentFuelingConsumption = lastThreeFueling.get(0).getQuantity() / (lastThreeFueling.get(0).getMileage() - lastThreeFueling.get(1).getMileage()) * 100;
             double previousFuelingConsumption = lastThreeFueling.get(1).getQuantity() / (lastThreeFueling.get(1).getMileage() - lastThreeFueling.get(2).getMileage()) * 100;
-            return new ResponseEntity<>(new FuelingCostResult(currentFuelingConsumption<previousFuelingConsumption, currentFuelingConsumption), HttpStatus.OK);
+            return new ResponseEntity<>(new FuelingCostResult(currentFuelingConsumption < previousFuelingConsumption, currentFuelingConsumption), HttpStatus.OK);
         } catch (ParseException e) {
             throw new ValidationException("Hibás dátum formátum!");
         }

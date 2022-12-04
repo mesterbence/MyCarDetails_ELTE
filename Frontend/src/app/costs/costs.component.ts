@@ -8,6 +8,13 @@ import {FuelingCostResult} from "../model/fueling-cost-result";
 import {DatePipe, DecimalPipe} from "@angular/common";
 import Utils from "../helpers/utils";
 import {MatPaginator} from "@angular/material/paginator";
+import {Service} from "../model/service";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CosttypeService} from "../service/costtype.service";
+import {CostType} from "../model/costtype";
+import {CardetailsComponent} from "../cardetails/cardetails.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-costs',
@@ -33,16 +40,26 @@ export class CostsComponent implements OnInit {
     carId!: number;
     fuelingData!: FuelingCostResult | undefined;
     decimalPipe = new DecimalPipe('en-US');
+    editCostGroup!: FormGroup;
+    costTypes!: CostType[];
+    enabledCostTypes!: CostType[];
 
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
+    @ViewChild(CardetailsComponent) carDetails: CardetailsComponent | undefined;
 
     constructor(private costService: CostService,
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
-                private datePipe: DatePipe) {
+                private datePipe: DatePipe,
+                private formBuilder: FormBuilder,
+                private modalService: NgbModal,
+                private costTypeService: CosttypeService,
+                private snackBar: MatSnackBar) {
     }
 
     getNum = Utils.getNum;
+    numberOnly = Utils.numberOnly;
+    numberOnlyWithComma = Utils.numberOnlyWithComma;
 
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe(params => {
@@ -52,6 +69,11 @@ export class CostsComponent implements OnInit {
             } else {
                 this.router.navigate(['/mycars']);
             }
+            this.costTypeService.getAllCostTypes().subscribe(
+                data => {
+                    this.costTypes = data;
+                }
+            );
         });
     }
 
@@ -104,5 +126,87 @@ export class CostsComponent implements OnInit {
             return `${start} - ${end > length ? length : end} / ${this.decimalPipe.transform(length)}`;
         };
         this.dataSource.paginator = this.paginator;
+    }
+    clickedCost(cost: Cost,content:any) {
+        this.enabledCostTypes = [];
+        if(cost.type.name === "üzemanyag") {
+            this.costTypes.forEach((type) => {
+                if(type.name === "üzemanyag") {
+                    this.enabledCostTypes.push(type);
+                }
+            });
+            this.editCostGroup = this.formBuilder.group({
+                id: cost.id,
+                costtype: cost.type,
+                price: cost.price,
+                mileage: cost.mileage,
+                title: cost.title,
+                date: cost.date,
+                note: cost.note,
+                fueling_type: cost.fueling.type,
+                fueling_quantity: cost.fueling.quantity,
+                fueling_isPremium: cost.fueling.isPremium,
+                fueling_isFull: cost.fueling.isFull,
+            });
+        } else {
+            this.costTypes.forEach((type) => {
+                if(type.name !== "üzemanyag") {
+                    this.enabledCostTypes.push(type);
+                }
+            });
+            this.editCostGroup = this.formBuilder.group({
+                id: cost.id,
+                costtype: cost.type,
+                price: cost.price,
+                mileage: cost.mileage,
+                title: cost.title,
+                date: cost.date,
+                note: cost.note,
+            });
+        }
+        const type = this.costTypes.find(f => f.id == cost.type.id);
+        this.editCostGroup.get('costtype')?.setValue(type);
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    }
+    onSubmit() {
+        if (this.editCostGroup.get('date')?.value !== "" && this.editCostGroup.get('costtype')?.value !== "") {
+            if (this.editCostGroup.get('costtype')?.value.name === "üzemanyag") {
+                this.editCostGroup.get('fueling_quantity')?.setValue(this.editCostGroup.get('fueling_quantity')?.value.replace(',', '.'));
+                this.costService.editCostWithFueling(
+                    this.carId,
+                    this.editCostGroup.get('costtype')?.value,
+                    this.editCostGroup.get('price')?.value,
+                    this.editCostGroup.get('mileage')?.value,
+                    this.editCostGroup.get('title')?.value,
+                    this.editCostGroup.get('date')?.value,
+                    this.editCostGroup.get('note')?.value,
+                    this.editCostGroup.get('fueling_type')?.value,
+                    this.editCostGroup.get('fueling_quantity')?.value,
+                    this.editCostGroup.get('fueling_isPremium')?.value,
+                    this.editCostGroup.get('fueling_isFull')?.value,
+                    this.editCostGroup.get('id')?.value
+                ).subscribe((data) => {
+                    this.loadCosts();
+                    this.carDetails?.loadCarStat(this.carId);
+                })
+            } else {
+                this.costService.editCost(
+                    this.carId,
+                    this.editCostGroup.get('costtype')?.value,
+                    this.editCostGroup.get('price')?.value,
+                    this.editCostGroup.get('mileage')?.value,
+                    this.editCostGroup.get('title')?.value,
+                    this.editCostGroup.get('date')?.value,
+                    this.editCostGroup.get('note')?.value,
+                    this.editCostGroup.get('id')?.value
+                ).subscribe((data) => {
+                    this.loadCosts();
+                    this.carDetails?.loadCarStat(this.carId);
+                })
+            }
+            this.modalService.dismissAll();
+        } else {
+            this.snackBar.open("A mezők kitöltése kötelező!", 'Bezárás', {verticalPosition: 'top', duration: 5000});
+        }
     }
 }

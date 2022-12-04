@@ -23,4 +23,5 @@ public interface CostService {
     List<Integer> findDistinctYearsByCarId(Long carId);
     List<Cost> findAllCostsWithMileageByCarIdAndYear(Long carId, Integer year);
     void delete(Cost cost);
+    Cost findById(Long id);
 }

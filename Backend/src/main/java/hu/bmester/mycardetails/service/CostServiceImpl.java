@@ -90,4 +90,9 @@ public class CostServiceImpl implements CostService {
     public void delete(Cost cost) {
         costRepository.delete(cost);
     }
+
+    @Override
+    public Cost findById(Long id) {
+        return costRepository.findCostById(id);
+    }
 }

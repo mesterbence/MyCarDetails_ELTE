@@ -13,6 +13,7 @@ public interface CostRepository extends JpaRepository<Cost, Long> {
     List<Cost> findCostsByCarIdOrderByDateDesc(Long carId);
     List<Cost> findCostsByFuelingIsNotNullAndCarIdOrderByDateDesc(Long carId);
     List<Cost> findCostsByCarIdAndAndMileageIsNotNullOrderByDate(Long carId);
+    Cost findCostById(Long id);
 
     @Query(value = "select c.* from Costs c where c.car = :carId and c.mileage is not null and extract(year from c.date) = :year order by c.date", nativeQuery = true)
     List<Cost> findAllCostsByCarIdAndYear(Long carId, Integer year);
