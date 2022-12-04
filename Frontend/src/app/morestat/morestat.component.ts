@@ -128,6 +128,7 @@ export class MorestatComponent implements OnInit {
 
     loadFuelingChartData(carId: number, year: number) {
         this.lineChart.dataTable = [['Dátum', 'Üzemanyag ára (Ft)']];
+        this.prices = [];
         this.carService.getCarFuelings(carId, year === 0 ? null : year).subscribe(
             data => {
                 this.fuelings = data;
@@ -140,7 +141,7 @@ export class MorestatComponent implements OnInit {
                         }
                         this.prices.push(fueling.price / fueling.fueling.quantity);
                     })
-                    this.lineChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.prices) - 50;
+                    this.lineChart.options.vAxis.viewWindow.min = (Math.min.apply(Math, this.prices) - 50) <= 0 ? 0 : Math.min.apply(Math, this.prices) - 50;
                     this.lineChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.prices) + 50;
                     this.lineChart.component?.draw();
                 }
@@ -165,6 +166,7 @@ export class MorestatComponent implements OnInit {
     }
     loadCarMileagesChartData(carId: number, year: number) {
         this.mileageChart.dataTable = [['Dátum', 'Kilométeróra állása']];
+        this.storedMileages = [];
         this.carService.getCarMileages(carId,year === 0 ? null : year).subscribe(
             data => {
                 this.mileages = data;
@@ -177,7 +179,7 @@ export class MorestatComponent implements OnInit {
                         }
                         this.storedMileages.push(mileage.mileage);
                     })
-                    this.mileageChart.options.vAxis.viewWindow.min = Math.min.apply(Math, this.storedMileages) - 5000;
+                    this.mileageChart.options.vAxis.viewWindow.min = (Math.min.apply(Math, this.storedMileages) - 5000) <= 0 ? 0 : Math.min.apply(Math, this.storedMileages) - 5000;
                     this.mileageChart.options.vAxis.viewWindow.max = Math.max.apply(Math, this.storedMileages) + 5000;
                     this.mileageChart.component?.draw();
                 }
