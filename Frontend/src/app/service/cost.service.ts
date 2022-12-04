@@ -88,4 +88,8 @@ export class CostService {
     getLastThreeFueling(carId: number, date: String, mileage: number): Observable<FuelingCostResult> {
         return this.httpClient.get<FuelingCostResult>(`${environment.baseUrl}/cost/fueling/${carId}/${date}/${mileage}`);
     }
+
+    deleteCost(costId: number) {
+        return this.httpClient.delete(`${environment.baseUrl}/cost/delete/${costId}`);
+    }
 }

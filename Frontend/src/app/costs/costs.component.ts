@@ -44,6 +44,7 @@ export class CostsComponent implements OnInit {
     costTypes!: CostType[];
     enabledCostTypes!: CostType[];
     clicked: boolean = false;
+    costToDel!: Cost;
 
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | undefined;
 
@@ -179,7 +180,6 @@ export class CostsComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.editCostGroup.value)
         if (this.editCostGroup.get('date')?.value !== "" && this.editCostGroup.get('date')?.value !== null && this.editCostGroup.get('costtype')?.value !== "") {
             if (this.editCostGroup.get('costtype')?.value.name === "üzemanyag") {
                 this.costService.editCostWithFueling(
@@ -218,5 +218,17 @@ export class CostsComponent implements OnInit {
         } else {
             this.snackBar.open("A mezők kitöltése kötelező!", 'Bezárás', {verticalPosition: 'top', duration: 5000});
         }
+    }
+    clickedDeleteCost(cost: Cost, content: any) {
+        this.clicked = true;
+        this.costToDel = cost;
+        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    }
+    onDeleteCost() {
+        this.costService.deleteCost(this.costToDel.id).subscribe(data => {
+            this.loadCosts();
+            this.carDetails?.loadCarStat(this.carId);
+            this.modalService.dismissAll();
+        });
     }
 }

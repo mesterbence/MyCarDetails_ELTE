@@ -8,6 +8,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
             <mat-icon (click)="clickedCost(element,editCost)">edit</mat-icon>
+            <mat-icon (click)="clickedDeleteCost(element,deleteCost)">delete</mat-icon>
             <mat-icon
                     class="pt-2 d-cell {{element.type.name === 'üzemanyag' ? '' : 'd-md-none'}}">{{ element === expanded ? "expand_less" : "expand_more"}}</mat-icon>
         </td>
@@ -214,4 +215,16 @@
             <button type="submit" class="btn btn-light w-100">Módosítás</button>
         </div>
     </form>
+</ng-template>
+
+
+<ng-template #deleteCost let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Biztosan törli a kijelölt költséget?</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <button class="btn btn-light w-50" (click)="modal.dismiss()">Nem</button>
+        <button class="btn btn-light w-50" (click)="onDeleteCost()">Igen, törlöm</button>
+    </div>
 </ng-template>

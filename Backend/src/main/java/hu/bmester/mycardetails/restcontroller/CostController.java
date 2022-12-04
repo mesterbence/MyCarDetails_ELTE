@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -142,5 +143,15 @@ public class CostController {
         } catch (ParseException e) {
             throw new ValidationException("Hibás dátum formátum!");
         }
+    }
+    @DeleteMapping("/api/cost/delete/{costId}")
+    @Transactional
+    public ResponseEntity<?> deleteCost(@PathVariable Long costId) {
+        log.error("sa");
+        Cost costToDel = costService.findById(costId);
+        controllerUtils.validateCarExistsAndOwner(costToDel.getCar());
+        costToDel.setCar(null);
+        costService.delete(costToDel);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }
