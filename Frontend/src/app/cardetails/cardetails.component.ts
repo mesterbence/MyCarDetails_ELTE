@@ -20,7 +20,6 @@ import {DatePipe} from "@angular/common";
 import {ServiceSummary} from "../model/service-summary";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 import autoTable from "jspdf-autotable";
 
 @Component({
@@ -245,25 +244,5 @@ export class CardetailsComponent implements OnInit {
             return this.serviceSummary.serviceSum;
         }
         return 0;
-    }
-    exportData() {
-        let prepare:any=[];
-        this.costs?.costs.forEach(cost=>{
-            if(cost.type.name !== "üzemanyag") {
-                let tempObj:any =[];
-                tempObj.push(this.getDate(cost));
-                tempObj.push(cost.type.name.replaceAll("ő","o").replaceAll("ű","u"));
-                tempObj.push(this.getNum(cost.price,"Ft"));
-                tempObj.push(this.getNum(cost.mileage,"km"));
-                tempObj.push(cost.title.replaceAll("ő","o").replaceAll("ű","u"));
-                prepare.push(tempObj)
-            }
-        });
-        const doc = new jsPDF();
-        autoTable(doc,{
-            head: [['Dátum','Típus','Ár','Kilométer','Megnevezés']],
-            body: prepare
-        });
-        doc.save(this.carData.numberplate + ".pdf");
     }
 }
