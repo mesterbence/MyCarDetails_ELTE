@@ -253,7 +253,7 @@ export class CardetailsComponent implements OnInit {
                 let tempObj:any =[];
                 tempObj.push(this.getDate(cost));
                 tempObj.push(cost.type.name.replaceAll("ő","o").replaceAll("ű","u"));
-                tempObj.push(cost.price);
+                tempObj.push(this.getNum(cost.price,"Ft"));
                 tempObj.push(this.getNum(cost.mileage,"km"));
                 tempObj.push(cost.title.replaceAll("ő","o").replaceAll("ű","u"));
                 prepare.push(tempObj)
