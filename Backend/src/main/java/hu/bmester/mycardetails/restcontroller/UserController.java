@@ -57,7 +57,7 @@ public class UserController {
         String encodedPass = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPass);
         userService.saveUser(user);
-        return new ResponseEntity<>(userService.findUserByUsername(user.getUsername()), HttpStatus.CREATED); // TODO: rendes return
+        return new ResponseEntity<>(userService.findUserByUsername(user.getUsername()), HttpStatus.CREATED);
     }
 
     @PostMapping("/api/user/login")

@@ -67,7 +67,7 @@ public class CostController {
         cost.setCar(car);
         cost.setType(type);
         costService.saveCost(cost);
-        return new ResponseEntity<>(true, HttpStatus.CREATED); // TODO: rendes return
+        return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
 
     @PostMapping("/api/cost/create/{carId}")
@@ -75,7 +75,7 @@ public class CostController {
         Car car = carService.findCarById(carId);
         controllerUtils.validateCarExistsAndOwner(car);
         cost.setCar(car);
-        return new ResponseEntity<>(costService.saveCost(cost), HttpStatus.CREATED); // TODO: rendes return
+        return new ResponseEntity<>(costService.saveCost(cost), HttpStatus.CREATED);
     }
 
     @PostMapping("/api/cost/edit/{carId}")

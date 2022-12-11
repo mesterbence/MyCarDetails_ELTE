@@ -68,11 +68,11 @@ public class CarController {
     @PostMapping("/api/car/create")
     public ResponseEntity<?> createNewCar(@Valid @RequestBody Car car) {
         if (null != carService.findCarByNumberplate(car.getNumberplate())) {
-            throw new ValidationException("Foglalt rendszám!"); // TODO: Rendszám nem biztos, hogy unique kell legyen, megnézni
+            throw new ValidationException("Foglalt rendszám!");
         }
         car.setOwner(jwtUtil.getAuthenticatedUser());
         carService.createCar(car);
-        return new ResponseEntity<>(carService.findCarByNumberplate(car.getNumberplate()), HttpStatus.CREATED); // TODO: rendes return
+        return new ResponseEntity<>(carService.findCarByNumberplate(car.getNumberplate()), HttpStatus.CREATED);
     }
 
     @PostMapping("/api/car/modify/{carId}")
@@ -85,7 +85,7 @@ public class CarController {
         carToUpdate.setModel(car.getModel());
         carToUpdate.setFuelType(car.getFuelType());
         carService.updateCar(carToUpdate);
-        return new ResponseEntity<>(carToUpdate, HttpStatus.OK); // TODO: rendes return
+        return new ResponseEntity<>(carToUpdate, HttpStatus.OK);
     }
 
     @GetMapping("/api/car/stat/{carId}")
@@ -156,7 +156,6 @@ public class CarController {
     }
 
     @GetMapping("/api/car/morestat/{carId}/{year}")
-    // TODO: itt még 0-val osztás van
     public ResponseEntity<?> getMoreStat(@PathVariable Long carId, @PathVariable Integer year) {
         CarStatistic carStatistic = new CarStatistic();
         Car car = carService.findCarById(carId);
