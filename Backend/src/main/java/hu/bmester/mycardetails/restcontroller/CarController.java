@@ -202,13 +202,10 @@ public class CarController {
         List<Cost> costs = costService.findByCarId(car.getId());
         ExportDataPdfGenerator exportDataPdfGenerator = new ExportDataPdfGenerator();
         exportDataPdfGenerator.setCostList(costs);
-        byte[] ret;
         try {
-            ret = exportDataPdfGenerator.generate(car.getNumberplate());
+            return new ResponseEntity<>(exportDataPdfGenerator.generate(car.getNumberplate()), HttpStatus.OK);
         } catch (IOException e) {
             throw new ValidationException("Hiba a fájl írásakor!");
         }
-        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
-
 }

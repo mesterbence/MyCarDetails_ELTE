@@ -45,7 +45,8 @@ public class ExportDataPdfGenerator {
         table.setWidths(new int[] { 1, 1, 5, 2, 2 });
         table.setSpacingBefore(5);
         PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(Color.LIGHT_GRAY);
+        //cell.setBackgroundColor(Color.LIGHT_GRAY);
+        cell.setBackgroundColor(Color.decode("#B6E388"));
         cell.setPadding(5);
         font.setColor(Color.BLACK);
         cell.setPhrase(new Phrase("Dátum", font));
@@ -78,7 +79,9 @@ public class ExportDataPdfGenerator {
         document.add(table);
         font.setSize(8);
         document.close();
-        return Files.readAllBytes(temp.toPath());
+        byte[] ret = Files.readAllBytes(temp.toPath());
+        temp.delete();
+        return ret;
     }
     private String getValue(String data) {
         return getValue(data, "");
