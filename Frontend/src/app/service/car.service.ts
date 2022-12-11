@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -81,7 +81,17 @@ export class CarService {
       return this.httpClient.get<MoreCarstat>(`${environment.baseUrl}/car/morestat/${carId}`);
     }
   }
-
+  exportData(carId: number): any {
+    let  headers= new HttpHeaders({
+      'Content-Type':  'application/pdf',
+      responseType : 'blob',
+      Accept : 'application/pdf',
+      observe : 'response'
+    })
+    return this.httpClient.get(`${environment.baseUrl}/car/export/${carId}`, {
+      headers:headers , responseType: 'blob'
+    });
+  }
   deleteCar(carId: number) {
     return this.httpClient.delete(`${environment.baseUrl}/car/delete/${carId}`);
   }

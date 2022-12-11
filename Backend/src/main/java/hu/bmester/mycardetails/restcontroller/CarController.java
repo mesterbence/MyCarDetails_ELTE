@@ -5,13 +5,18 @@ import hu.bmester.mycardetails.jwt.JwtUtil;
 import hu.bmester.mycardetails.model.*;
 import hu.bmester.mycardetails.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,4 +194,21 @@ public class CarController {
         carService.delete(car);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/api/car/export/{carId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<?> exportData(@PathVariable Long carId) {
+        Car car = carService.findCarById(carId);
+        controllerUtils.validateCarExistsAndOwner(car);
+        List<Cost> costs = costService.findByCarId(car.getId());
+        ExportDataPdfGenerator exportDataPdfGenerator = new ExportDataPdfGenerator();
+        exportDataPdfGenerator.setCostList(costs);
+        byte[] ret;
+        try {
+            ret = exportDataPdfGenerator.generate(car.getNumberplate());
+        } catch (IOException e) {
+            throw new ValidationException("Hiba a fájl írásakor!");
+        }
+        return new ResponseEntity<>(ret, HttpStatus.OK);
+    }
+
 }

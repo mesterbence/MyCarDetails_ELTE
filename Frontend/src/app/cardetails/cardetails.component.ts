@@ -245,4 +245,10 @@ export class CardetailsComponent implements OnInit {
         }
         return 0;
     }
+    exportData() {
+        this.carService.exportData(this.carId).subscribe((data: any) => {
+            const fileURL = URL.createObjectURL(data);
+            window.open(fileURL, '_blank');
+        });
+    }
 }
