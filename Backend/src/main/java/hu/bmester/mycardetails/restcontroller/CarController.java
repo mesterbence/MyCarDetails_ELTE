@@ -164,7 +164,9 @@ public class CarController {
         carStatistic.setSumMileage(costService.getTraveledDistanceByYear(carId, year));
         carStatistic.setSumFueling(fuelingService.getFuelSumByYear(carId, year));
         carStatistic.setSelectedYearSum(costService.getPriceSumByYear(carId, year));
-        carStatistic.setPricePerKilometer((double) (carStatistic.getSelectedYearSum() / carStatistic.getSumMileage()));
+        if(carStatistic.getSumMileage() != null && carStatistic.getSumMileage() > 0) {
+            carStatistic.setPricePerKilometer((double) (carStatistic.getSelectedYearSum() / carStatistic.getSumMileage()));
+        }
         Fueling firstFueling = fuelingService.findFirstByCost_Car(car);
         Fueling lastFueling = fuelingService.findFirstByCost_CarDesc(car);
         if (carStatistic.getSumMileage() != null && carStatistic.getSumFueling() != null && firstFueling != lastFueling) {
