@@ -19,8 +19,6 @@ import {Service} from "../model/service";
 import {DatePipe} from "@angular/common";
 import {ServiceSummary} from "../model/service-summary";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import jsPDF from 'jspdf';
-import autoTable from "jspdf-autotable";
 
 @Component({
     selector: 'app-cardetails',
