@@ -21,7 +21,7 @@ import {ServiceSummary} from "../model/service-summary";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-    selector: 'app-cardetails',f
+    selector: 'app-cardetails',
     templateUrl: './cardetails.component.html',
     styleUrls: ['./cardetails.component.css'],
     providers: [DatePipe]
