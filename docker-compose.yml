@@ -1,0 +1,21 @@
+services:
+  backend:
+    image: 'mycardetails_backend:latest'
+    build:
+      context: .
+    container_name: mycardetails_backend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/mycardetails
+      - SPRING_DATASOURCE_USERNAME=mycardetails
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - 8080:8080
+          
+  frontend:
+    image: 'mycardetails_frontend:latest'
+    container_name: mycardetails_frontend
+    depends_on:
+      - backend
+    ports:
+      - 80:80
