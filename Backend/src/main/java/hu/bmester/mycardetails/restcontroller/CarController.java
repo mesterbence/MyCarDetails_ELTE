@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin({"http://localhost:4200","https://bmester.hu"})
+@CrossOrigin({"http://localhost:4200","https://bmester.hu","http://localhost"})
 @RestController
 @Slf4j
 public class CarController {
