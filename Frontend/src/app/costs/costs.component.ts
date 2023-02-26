@@ -86,12 +86,11 @@ export class CostsComponent implements OnInit {
             if (this.expanded === row) {
                 this.expanded = null;
                 this.fuelingData = undefined;
-
             } else {
-                this.loading = true;
                 this.expanded = row;
                 let fuelings = this.costs.filter((cost) => cost.fueling !== null);
                 if (row.fueling && fuelings.length >= 3) {
+                    this.loading = true;
                     this.getConsumptionData(row);
                 }
             }
