@@ -41,6 +41,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MyDateAdapter} from "./helpers/my-date-adapter";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
         FormsModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSidenavModule,
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
