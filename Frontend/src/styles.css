@@ -43,3 +43,6 @@ mat-label {
 .cdk-overlay-container {
     z-index: 9999;
 }
+.uploader-status .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #B6E388;
+}

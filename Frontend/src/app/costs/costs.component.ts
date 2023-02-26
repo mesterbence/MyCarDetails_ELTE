@@ -8,7 +8,6 @@ import {FuelingCostResult} from "../model/fueling-cost-result";
 import {DatePipe, DecimalPipe} from "@angular/common";
 import Utils from "../helpers/utils";
 import {MatPaginator} from "@angular/material/paginator";
-import {Service} from "../model/service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CosttypeService} from "../service/costtype.service";
@@ -45,6 +44,7 @@ export class CostsComponent implements OnInit {
     enabledCostTypes!: CostType[];
     clicked: boolean = false;
     costToDel!: Cost;
+    loading: boolean = true;
 
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | undefined;
 
@@ -86,7 +86,9 @@ export class CostsComponent implements OnInit {
             if (this.expanded === row) {
                 this.expanded = null;
                 this.fuelingData = undefined;
+
             } else {
+                this.loading = true;
                 this.expanded = row;
                 let fuelings = this.costs.filter((cost) => cost.fueling !== null);
                 if (row.fueling && fuelings.length >= 3) {
@@ -104,6 +106,7 @@ export class CostsComponent implements OnInit {
                 this.costs = data;
                 this.dataSource = new MatTableDataSource(this.costs);
                 this.initPaginator();
+                this.loading = false;
             }
         );
     }
@@ -119,6 +122,7 @@ export class CostsComponent implements OnInit {
                 (data) => {
                     if (data !== null) {
                         this.fuelingData = data;
+                        this.loading = false;
                     }
                 }
             );

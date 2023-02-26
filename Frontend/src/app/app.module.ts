@@ -42,6 +42,7 @@ import {DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/materi
 import {MyDateAdapter} from "./helpers/my-date-adapter";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
         MatNativeDateModule,
         MatPaginatorModule,
         MatSidenavModule,
+        MatProgressSpinnerModule
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
