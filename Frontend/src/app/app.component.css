@@ -8,3 +8,9 @@
 .navbar {
     background-color: #B6E388 !important;
 }
+.inline-icon {
+    vertical-align: bottom;
+}
+.nav-item:hover {
+    background-color: #B6E388;
+}

@@ -48,6 +48,10 @@ export class AuthService {
     //return this.cookieService.get('token');
     return localStorage.getItem('token')!;
   }
+  getUser(): User {
+    //return this.cookieService.get('token');
+    return JSON.parse(localStorage.getItem('user')!);
+  }
 
   logout(): void {
     // this.cookieService.delete('token');

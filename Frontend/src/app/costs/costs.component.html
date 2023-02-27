@@ -114,10 +114,8 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['details']" class="detail-row"></tr>
 </table>
-<div *ngIf="this.loading"
-     class="position-fixed top-50 start-50 translate-middle">
-    <mat-spinner>
-    </mat-spinner>
+<div *ngIf="this.loading" class="position-fixed top-50 start-50 translate-middle">
+    <mat-spinner></mat-spinner>
 </div>
 <mat-paginator showFirstLastButtons
                [pageSizeOptions]="[10,20,30,50,100,500]"
