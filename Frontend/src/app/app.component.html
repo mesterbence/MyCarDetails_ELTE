@@ -1,5 +1,5 @@
 <mat-sidenav-container fullscreen>
-    <mat-sidenav #sidenav mode="side" class="col-lg-2 col-12 col-sm-2">
+    <mat-sidenav #sidenav mode="side" class="col-lg-2 col-12 col-sm-2 shadow-lg">
         <div class="ps-3 pt-2">
             <h4 class="offcanvas-title" id="offcanvas-basic-title">MyCarDetails</h4>
             <button type="button" class="btn-close pe-3 d-block d-sm-none" aria-label="Close" (click)="sidenav.toggle()"></button>
@@ -13,7 +13,7 @@
                     </a>
                 </li>
                 <li class="nav-item" *ngIf="this.authService.hasToken() && this.authService.isAdmin()">
-                    <a class="nav-link" routerLink="admin">
+                    <a class="nav-link" routerLink="admin" >
                         <mat-icon class="inline-icon">supervisor_account</mat-icon>
                         Admin
                     </a>
@@ -39,7 +39,7 @@
             </ul>
         </div>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="bg-own">
         <nav class="navbar navbar-expand bg-light shadow-sm">
             <div class="collapse navbar-collapse">
                 <span class="navbar-brand">
