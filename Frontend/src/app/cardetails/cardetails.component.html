@@ -3,86 +3,78 @@
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Adatok áttekintése
+                    Adatok áttekintése - {{carData.numberplate}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="row">
                 <div class="col-lg-4 pb-2">
-                    <div class="bg-white rounded pt-2 p-3">
-                        <div class="padding-title">
-                            Autó adatai
-                            <span class="float-end edit padding-button delete-button" (click)="openModify(modifyCar)"><mat-icon
-                                    class="float-end">edit</mat-icon></span>
-                        </div>
-                        <div class="col-lg-12 shadow-lg bg-white rounded">
-                            <ul class="list-group">
-                                <li class="list-group-item">Rendszám: {{ carData.numberplate }}</li>
-                                <li class="list-group-item">Márka: {{ carData.brand }}</li>
-                                <li class="list-group-item">Modell: {{ carData.model }}</li>
-                                <li class="list-group-item">Üzemanyag: {{ carData.fuelType.name }}</li>
-                            </ul>
-                        </div>
+                    <div class="col-lg-12 rounded">
+                        <ul class="list-group">
+                            <li class="list-group-item">Rendszám: {{ carData.numberplate }}</li>
+                            <li class="list-group-item">Márka: {{ carData.brand }}</li>
+                            <li class="list-group-item">Modell: {{ carData.model }}</li>
+                            <li class="list-group-item">Üzemanyag: {{ carData.fuelType.name }}</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 pb-2">
-                    <div class="bg-white rounded pt-2 p-3">
-                        <div class="padding-title">Szervizek</div>
-                        <div class="col-lg-12 shadow-lg bg-white rounded">
-                            <ul class="list-group list-group-green">
-                                <button [routerLink]="['/services', this.carId]"
-                                        class="list-group-item list-group-item-green list-group-item-action">
-                                    Szervizesedékességek áttekintése
-                                    <mat-icon class="float-end">construction</mat-icon>
-                                </button>
-                                <button (click)="open(service)"
-                                        class="list-group-item list-group-item-green list-group-item-action">
-                                    Szervizesedékesség rögzítése
-                                    <mat-icon class="float-end">add</mat-icon>
-                                </button>
-                                <li class="list-group-item">Következő műszaki vizsga: {{ getDate(nextMOT) }}
-                                </li>
-                                <li class="list-group-item" *ngIf="serviceSummary">Esedékes
-                                    szervizelések: {{ getBadgeValue(carId) }}
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="col-lg-12 rounded">
+                        <ul class="list-group list-group-green">
+                            <button [routerLink]="['/services', this.carId]"
+                                    class="list-group-item list-group-item-green list-group-item-action">
+                                Szervizesedékességek áttekintése
+                                <mat-icon class="float-end">construction</mat-icon>
+                            </button>
+                            <button (click)="open(service)"
+                                    class="list-group-item list-group-item-green list-group-item-action">
+                                Szervizesedékesség rögzítése
+                                <mat-icon class="float-end">add</mat-icon>
+                            </button>
+                            <li class="list-group-item">Következő műszaki vizsga: {{ getDate(nextMOT) }}
+                            </li>
+                            <li class="list-group-item" *ngIf="serviceSummary">Esedékes
+                                szervizelések: {{ getBadgeValue(carId) }}
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 pb-2">
-                    <div class="bg-white rounded pt-2 p-3">
-                        <div class="padding-title">
-                            Statisztikák
-                            <span class="float-end edit padding-button" [routerLink]="['/morestat', this.carId]"><mat-icon
-                                    class="float-end">more_horiz</mat-icon></span>
-                        </div>
-                        <div class="col-lg-12 shadow-lg bg-white rounded" *ngIf="this.carStat">
-                            <ul class="list-group">
-                                <li class="list-group-item">Összes költött
-                                    összeg: {{ getNum(this.carStat.priceSum, "Ft") }}
-                                </li>
-                                <li class="list-group-item">Összes tankolt mennyiség: {{ getNum(this.carStat.fuelingSum,
-                                    "liter") }}</li>
-                                <li class="list-group-item">Összes megtett
-                                    kilométer: {{ getNum(this.carStat.mileageSum, "km")
-                                    }}</li>
-                                <li class="list-group-item">
-                                    Átlagfogyasztás: {{ getNum(this.carStat.consumption, "l/100 km") }}
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="col-lg-12 rounded" *ngIf="this.carStat">
+                        <ul class="list-group">
+                            <li class="list-group-item">Összes költött
+                                összeg: {{ getNum(this.carStat.priceSum, "Ft") }}
+                            </li>
+                            <li class="list-group-item">Összes tankolt mennyiség: {{ getNum(this.carStat.fuelingSum,
+                                "liter") }}</li>
+                            <li class="list-group-item">Összes megtett
+                                kilométer: {{ getNum(this.carStat.mileageSum, "km")
+                                }}</li>
+                            <li class="list-group-item">
+                                Átlagfogyasztás: {{ getNum(this.carStat.consumption, "l/100 km") }}
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
+            <button class="btn btn-light col-lg-2" (click)="openDeleteCar()">Autó törlése</button>
         </mat-expansion-panel>
+        <div class="pt-2 pb-1">
+            <button class="btn btn-light col-lg-2" (click)="open(newCost)">Új költség</button>
+            <button class="btn btn-light col-lg-2" (click)="open(service)">Új szervizesedékesség</button>
+            <button class="btn btn-light col-lg-2" [routerLink]="['/morestat', this.carId]">Statisztikai adatok</button>
+            <button class="btn btn-light col-lg-2" (click)="openModify(modifyCar)">Adatok módosítása</button>
+            <button class="btn btn-light col-lg-2" (click)="exportData()">Adatexport</button>
+            <button class="btn btn-light col-lg-2" [routerLink]="['/newcar']">Új autó</button>
+        </div>
     </div>
     <div class="row">
         <app-costs></app-costs>
     </div>
-    <div class="fixed-button">
+    <!--<div class="fixed-button">
         <button mat-fab class="mcd-button" [matMenuTriggerFor]="menu">
             <mat-icon>menu</mat-icon>
         </button>
-    </div>
+    </div>-->
 </div>
 <ng-template #newCost let-modal>
     <div class="modal-header">
@@ -181,7 +173,7 @@
     </form>
 </ng-template>
 
-<mat-menu #menu="matMenu">
+<!--<mat-menu #menu="matMenu">
 
     <button mat-menu-item (click)="open(newCost)">
         Új költség rögzítése
@@ -208,7 +200,7 @@
     <button mat-menu-item [routerLink]="['/newcar']">
         Új autó felvétele
     </button>
-</mat-menu>
+</mat-menu>-->
 
 <ng-template #modifyCar let-modal>
     <div class="modal-header">
