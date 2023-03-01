@@ -27,7 +27,7 @@
                 <li class="nav-item" *ngIf="this.authService.hasToken()">
                     <a class="nav-link" routerLink="myprofile">
                         <mat-icon class="inline-icon">person</mat-icon>
-                        Profilom
+                        Profilom ({{this.authService.getUser().username}})
                     </a>
                 </li>
                 <li class="nav-item" *ngIf="this.authService.hasToken()">
