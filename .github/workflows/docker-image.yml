@@ -24,6 +24,6 @@ jobs:
       run: echo 1
     - name: Debug Environment Variables
       run: |
-        echo "SQL_URL: ${{ secrets.SQL_URL }}"
+        echo "SgQL_URL: ${{ secrets.SQL_URL }}"
         echo "SQL_USER: ${{ secrets.SQL_USER }}"
         echo "JWT: ${{ secrets.JWT }}"
