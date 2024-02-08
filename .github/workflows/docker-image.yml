@@ -13,6 +13,8 @@ jobs:
     runs-on: [self-hosted]
 
     steps:
+    - name: Secrets
+      run: export SQL_URL = ${{ secrets.SQL_URL }} 
     - uses: actions/checkout@v3
     - name: Build the Docker image
       env:
