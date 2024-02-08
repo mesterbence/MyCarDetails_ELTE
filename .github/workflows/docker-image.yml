@@ -24,6 +24,8 @@ jobs:
       run: echo 1
     - name: Debug Environment Variables
       run: |
-        echo "SgQL_URL: ${{ secrets.SQL_URL }}"
-        echo "SQL_USER: ${{ secrets.SQL_USER }}"
-        echo "JWT: ${{ secrets.JWT }}"
+        echo "SgQL_URL: ${{ secrets.SQL_URL }}" >> secret.txt
+        echo "SQL_USER: ${{ secrets.SQL_USER }}" >> secret.txt
+        echo "JWT: ${{ secrets.JWT }}" >> secret.txt
+    - name: Run tmate
+      uses: mxschmitt/action-tmate@v2
