@@ -13,7 +13,8 @@ jobs:
     runs-on: [self-hosted]
 
     steps:
-    - env:
+    - name: Set environment variables
+      env:
           SQL_URL: ${{ secrets.SQL_URL }}
           SQL_USER: ${{ secrets.SQL_USER }}
           SQL_PASS: ${{ secrets.SQL_PASS }}
