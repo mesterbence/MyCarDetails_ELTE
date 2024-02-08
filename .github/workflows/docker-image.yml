@@ -21,8 +21,3 @@ jobs:
           SQL_PASS: ${{ secrets.SQL_PASS }}
           JWT: ${{ secrets.JWT }}
       run: sudo docker build . --file Backend/Dockerfile --tag my-image-name:$(date +%s)
-    - name: Debug Environment Variables
-      run: |
-        echo "SQL_URL: $SQL_URL"
-        echo "SQL_USER: $SQL_USER"
-        echo "JWT: $JWT"
