@@ -1,4 +1,4 @@
-FROM FROM openjdk:17-alpine
+FROM openjdk:17-alpine
 ARG JAR_FILE=Backend/target/*.jar
 ARG SQL_URL
 ARG SQL_USER
