@@ -14,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Package
+      run: mvn clean package -Dmaven.test.skip
     - name: Build the Docker image
       env:
           SQL_URL: ${{ secrets.SQL_URL }}
