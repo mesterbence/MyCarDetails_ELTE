@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM openjdk:11
 ARG JAR_FILE=target/*.jar
 ARG SQL_URL
 ARG SQL_USER
@@ -11,7 +11,6 @@ ENV SQL_USER=$SQL_USER
 ENV SQL_PASS=$SQL_PASS
 ENV JWT=$JWT
 ENV APP_IMAGE=$APP_IMAGE
-
 
 COPY ${JAR_FILE} app.jar
 CMD ["java", "-jar", "app.jar"]
