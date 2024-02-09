@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Package
       run: mvn clean package -Dmaven.test.skip
-      working-directory: _work/MyCarDetails_ELTE/MyCarDetails_ELTE/Backend/
+      working-directory: Backend/
     - name: Build the Docker image
       env:
           SQL_URL: ${{ secrets.SQL_URL }}
