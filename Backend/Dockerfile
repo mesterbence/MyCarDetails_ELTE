@@ -12,5 +12,7 @@ ENV SQL_PASS=$SQL_PASS
 ENV JWT=$JWT
 ENV APP_IMAGE=$APP_IMAGE
 
+EXPOSE 8080
+
 COPY ${JAR_FILE} app.jar
 CMD ["java", "-jar", "app.jar"]
