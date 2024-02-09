@@ -1,11 +1,9 @@
 FROM node:latest as node
-
-WORKDIR /Frontend
-COPY . .
-RUN npm cache clean --force
-RUN npm install -g npm@latest
+WORKDIR /app
+COPY Frontend/. .
 RUN npm install
 RUN npm run build --prod
 
+
 FROM nginx:alpine
-COPY --from=node /Frontend/src/app/dist/mycardetails /usr/share/nginx/html
+COPY --from=node /app/dist/mycardetails /usr/share/nginx/html
