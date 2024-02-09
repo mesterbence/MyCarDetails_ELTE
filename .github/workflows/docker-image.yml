@@ -25,3 +25,5 @@ jobs:
           SQL_PASS: ${{ secrets.SQL_PASS }}
           JWT: ${{ secrets.JWT }}
       run: sudo docker build . --file Backend/Dockerfile --tag mycardetails:latest
+    - name: Run Docker container
+      run: sudo docker run -d -p 8080:8080 mycardetails
