@@ -14,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Create JAR file
+      run: mvn -f /home/app/pom.xml clean -Dmaven.text.skip package
     - name: Build the Docker image
       env:
           SQL_URL: ${{ secrets.SQL_URL }}
@@ -21,5 +23,3 @@ jobs:
           SQL_PASS: ${{ secrets.SQL_PASS }}
           JWT: ${{ secrets.JWT }}
       run: sudo docker build . --file Backend/Dockerfile --tag mycardetails:latest
-    - name: List folder
-      run: ls
