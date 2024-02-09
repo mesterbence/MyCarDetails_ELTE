@@ -1,5 +1,5 @@
 FROM node:latest as node
-WORKDIR Frontend/src/app
+WORKDIR Frontend
 COPY . .
 RUN npm install
 RUN npm run build --prod
