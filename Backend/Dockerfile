@@ -1,11 +1,17 @@
+FROM FROM openjdk:17-alpine
+ARG JAR_FILE=Backend/target/*.jar
 ARG SQL_URL
 ARG SQL_USER
 ARG SQL_PASS
 ARG JWT
+ARG APP_IMAGE
 
-FROM maven:3.6.0-jdk-11-slim AS build
-COPY Backend/src /home/app/src
-COPY Backend/pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean -Dmaven.test.skip package
-COPY target/MyCarDetails-0.0.1-SNAPSHOT.jar /app/mycardetails.jar
-CMD ["java", "-jar", "mycardetails.jar"]
+ENV SQL_URL=$SQL_URL
+ENV SQL_USER=$SQL_USER
+ENV SQL_PASS=$SQL_PASS
+ENV JWT=$JWT
+ENV APP_IMAGE=$APP_IMAGE
+
+
+COPY ${JAR_FILE} app.jar
+CMD ["java", "-jar", "app.jar"]
