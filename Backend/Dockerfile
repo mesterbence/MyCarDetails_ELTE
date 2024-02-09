@@ -1,5 +1,5 @@
 FROM openjdk:17-alpine
-ARG JAR_FILE=Backend/target/*.jar
+ARG JAR_FILE=target/*.jar
 ARG SQL_URL
 ARG SQL_USER
 ARG SQL_PASS
