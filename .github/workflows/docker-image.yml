@@ -24,16 +24,16 @@ jobs:
           SQL_USER: ${{ secrets.SQL_USER }}
           SQL_PASS: ${{ secrets.SQL_PASS }}
           JWT: ${{ secrets.JWT }}
-      run: sudo docker build . --file Backend/Dockerfile --tag mycardetails:latest
+      run: docker build . --file Backend/Dockerfile --tag mycardetails:latest
     - name: Run Docker container
       env:
           SQL_URL: ${{ secrets.SQL_URL }}
           SQL_USER: ${{ secrets.SQL_USER }}
           SQL_PASS: ${{ secrets.SQL_PASS }}
           JWT: ${{ secrets.JWT }}
-      run: sudo docker run -d -p 8080:8080 -e SQL_USER=${{ secrets.SQL_USER }} -e SQL_PASS=${{ secrets.SQL_PASS }} -e SQL_URL=${{ secrets.SQL_URL }} -e JWT=${{ secrets.JWT }} mycardetails
+      run: docker run -d -p 8080:8080 -e SQL_USER=${{ secrets.SQL_USER }} -e SQL_PASS=${{ secrets.SQL_PASS }} -e SQL_URL=${{ secrets.SQL_URL }} -e JWT=${{ secrets.JWT }} mycardetails
     - name: Build the Frontend docker image
-      run: sudo docker build . --file Frontend/Dockerfile --tag mycardetails_frontend:latest
+      run: docker build . --file Frontend/Dockerfile --tag mycardetails_frontend:latest
     - name: Run Frontend Docker container
-      run: sudo docker run -d -p 80:80 mycardetails_frontend
+      run: docker run -d -p 80:80 mycardetails_frontend
 
