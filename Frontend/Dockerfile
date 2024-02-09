@@ -1,9 +1,9 @@
 FROM node:latest as node
-WORKDIR /app
+WORKDIR Frontend/app
 COPY . .
 RUN npm install
 RUN npm run build --prod
 
 
 FROM nginx:alpine
-COPY --from=node /app/dist/mycardetails /usr/share/nginx/html
+COPY --from=node Frontend/app/dist/mycardetails /usr/share/nginx/html
