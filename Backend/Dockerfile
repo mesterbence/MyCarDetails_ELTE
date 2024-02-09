@@ -1,5 +1,5 @@
 FROM openjdk:11
-ARG JAR_FILE=target/*.jar
+ARG JAR_FILE=Backend/target/*.jar
 ARG SQL_URL
 ARG SQL_USER
 ARG SQL_PASS
