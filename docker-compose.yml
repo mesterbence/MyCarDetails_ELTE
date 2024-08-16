@@ -1,6 +1,7 @@
 services:
   backend:
     image: 'mycardetails:latest'
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Backend/Dockerfile
