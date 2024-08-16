@@ -1,6 +1,6 @@
 services:
   backend:
-    image: 'mycardetails_backend:latest'
+    image: 'mycardetails:latest'
     build:
       context: .
     container_name: mycardetails_backend
