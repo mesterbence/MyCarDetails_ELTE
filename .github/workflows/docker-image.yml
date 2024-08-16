@@ -24,4 +24,4 @@ jobs:
         SQL_USER: ${{ secrets.SQL_USER }}
         SQL_PASS: ${{ secrets.SQL_PASS }}
         JWT: ${{ secrets.JWT }}
-      run: docker-compose up --build -d
+      run: docker compose up --build -d
