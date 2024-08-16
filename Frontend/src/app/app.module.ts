@@ -86,8 +86,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
         FormsModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatPaginatorModule,
-	RouterModule.forRoot(routes, { useHash: true })
+        MatPaginatorModule
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
