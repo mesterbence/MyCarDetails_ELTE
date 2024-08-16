@@ -2,38 +2,26 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "release" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "release" ]
 
 jobs:
-
   build:
-
     runs-on: [self-hosted]
 
     steps:
     - name: Standard Checkout
       uses: actions/checkout@v2
-    - name: Package
+
+    - name: Package Backend
       run: mvn clean package -Dmaven.test.skip
       working-directory: Backend/
-    - name: Build the Docker image
-      env:
-          SQL_URL: ${{ secrets.SQL_URL }}
-          SQL_USER: ${{ secrets.SQL_USER }}
-          SQL_PASS: ${{ secrets.SQL_PASS }}
-          JWT: ${{ secrets.JWT }}
-      run: docker build . --file Backend/Dockerfile --tag mycardetails:latest
-    - name: Run Docker container
-      env:
-          SQL_URL: ${{ secrets.SQL_URL }}
-          SQL_USER: ${{ secrets.SQL_USER }}
-          SQL_PASS: ${{ secrets.SQL_PASS }}
-          JWT: ${{ secrets.JWT }}
-      run: docker run -d -p 8080:8080 -e SQL_USER=${{ secrets.SQL_USER }} -e SQL_PASS=${{ secrets.SQL_PASS }} -e SQL_URL=${{ secrets.SQL_URL }} -e JWT=${{ secrets.JWT }} mycardetails
-    - name: Build the Frontend docker image
-      run: docker build . --file Frontend/Dockerfile --tag mycardetails_frontend:latest
-    - name: Run Frontend Docker container
-      run: docker run -d -p 80:80 mycardetails_frontend
 
+    - name: Build and Run with Docker Compose
+      env:
+        SQL_URL: ${{ secrets.SQL_URL }}
+        SQL_USER: ${{ secrets.SQL_USER }}
+        SQL_PASS: ${{ secrets.SQL_PASS }}
+        JWT: ${{ secrets.JWT }}
+      run: docker compose up --build -d
