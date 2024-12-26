@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@CrossOrigin({"http://localhost:4200","https://bmester.hu","http://localhost"})
+@CrossOrigin({"*"})
 @RestController
 public class HealthController {
 
