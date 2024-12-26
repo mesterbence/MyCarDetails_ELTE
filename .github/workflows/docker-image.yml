@@ -12,10 +12,6 @@ jobs:
     - name: Standard Checkout
       uses: actions/checkout@v2
 
-    - name: Package Backend
-      run: mvn clean package -Dmaven.test.skip
-      working-directory: Backend/
-
     - name: Build and Run with Docker Compose
       env:
         SQL_URL: ${{ secrets.SQL_URL }}
