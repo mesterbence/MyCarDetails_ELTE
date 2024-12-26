@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin({"http://localhost:4200","https://bmester.hu","http://localhost"})
+@CrossOrigin({"*"})
 @RestController
 public class FuelTypeController {
 
