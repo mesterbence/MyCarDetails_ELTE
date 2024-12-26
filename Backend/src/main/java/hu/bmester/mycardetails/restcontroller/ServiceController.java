@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin({"http://localhost:4200","https://bmester.hu","http://localhost"})
+@CrossOrigin({"*"})
 @RestController
 @Slf4j
 public class ServiceController {
