@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@CrossOrigin({"http://localhost:4200","https://bmester.hu","http://localhost"})
+@CrossOrigin({"*"})
 @RestController
 @Slf4j
 public class UserController {
